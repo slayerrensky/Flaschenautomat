@@ -1,5 +1,5 @@
 package Automat;
 
 public enum FlaschenType {
-	Mehrweg, PET
+	Mehrweg, PET, CodeNichtValide, CodeUnlesbar
 }

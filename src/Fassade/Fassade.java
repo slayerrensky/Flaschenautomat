@@ -1,5 +1,8 @@
 package Fassade;
+import java.awt.EventQueue;
+
 import Automat.FlaschenType;
+import GUI.SimulationGUI;
 
 /**
  * @author Dennis
@@ -8,10 +11,29 @@ import Automat.FlaschenType;
  */
 public class Fassade {
 
+	private SimulationGUI Gui; 
+	
 	public Fassade(){
-
+		Gui = new SimulationGUI(this);
+		Gui.frame.setVisible(true);
 	}
 
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Fassade DieFassade =  new Fassade();
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
 	public void finalize() throws Throwable {
 
 	}
@@ -29,7 +51,8 @@ public class Fassade {
 	 * Wenn der Bon Button in der GUI gedrückt wurde
 	 */
 	public void bonButtonGedrueckt(){
-
+		// Ausgabe auf Gui.Monitoring
+		// Automat.Ablieferung etwas tuhen
 	}
 
 	/**
@@ -55,7 +78,7 @@ public class Fassade {
 	 * @param Text
 	 */
 	public void logText(int level, String Text){
-
+		Gui.MonitoringUpdate(Text);
 	}
 
 	/**
@@ -63,7 +86,7 @@ public class Fassade {
 	 * @param Type
 	 */
 	public void simFlascheEingelegt(FlaschenType Type){
-
+		logText(0, "Flasche mit dem Code " + Type.toString() + " wurde eingelegt.");
 	}
 
 	public void troeteAN(){

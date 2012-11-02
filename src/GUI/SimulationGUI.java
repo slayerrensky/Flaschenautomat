@@ -1,4 +1,5 @@
 package GUI;
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -13,32 +14,39 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import Automat.FlaschenType;
+import Fassade.Fassade;
 
 public class SimulationGUI {
 
-	private JFrame frame;
+	public JFrame frame;
 	private JTextField txtText;
+	private Fassade DieFassade;
+	private JComboBox comboBox;
+	private JTextPane txtpnMonitoring;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SimulationGUI window = new SimulationGUI();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					Fassade DieFassade =  new Fassade();
+//					SimulationGUI window = new SimulationGUI(DieFassade);
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the application.
 	 */
-	public SimulationGUI() {
+	public SimulationGUI(Fassade fassade) {
+		DieFassade = fassade;
 		initialize();
 	}
 
@@ -59,17 +67,23 @@ public class SimulationGUI {
 		JLabel lblFlaschenautomat = new JLabel("Flaschenautomat");
 		desktopPane.add(lblFlaschenautomat, "cell 0 0,alignx center,aligny center");
 		
-		String[] comboStrings = { "Mehrweg", "PET", "CodeNichtValide", "CodeUnlesbar"};
-		JComboBox comboBox =  new JComboBox(comboStrings);
+		String[] comboStrings = new String[FlaschenType.values().length];
+		comboStrings[0] = FlaschenType.CodeNichtValide.toString();
+		comboStrings[1] = FlaschenType.CodeUnlesbar.toString();
+		comboStrings[2] = FlaschenType.Mehrweg.toString();
+		comboStrings[3] = FlaschenType.PET.toString();
 		
-
+		comboBox =  new JComboBox(comboStrings);
+		
 		desktopPane.add(comboBox, "cell 0 2,growx,aligny center");
 		
 		JButton btnFlascheeinlegen = new JButton("FlascheEinlegen");		
 		btnFlascheeinlegen.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Glue.InsertBottle();
+				String Flasche = comboBox.getSelectedItem().toString();
+				DieFassade.simFlascheEingelegt(FlaschenType.valueOf(Flasche));
+				//Glue.InsertBottle();
 			}
 		});
 		desktopPane.add(btnFlascheeinlegen, "cell 0 3,alignx center,aligny center");
@@ -95,9 +109,16 @@ public class SimulationGUI {
 		txtpnBondrucker.setText("BonDrucker");
 		frame.getContentPane().add(txtpnBondrucker, "cell 1 0,grow");
 		
-		JTextPane txtpnMonitoring = new JTextPane();
+		txtpnMonitoring = new JTextPane();
 		txtpnMonitoring.setText("Monitoring");
 		frame.getContentPane().add(txtpnMonitoring, "cell 2 0,grow");
 	}
+	
+	public void MonitoringUpdate(String message)
+	{
+		txtpnMonitoring.setText(message);
+		
+	}
+	
 
 }
