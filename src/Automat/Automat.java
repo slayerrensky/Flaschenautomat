@@ -7,15 +7,20 @@ package Automat;
 public class Automat {
 
 	public Auswahlklappe m_Auswahlklappe;
-	public EndbehälterMehrweg m_EndbehälterMehrweg;
-	public EndbehälterPET m_EndbehälterPET;
-	public Näherungssensor m_Näherungssensor;
-	public DB m_DB;
-	public Laufband m_Laufband;
+	public Laufband m_VorderesLaufband;
+	public Laufband m_DrehLaufband;
+	public Laufband m_HinteresLaufband;
+	
 	public Display m_Display;
 	public Scanner m_Scanner;
 	public Leuchte m_Leuchte;
-	public Tröte m_Tröte;
+	public Troete m_Troete;
+	public Lichtschranke s_EingangsLichtschranke;
+	public Lichtschranke s_UstierungLichtschranke;
+	public Lichtschranke s_AusgangLichtschranke;
+	public Lichtschranke s_AuswahlklappeEingangLichtschranke;
+	public Lichtschranke s_MehrwegBeaelterLichtschranke;
+	public Lichtschranke s_PetBeaelterLichtschranke;
 
 	public Automat(){
 

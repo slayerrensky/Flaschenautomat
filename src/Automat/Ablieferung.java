@@ -19,7 +19,8 @@ public class Ablieferung {
 	public BonDrucker m_BonDrucker;
 	public Druckknopf m_Druckknopf;
 	private LinkedList<Flasche> ListofBottls;
-
+	private double Guthaben;
+	
 	public Ablieferung(){
 
 	}

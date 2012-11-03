@@ -56,11 +56,11 @@ public class Fassade {
 	}
 
 	/**
-	 * druckt, blockierend
+	 * Druckt den Bon in die Gui, blockierend
 	 * 
 	 * @param Text
 	 */
-	public void drucken(String Text){
+	public void bonAnzeigen(String Text){
 
 	}
 
@@ -77,7 +77,7 @@ public class Fassade {
 	 * @param level
 	 * @param Text
 	 */
-	public void logText(int level, String Text){
+	public void monitoringText(int level, String Text){
 		Gui.MonitoringUpdate(Text);
 	}
 
@@ -86,7 +86,7 @@ public class Fassade {
 	 * @param Type
 	 */
 	public void simFlascheEingelegt(FlaschenType Type){
-		logText(0, "Flasche mit dem Code " + Type.toString() + " wurde eingelegt.");
+		monitoringText(0, "Flasche mit dem Code " + Type.toString() + " wurde eingelegt.");
 	}
 
 	public void troeteAN(){

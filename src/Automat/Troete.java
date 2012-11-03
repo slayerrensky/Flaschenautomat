@@ -3,15 +3,20 @@ package Automat;
 /**
  * @author Dennis
  * @version 1.0
- * @created 26-Okt-2012 07:10:53
+ * @created 03-Nov-2012 10:21:35
  */
-public class Tröte {
+public class Troete {
 
-	public Tröte(){
+	public Troete(){
 
 	}
 
-	public void finalize() throws Throwable {
+	/**
+	 * 
+	 * @exception Throwable
+	 */
+	public void finalize()
+	  throws Throwable{
 
 	}
 
