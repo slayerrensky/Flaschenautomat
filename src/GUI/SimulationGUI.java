@@ -68,6 +68,7 @@ public class SimulationGUI {
 		desktopPane.add(lblFlaschenautomat, "cell 0 0,alignx center,aligny center");
 		
 		String[] comboStrings = new String[FlaschenType.values().length];
+		
 		comboStrings[0] = FlaschenType.CodeNichtValide.toString();
 		comboStrings[1] = FlaschenType.CodeUnlesbar.toString();
 		comboStrings[2] = FlaschenType.Mehrweg.toString();
