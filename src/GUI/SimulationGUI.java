@@ -93,7 +93,7 @@ public class SimulationGUI {
 		btnBondrucken.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Glue.PressedBonButton();
+				Glu.PressedBonButton();
 			}
 		});
 		desktopPane.add(btnBondrucken, "cell 0 5,alignx center,aligny center");
