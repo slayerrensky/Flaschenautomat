@@ -67,7 +67,7 @@ public class HardwareGUI {
 		JButton btnBonDrucken = new JButton("Bon Drucken");
 		btnBonDrucken.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				DieFassade.bonButtonGedrueckt();
+				DieFassade.bonAnfordern();
 			}
 		});
 		btnBonDrucken.addMouseListener(new MouseAdapter() {

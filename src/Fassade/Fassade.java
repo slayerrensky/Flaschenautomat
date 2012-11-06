@@ -1,7 +1,7 @@
 package Fassade;
 import java.awt.EventQueue;
 
-import Automat.FlaschenType;
+import Automat.*;
 import GUI.HardwareGUI;
 import GUI.SimulationGUI;
 
@@ -14,10 +14,12 @@ public class Fassade {
 
 	private SimulationGUI SIMGui;
 	private HardwareGUI HWGui;
+	private Ablieferung	FachklasseAblieferung;
 	
 	public Fassade(){
 		SIMGui = new SimulationGUI(this);
 		HWGui = new HardwareGUI(this);
+		FachklasseAblieferung = new Ablieferung(this);
 	}
 
 	/**
@@ -44,7 +46,7 @@ public class Fassade {
 	 * 
 	 * @param Text
 	 */
-	public void aktualisiereDisplay(String Text){
+	public void displayAktualisieren(String Text){
 		HWGui.updateDisplay(Text);
 		SIMGui.MonitoringUpdate("Display aktualisiert mit \""+Text+"\"");
 	}
@@ -52,7 +54,7 @@ public class Fassade {
 	/**
 	 * Wenn der Bon Button in der GUI gedrückt wurde
 	 */
-	public void bonButtonGedrueckt(){
+	public void bonAnfordern(){
 		// Ausgabe auf Gui.Monitoring
 		// Automat.Ablieferung etwas tuhen
 		SIMGui.MonitoringUpdate("Bon Button wurde gedrückt");
@@ -68,12 +70,12 @@ public class Fassade {
 		SIMGui.MonitoringUpdate("Bon gedruckt: \""+Text+"\"");
 	}
 
-	public void leuchteAN(){
+	public void warnleuchteAN(){
 		
 		SIMGui.MonitoringUpdate("Leuchte wurd eingeschaltet");
 	}
 
-	public void leuchteAUS(){
+	public void warnleuchteAUS(){
 		SIMGui.MonitoringUpdate("Leuchte wurd AUSgeschaltet");
 	}
 
@@ -82,7 +84,7 @@ public class Fassade {
 	 * @param level
 	 * @param Text
 	 */
-	public void monitoringText(int level, String Text){
+	public void simKonsolenText(int level, String Text){
 		SIMGui.MonitoringUpdate(Text);
 	}
 
@@ -90,15 +92,15 @@ public class Fassade {
 	 * 
 	 * @param Type
 	 */
-	public void simFlascheEingelegt(FlaschenType Type){
-		monitoringText(0, "Flasche mit dem Code " + Type.toString() + " wurde eingelegt.");
+	public void simFlascheEinlegen(FlaschenType Type){
+		simKonsolenText(0, "Flasche mit dem Code " + Type.toString() + " wurde eingelegt.");
 	}
 
-	public void troeteAN(){
+	public void warnsignalAN(){
 		SIMGui.MonitoringUpdate("Tröte wurd eingeschaltet");
 	}
 
-	public void troeteAUS(){
+	public void warnsignalAUS(){
 		SIMGui.MonitoringUpdate("Tröte wurd AUSgeschaltet");
 	}
 

@@ -2,6 +2,8 @@ package Automat;
 import java.util.LinkedList;
 import java.util.List;
 
+import Fassade.Fassade;
+
 
 /**
  * @author Dennis
@@ -20,9 +22,11 @@ public class Ablieferung {
 	public Druckknopf m_Druckknopf;
 	private LinkedList<Flasche> ListofBottls;
 	private double Guthaben;
+	private Fassade DieFassade;
 	
-	public Ablieferung(){
-
+	public Ablieferung(Fassade fassade){
+		DieFassade = fassade;
+		
 	}
 
 	public void AbbruchDurchButton(){

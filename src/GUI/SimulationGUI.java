@@ -86,7 +86,7 @@ public class SimulationGUI {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String Flasche = comboBox.getSelectedItem().toString();
-				DieFassade.simFlascheEingelegt(FlaschenType.valueOf(Flasche));
+				DieFassade.simFlascheEinlegen(FlaschenType.valueOf(Flasche));
 				//Glue.InsertBottle();
 			}
 		});
