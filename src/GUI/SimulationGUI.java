@@ -16,14 +16,14 @@ import java.awt.event.MouseEvent;
 
 import Automat.FlaschenType;
 import Fassade.Fassade;
+import javax.swing.JTextArea;
 
 public class SimulationGUI {
 
-	public JFrame frame;
-	private JTextField txtText;
+	private JFrame frmSimulationhelper;
 	private Fassade DieFassade;
 	private JComboBox comboBox;
-	private JTextPane txtpnMonitoring;
+	private JTextArea txtrMonitoring;
 
 //	/**
 //	 * Launch the application.
@@ -48,20 +48,23 @@ public class SimulationGUI {
 	public SimulationGUI(Fassade fassade) {
 		DieFassade = fassade;
 		initialize();
+		this.frmSimulationhelper.setVisible(true);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 451, 299);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new MigLayout("", "[144px][144px][149px]", "[278px]"));
+		frmSimulationhelper = new JFrame();
+		frmSimulationhelper.setResizable(false);
+		frmSimulationhelper.setTitle("Simulation");
+		frmSimulationhelper.setBounds(100, 100, 500, 600);
+		frmSimulationhelper.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSimulationhelper.getContentPane().setLayout(new MigLayout("", "[144px][144px,grow][193.00px]", "[554.00px,grow]"));
 		
 		JDesktopPane desktopPane = new JDesktopPane();
 		desktopPane.setBackground(Color.LIGHT_GRAY);
-		frame.getContentPane().add(desktopPane, "cell 0 0,grow");
+		frmSimulationhelper.getContentPane().add(desktopPane, "cell 0 0,grow");
 		desktopPane.setLayout(new MigLayout("", "[140px]", "[12px][24px][25px][25px][15px][19px][][][][]"));
 		
 		JLabel lblFlaschenautomat = new JLabel("Flaschenautomat");
@@ -89,36 +92,13 @@ public class SimulationGUI {
 		});
 		desktopPane.add(btnFlascheeinlegen, "cell 0 3,alignx center,aligny center");
 		
-		JButton btnBondrucken = new JButton("BonDrucken");
-		btnBondrucken.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				Glu.PressedBonButton();
-			}
-		});
-		desktopPane.add(btnBondrucken, "cell 0 5,alignx center,aligny center");
-		
-		JLabel lblNachrichten = new JLabel("Nachrichten");
-		desktopPane.add(lblNachrichten, "cell 0 7,alignx center,aligny center");
-		
-		txtText = new JTextField();
-		txtText.setText("Text");
-		desktopPane.add(txtText, "cell 0 8,growx,aligny center");
-		txtText.setColumns(10);
-		
-		JTextPane txtpnBondrucker = new JTextPane();
-		txtpnBondrucker.setText("BonDrucker");
-		frame.getContentPane().add(txtpnBondrucker, "cell 1 0,grow");
-		
-		txtpnMonitoring = new JTextPane();
-		txtpnMonitoring.setText("Monitoring");
-		frame.getContentPane().add(txtpnMonitoring, "cell 2 0,grow");
+		txtrMonitoring = new JTextArea();
+		frmSimulationhelper.getContentPane().add(txtrMonitoring, "cell 1 0 2 1,grow");
 	}
 	
 	public void MonitoringUpdate(String message)
 	{
-		txtpnMonitoring.setText(message);
-		
+		txtrMonitoring.append(message+'\n');		
 	}
 	
 
