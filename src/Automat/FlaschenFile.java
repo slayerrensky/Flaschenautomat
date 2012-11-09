@@ -7,9 +7,6 @@ package Automat;
  */
 public class FlaschenFile {
 
-	public FlaschenFile(){
-
-	}
 
 	public void finalize() throws Throwable {
 
@@ -19,7 +16,7 @@ public class FlaschenFile {
 	 * 
 	 * @param path
 	 */
-	public FlaschenFile(string path){
+	public FlaschenFile(String path){
 
 	}
 
