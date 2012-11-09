@@ -5,21 +5,27 @@ package Automat;
  * @version 1.0
  * @created 26-Okt-2012 07:10:45
  */
-public class Auswahlklappe {
+public class Auswahlklappe extends java.lang.Object {
 
-	private boolean Mehrweg = false;
-	private boolean PET = true;
+	private boolean Mehrweg;
+	private boolean PET;
+	private int adresse;
 
-	public Auswahlklappe(){
-
+	/**
+	 * @param FlaschenType Flasche
+	 * 
+	 * @param o0
+	 */
+	public boolean stellen(FlaschenType o0){
+		return false;
 	}
 
 	/**
 	 * 
-	 * @param FlaschenType Flasche
+	 * @param adresse
 	 */
-	public boolean stellen(FlaschenType Flasche){
-		return false;
+	public void Auswahlklappe(int adresse){
+
 	}
 
 }

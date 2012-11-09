@@ -15,4 +15,12 @@ public class FlaschenFile {
 
 	}
 
+	/**
+	 * 
+	 * @param path
+	 */
+	public FlaschenFile(string path){
+
+	}
+
 }

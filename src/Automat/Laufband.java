@@ -5,16 +5,17 @@ package Automat;
  * @version 1.0
  * @created 26-Okt-2012 07:10:51
  */
-public class Laufband {
+public class Laufband extends java.lang.Object {
 
 	private boolean gesperrt;
-	private boolean laeuft = false;
+	private boolean laeuft;
+	private int adresse;
 
-	public Laufband(){
+	public void Laufband(){
 
 	}
 
-	public void finalize() throws Throwable {
+	public void finalize() {
 
 	}
 
