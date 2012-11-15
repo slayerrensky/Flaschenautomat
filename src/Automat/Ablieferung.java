@@ -20,12 +20,14 @@ public class Ablieferung {
 	public Automat m_Automat;
 	public BonDrucker m_BonDrucker;
 	public Druckknopf m_Druckknopf;
-	private LinkedList<Flasche> ListofBottls;
+	private LinkedList<Flasche> abgelieferteFlaschen;
 	private double Guthaben;
 	private Fassade DieFassade;
 	
-	public Ablieferung(Fassade fassade){
+	
+	public Ablieferung(Fassade fassade, LinkedList ListofBottls){
 		DieFassade = fassade;
+		this.abgelieferteFlaschen = ListofBottls;
 		
 	}
 

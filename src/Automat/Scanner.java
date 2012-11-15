@@ -10,8 +10,8 @@ import java.awt.event.ActionEvent;
 public class Scanner {
 
 	private int lastCode;
-
-	public Scanner(){
+	private int adresse;
+	public Scanner(int adresse){
 
 	}
 

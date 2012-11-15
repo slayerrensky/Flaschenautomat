@@ -12,6 +12,14 @@ public class Auswahlklappe extends java.lang.Object {
 	private int adresse;
 
 	/**
+	 * 
+	 * @param adresse
+	 */
+	public void Auswahlklappe(int adresse){
+
+	}
+	
+	/**
 	 * @param FlaschenType Flasche
 	 * 
 	 * @param o0
@@ -20,12 +28,6 @@ public class Auswahlklappe extends java.lang.Object {
 		return false;
 	}
 
-	/**
-	 * 
-	 * @param adresse
-	 */
-	public void Auswahlklappe(int adresse){
 
-	}
 
 }

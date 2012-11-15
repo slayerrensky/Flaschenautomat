@@ -23,7 +23,7 @@ public class Leuchte {
 	 * 
 	 * @param Frequenz    Frequenz in Herz
 	 */
-	public void blik(int Frequenz){
+	public void blink(int Frequenz){
 
 	}
 

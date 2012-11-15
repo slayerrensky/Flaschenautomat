@@ -1,5 +1,7 @@
 package Fassade;
+
 import java.awt.EventQueue;
+import java.util.LinkedList;
 
 import Automat.*;
 import GUI.HardwareGUI;
@@ -14,12 +16,17 @@ public class Fassade {
 
 	private SimulationGUI SIMGui;
 	private HardwareGUI HWGui;
-	private Ablieferung	FachklasseAblieferung;
-	
-	public Fassade(){
+	private Ablieferung FachklasseAblieferung;
+
+	public Fassade() {
 		SIMGui = new SimulationGUI(this);
 		HWGui = new HardwareGUI(this);
-		FachklasseAblieferung = new Ablieferung(this);
+		String FlaschenfilePathasString = "./flaschenfile.txt";
+		FachklasseAblieferung = new Ablieferung(this, loadFlaschenFile(FlaschenfilePathasString));
+	}
+
+	public void finalize() throws Throwable {
+
 	}
 
 	/**
@@ -29,16 +36,12 @@ public class Fassade {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Fassade DieFassade =  new Fassade();
+					Fassade DieFassade = new Fassade();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}
-	
-	public void finalize() throws Throwable {
-
 	}
 
 	/**
@@ -46,15 +49,15 @@ public class Fassade {
 	 * 
 	 * @param Text
 	 */
-	public void displayAktualisieren(String Text){
+	public void displayAktualisieren(String Text) {
 		HWGui.updateDisplay(Text);
-		SIMGui.MonitoringUpdate("Display aktualisiert mit \""+Text+"\"");
+		SIMGui.MonitoringUpdate("Display aktualisiert mit \"" + Text + "\"");
 	}
 
 	/**
 	 * Wenn der Bon Button in der GUI gedrückt wurde
 	 */
-	public void bonAnfordern(){
+	public void bonAnfordern() {
 		// Ausgabe auf Gui.Monitoring
 		// Automat.Ablieferung etwas tuhen
 		SIMGui.MonitoringUpdate("Bon Button wurde gedrückt");
@@ -65,17 +68,23 @@ public class Fassade {
 	 * 
 	 * @param Text
 	 */
-	public void bonAnzeigen(String Text){
+	public void bonAnzeigen(String Text) {
 		HWGui.drucken(Text);
-		SIMGui.MonitoringUpdate("Bon gedruckt: \""+Text+"\"");
+		SIMGui.MonitoringUpdate("Bon gedruckt: \"" + Text + "\"");
 	}
-
-	public void warnleuchteAN(){
+	
+	private LinkedList<Flasche> loadFlaschenFile(String Path)
+	{
 		
+		return null;
+	}
+	
+	public void warnleuchteAN() {
+
 		SIMGui.MonitoringUpdate("Leuchte wurd eingeschaltet");
 	}
 
-	public void warnleuchteAUS(){
+	public void warnleuchteAUS() {
 		SIMGui.MonitoringUpdate("Leuchte wurd AUSgeschaltet");
 	}
 
@@ -84,7 +93,7 @@ public class Fassade {
 	 * @param level
 	 * @param Text
 	 */
-	public void simKonsolenText(int level, String Text){
+	public void simKonsolenText(int level, String Text) {
 		SIMGui.MonitoringUpdate(Text);
 	}
 
@@ -92,15 +101,16 @@ public class Fassade {
 	 * 
 	 * @param Type
 	 */
-	public void simFlascheEinlegen(FlaschenType Type){
-		simKonsolenText(0, "Flasche mit dem Code " + Type.toString() + " wurde eingelegt.");
+	public void simFlascheEinlegen(FlaschenType Type) {
+		simKonsolenText(0, "Flasche mit dem Code " + Type.toString()
+				+ " wurde eingelegt.");
 	}
 
-	public void warnsignalAN(){
+	public void warnsignalAN() {
 		SIMGui.MonitoringUpdate("Tröte wurd eingeschaltet");
 	}
 
-	public void warnsignalAUS(){
+	public void warnsignalAUS() {
 		SIMGui.MonitoringUpdate("Tröte wurd AUSgeschaltet");
 	}
 

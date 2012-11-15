@@ -10,8 +10,9 @@ import java.util.Currency;
 public class Flasche {
 
 	private FlaschenType Type;
-	public Ablieferung m_Ablieferung;
 	private Currency Guthaben;
+	private int anzahl;
+	private String scanncode;
 
 	public Flasche(FlaschenType Type){
 
@@ -20,7 +21,13 @@ public class Flasche {
 	public void finalize() throws Throwable {
 
 	}
-
+	
+	public void AnzahlInc()
+	{}
+	
+	public void AnzahlDec()
+	{}
+	
 	/**
 	 * 
 	 * @param Guthaben
