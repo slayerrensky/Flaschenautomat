@@ -11,9 +11,10 @@ public class Laufband extends java.lang.Object {
 	private boolean laeuft;
 	private int adresse;
 
-	public void Laufband(){
-
+	public Laufband(int adresse) {
+		this.adresse = adresse; 
 	}
+
 
 	public void finalize() {
 

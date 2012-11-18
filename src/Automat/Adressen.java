@@ -14,5 +14,6 @@ public enum Adressen {
 	Scanner,
 	BonDrucker,
 	Druckknopf,
-	Display;
+	Display,
+	Auswahlklappe;
 }

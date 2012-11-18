@@ -20,7 +20,11 @@ public class Automat {
 	public Lichtschranke s_PetBeaelterLichtschranke;
 
 	public Automat(){
-		
+		m_VorderesLaufband = new Laufband(Adressen.LaufbandEingang.ordinal());
+		m_HinteresLaufband = new Laufband(Adressen.LaufbandAusgang.ordinal());
+		m_DrehLaufband = new Laufband(Adressen.LaufbandDrehen.ordinal());
+		m_Auswahlklappe = new Auswahlklappe(Adressen.Auswahlklappe.ordinal());
+		s_EingangsLichtschranke = new Lichtschranke(Adressen.Eingangslichtschranke.ordinal());
 	}
 
 

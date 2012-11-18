@@ -5,17 +5,13 @@ package Automat;
  * @version 1.0
  * @created 26-Okt-2012 07:10:45
  */
-public class Auswahlklappe extends java.lang.Object {
+public class Auswahlklappe {
 
 	private boolean Mehrweg;
 	private boolean PET;
 	private int adresse;
 
-	/**
-	 * 
-	 * @param adresse
-	 */
-	public void Auswahlklappe(int adresse){
+	public Auswahlklappe(int adresse) {
 		this.adresse = adresse;
 	}
 	

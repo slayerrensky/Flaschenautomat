@@ -5,20 +5,12 @@ package Automat;
  * @version 1.0
  * @created 03-Nov-2012 10:11:17
  */
-public class Lichtschranke extends java.lang.Object {
+public class Lichtschranke {
 
 	private int adresse;
 
-	public Lichtschranke(){
-
-	}
-
-	/**
-	 * 
-	 * @param adresse
-	 */
-	public void Lichtschranke(int adresse){
-
+	public Lichtschranke(int adresse) {
+		this.adresse = adresse;
 	}
 
 	public void finalize(){
