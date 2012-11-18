@@ -11,10 +11,7 @@ public class Automat {
 	public Laufband m_DrehLaufband;
 	public Laufband m_HinteresLaufband;
 	
-	public Display m_Display;
 	public Scanner m_Scanner;
-	public Leuchte m_Leuchte;
-	public Troete m_Troete;
 	public Lichtschranke s_EingangsLichtschranke;
 	public Lichtschranke s_UstierungLichtschranke;
 	public Lichtschranke s_AusgangLichtschranke;
@@ -26,21 +23,6 @@ public class Automat {
 
 	}
 
-	/**
-	 * 
-	 * @param Text
-	 */
-	public void Display_akt(String Text){
-
-	}
-
-	/**
-	 * 
-	 * @param errno
-	 */
-	public void FehlerMelden(int errno){
-
-	}
 
 	public void flasch_erkenneStart(){
 

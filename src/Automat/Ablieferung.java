@@ -18,6 +18,7 @@ public class Ablieferung {
 	 */
 	private int Timeout = 4;
 	public Automat m_Automat;
+	private Anzeige m_Anzeige;
 	public BonDrucker m_BonDrucker;
 	public Druckknopf m_Druckknopf;
 	private LinkedList<Flasche> abgelieferteFlaschen;
@@ -35,7 +36,7 @@ public class Ablieferung {
 
 	}
 
-	public void ablaufStarten(){
+	public void ablaufFlaschenablieferung(){
 
 	}
 
