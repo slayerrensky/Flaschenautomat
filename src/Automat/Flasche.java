@@ -9,34 +9,34 @@ import java.util.Currency;
  */
 public class Flasche {
 
-	private FlaschenType Type;
-	private Currency Guthaben;
+	private FlaschenType type;
+	private Currency guthaben;
 	private int anzahl;
 	private String scanncode;
 
-	public Flasche(FlaschenType Type){
-
+	public Flasche(FlaschenType type, Currency guthaben, String scanncode){
+		this.type = type;
+		this.guthaben = guthaben;
+		this.scanncode = scanncode;
+		
 	}
 
 	public void finalize() throws Throwable {
 
 	}
 	
+	
+	
 	public void AnzahlInc()
-	{}
+	{
+		
+	}
 	
 	public void AnzahlDec()
-	{}
-	
-	/**
-	 * 
-	 * @param Guthaben
-	 * @param Type
-	 */
-	public Flasche(Currency Guthaben, FlaschenType Type){
-
+	{
+		
 	}
-
+	
 	public Currency getGuthaben(){
 		return null;
 	}

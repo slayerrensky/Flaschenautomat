@@ -13,7 +13,7 @@ public class Automat {
 	
 	public Scanner m_Scanner;
 	public Lichtschranke s_EingangsLichtschranke;
-	public Lichtschranke s_UstierungLichtschranke;
+	public Lichtschranke s_JstierungLichtschranke;
 	public Lichtschranke s_AusgangLichtschranke;
 	public Lichtschranke s_AuswahlklappeEingangLichtschranke;
 	public Lichtschranke s_MehrwegBeaelterLichtschranke;
@@ -24,7 +24,13 @@ public class Automat {
 		m_HinteresLaufband = new Laufband(Adressen.LaufbandAusgang.ordinal());
 		m_DrehLaufband = new Laufband(Adressen.LaufbandDrehen.ordinal());
 		m_Auswahlklappe = new Auswahlklappe(Adressen.Auswahlklappe.ordinal());
+		m_Scanner = new Scanner(Adressen.Scanner.ordinal());
 		s_EingangsLichtschranke = new Lichtschranke(Adressen.Eingangslichtschranke.ordinal());
+		s_JstierungLichtschranke = new Lichtschranke(Adressen.Justierlichtschranke.ordinal());
+		s_AusgangLichtschranke = new Lichtschranke(Adressen.Ausgangslichtschranke.ordinal());
+		s_AuswahlklappeEingangLichtschranke = new Lichtschranke(Adressen.AuswahlklappeEingangslichtschranke.ordinal());
+		s_MehrwegBeaelterLichtschranke = new Lichtschranke(Adressen.UebergabelichtschrankeMehrweg.ordinal());
+		s_PetBeaelterLichtschranke = new Lichtschranke(Adressen.UebergabelichtschrankePET.ordinal());
 	}
 
 
