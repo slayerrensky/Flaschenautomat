@@ -3,6 +3,7 @@ package Automat;
 public enum Adressen {
 	Troete,
 	Leuchte,
+	AuswahlklappeEingangslichtschranke,
 	Eingangslichtschranke,
 	Justierlichtschranke,
 	Ausgangslichtschranke,
