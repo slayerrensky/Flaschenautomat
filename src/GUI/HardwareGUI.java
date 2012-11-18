@@ -16,6 +16,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import java.awt.Dialog.ModalExclusionType;
+import java.awt.Component;
+import javax.swing.Box;
+import javax.swing.JSeparator;
 
 
 public class HardwareGUI {
@@ -77,20 +80,29 @@ public class HardwareGUI {
 			}
 		});
 		
-		JLabel lblDrucker = new JLabel("Druckerausgabe:");
-		frmHardware.getContentPane().add(lblDrucker, "cell 1 0");
+		JLabel lblLeuchte = new JLabel("Leuchte:");
+		frmHardware.getContentPane().add(lblLeuchte, "flowx,cell 1 0,alignx center");
 		frmHardware.getContentPane().add(btnBonDrucken, "cell 0 1,alignx center");
 		
 		JLabel lblNachrichten = new JLabel("Display:");
 		frmHardware.getContentPane().add(lblNachrichten, "cell 0 2,alignx center");
 		
+		JLabel lblDrucker = new JLabel("Druckerausgabe:");
+		frmHardware.getContentPane().add(lblDrucker, "cell 1 2,alignx center,aligny center");
+		
 		druckerausgabe = new JTextArea();
 		druckerausgabe.setEditable(false);
-		frmHardware.getContentPane().add(druckerausgabe, "cell 1 1 1 9,grow");
+		frmHardware.getContentPane().add(druckerausgabe, "cell 1 3 1 7,grow");
 		
 		txtdisplay = new JTextPane();
 		txtdisplay.setEditable(false);
 		frmHardware.getContentPane().add(txtdisplay, "cell 0 3 1 7,grow");
+		
+		Component horizontalStrut = Box.createHorizontalStrut(40);
+		frmHardware.getContentPane().add(horizontalStrut, "cell 1 0");
+		
+		JLabel lblTte = new JLabel("Tr\u00F6te:");
+		frmHardware.getContentPane().add(lblTte, "cell 1 0,alignx center");
 	}
 	
 	public void updateDisplay(String message){

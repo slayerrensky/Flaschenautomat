@@ -30,7 +30,7 @@ public class Ablieferung {
 		DieFassade = fassade;
 		this.abgelieferteFlaschen = ListofBottls;
 		m_Automat = new Automat();
-		m_Anzeige = new Anzeige();
+		m_Anzeige = new Anzeige(fassade);
 		m_BonDrucker= new BonDrucker(Adressen.BonDrucker.ordinal());
 		m_Druckknopf = new Druckknopf(Adressen.Druckknopf.ordinal());
 			

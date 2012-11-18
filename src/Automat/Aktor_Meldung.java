@@ -1,5 +1,7 @@
 package Automat;
 
+import Fassade.Fassade;
+
 /**
  * @author Dennis
  * @version 1.0
@@ -8,21 +10,42 @@ package Automat;
 public class Aktor_Meldung {
 
 	private int adresse;
-	
-	public Aktor_Meldung(int adresse){
+	private int type;
+	private Fassade DieFassade;
+
+	// type = 0 == Leuchte; 1 == Troete
+	public Aktor_Meldung(Fassade fassade, int adresse, int type) {
 		this.adresse = adresse;
+		this.DieFassade = fassade;
+		this.type = type;
 	}
 
 	public void finalize() throws Throwable {
 
 	}
 
-	public void ausschalten(){
-		
+	public void ausschalten() {
+		switch (type) {
+		default:
+		case 0:
+			DieFassade.warnleuchteAUS();
+			break;
+		case 1:
+			DieFassade.warnsignalAUS();
+			break;
+		}
 	}
 
-	public void einschalten(){
-
+	public void einschalten() {
+		switch (type) {
+		default:
+		case 0:
+			DieFassade.warnleuchteAN();
+			break;
+		case 1:
+			DieFassade.warnsignalAN();
+			break;
+		}
 	}
 
 }

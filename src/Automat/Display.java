@@ -1,5 +1,7 @@
 package Automat;
 
+import Fassade.Fassade;
+
 /**
  * @author Dennis
  * @version 1.0
@@ -8,10 +10,11 @@ package Automat;
 public class Display {
 
 private int adresse;
+private Fassade DieFassade;
 		
-	public Display(int adresse){
+	public Display(Fassade fassade, int adresse){
+		this.DieFassade = fassade;
 		this.adresse = adresse;
-
 	}
 	
 	public void finalize() throws Throwable {
@@ -23,7 +26,7 @@ private int adresse;
 	 * @param Text
 	 */
 	public void setText(String Text){
-
+		DieFassade.displayAktualisieren(Text);
 	}
 
 }
