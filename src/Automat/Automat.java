@@ -20,7 +20,7 @@ public class Automat {
 	public Lichtschranke s_PetBeaelterLichtschranke;
 
 	public Automat(){
-
+		
 	}
 
 

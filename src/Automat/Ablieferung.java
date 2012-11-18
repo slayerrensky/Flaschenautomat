@@ -17,10 +17,10 @@ public class Ablieferung {
 	 * in Sekunden
 	 */
 	private int Timeout = 4;
-	public Automat m_Automat;
+	private Automat m_Automat;
 	private Anzeige m_Anzeige;
-	public BonDrucker m_BonDrucker;
-	public Druckknopf m_Druckknopf;
+	private BonDrucker m_BonDrucker;
+	private Druckknopf m_Druckknopf;
 	private LinkedList<Flasche> abgelieferteFlaschen;
 	private double Guthaben;
 	private Fassade DieFassade;
@@ -29,7 +29,11 @@ public class Ablieferung {
 	public Ablieferung(Fassade fassade, LinkedList ListofBottls){
 		DieFassade = fassade;
 		this.abgelieferteFlaschen = ListofBottls;
-		
+		m_Automat = new Automat();
+		m_Anzeige = new Anzeige();
+		m_BonDrucker= new BonDrucker(Adressen.BonDrucker.ordinal());
+		m_Druckknopf = new Druckknopf(Adressen.Druckknopf.ordinal());
+			
 	}
 
 	public void AbbruchDurchButton(){

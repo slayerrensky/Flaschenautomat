@@ -14,6 +14,7 @@ public class Anzeige {
 	public Anzeige(){
 		m_Troete = new Aktor_Meldung(Adressen.Troete.ordinal());
 		m_Leuchte = new Aktor_Meldung(Adressen.Leuchte.ordinal());
+		m_Display = new Display(Adressen.Display.ordinal());
 	}
 
 	public void finalize() throws Throwable {

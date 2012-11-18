@@ -16,7 +16,7 @@ public class Auswahlklappe extends java.lang.Object {
 	 * @param adresse
 	 */
 	public void Auswahlklappe(int adresse){
-
+		this.adresse = adresse;
 	}
 	
 	/**

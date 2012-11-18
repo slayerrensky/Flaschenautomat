@@ -7,9 +7,9 @@ import java.util.LinkedList;
  */
 public class BonDrucker {
 	
-	
-	public BonDrucker(){
-		
+	private int adresse;
+	public BonDrucker(int adresse){
+		this.adresse= adresse; 
 
 	}
 
