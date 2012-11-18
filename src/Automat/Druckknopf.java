@@ -10,9 +10,11 @@ import java.awt.event.ActionEvent;
  * @created 26-Okt-2012 07:10:55
  */
 public class Druckknopf {
-
-	public Druckknopf(){
-
+	
+	private int adresse;
+	
+	public Druckknopf(int adresse){
+		this.adresse = adresse;
 	}
 
 	public void finalize() throws Throwable {

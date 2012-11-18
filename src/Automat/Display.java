@@ -7,10 +7,13 @@ package Automat;
  */
 public class Display {
 
-	public Display(){
+private int adresse;
+		
+	public Display(int adresse){
+		this.adresse = adresse;
 
 	}
-
+	
 	public void finalize() throws Throwable {
 
 	}

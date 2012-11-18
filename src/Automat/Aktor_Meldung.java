@@ -5,10 +5,12 @@ package Automat;
  * @version 1.0
  * @created 26-Okt-2012 07:10:52
  */
-public class Leuchte {
+public class Aktor_Meldung {
 
-	public Leuchte(){
-
+	private int adresse;
+	
+	public Aktor_Meldung(int adresse){
+		this.adresse = adresse;
 	}
 
 	public void finalize() throws Throwable {
@@ -16,15 +18,7 @@ public class Leuchte {
 	}
 
 	public void ausschalten(){
-
-	}
-
-	/**
-	 * 
-	 * @param Frequenz    Frequenz in Herz
-	 */
-	public void blink(int Frequenz){
-
+		
 	}
 
 	public void einschalten(){
