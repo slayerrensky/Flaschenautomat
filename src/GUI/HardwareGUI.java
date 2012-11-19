@@ -103,6 +103,8 @@ public class HardwareGUI {
 		
 		JLabel lblTte = new JLabel("Tr\u00F6te:");
 		frmHardware.getContentPane().add(lblTte, "cell 1 0,alignx center");
+		
+		frmHardware.setLocation(20, 30);
 	}
 	
 	public void updateDisplay(String message){

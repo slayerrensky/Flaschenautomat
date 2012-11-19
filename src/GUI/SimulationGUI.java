@@ -94,6 +94,8 @@ public class SimulationGUI {
 		
 		txtrMonitoring = new JTextArea();
 		frmSimulationhelper.getContentPane().add(txtrMonitoring, "cell 1 0 2 1,grow");
+		
+		frmSimulationhelper.setLocation(490, 30);
 	}
 	
 	public void MonitoringUpdate(String message)
