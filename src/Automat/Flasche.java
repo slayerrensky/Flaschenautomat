@@ -29,12 +29,12 @@ public class Flasche {
 	
 	public void AnzahlInc()
 	{
-		
+		this.anzahl++;
 	}
 	
 	public void AnzahlDec()
 	{
-		
+		this.anzahl--;
 	}
 	
 	public Currency getGuthaben(){
