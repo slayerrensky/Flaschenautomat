@@ -38,7 +38,7 @@ public class Flasche {
 	}
 	
 	public Currency getGuthaben(){
-		return null;
+		return guthaben;
 	}
 
 }
