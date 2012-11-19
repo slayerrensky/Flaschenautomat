@@ -1,24 +1,18 @@
 package GUI;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTextPane;
-
 import Fassade.Fassade;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
-import java.awt.Dialog.ModalExclusionType;
 import java.awt.Component;
 import javax.swing.Box;
-import javax.swing.JSeparator;
 
 
 public class HardwareGUI {
