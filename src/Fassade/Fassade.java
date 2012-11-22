@@ -22,7 +22,8 @@ public class Fassade {
 		SIMGui = new SimulationGUI(this);
 		HWGui = new HardwareGUI(this);
 		String FlaschenfilePathasString = "./flaschenfile.txt";
-		FachklasseAblieferung = new Ablieferung(this, loadFlaschenFile(FlaschenfilePathasString));
+		FachklasseAblieferung = new Ablieferung(this,
+				loadFlaschenFile(FlaschenfilePathasString),loadFlaschenFile(FlaschenfilePathasString));
 	}
 
 	public void finalize() throws Throwable {

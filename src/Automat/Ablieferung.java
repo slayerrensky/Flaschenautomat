@@ -29,15 +29,15 @@ public class Ablieferung {
 	private Fassade DieFassade;
 	
 	
-	public Ablieferung(Fassade fassade, LinkedList ListofBottls){
+	public Ablieferung(Fassade fassade, LinkedList<Flasche> ListofBottlesTag, LinkedList<Flasche> ListofBottlesKunde){
 		DieFassade = fassade;
 		m_Automat = new Automat();
 		m_Anzeige = new Anzeige(fassade);
 		m_BonDrucker= new BonDrucker(Adressen.BonDrucker.ordinal());
 		m_Druckknopf = new Druckknopf(Adressen.Druckknopf.ordinal());
 		m_FlaschenZaehlerSubject = new FlaschenAbrechnungSubject();
-		m_KundenZaehler = new FlaschenZaehler(m_FlaschenZaehlerSubject,ListofBottls);
-		m_TagesZaehler = new FlaschenZaehler(m_FlaschenZaehlerSubject,ListofBottls);
+		m_KundenZaehler = new FlaschenZaehler(m_FlaschenZaehlerSubject,ListofBottlesTag);
+		m_TagesZaehler = new FlaschenZaehler(m_FlaschenZaehlerSubject,ListofBottlesKunde);
 		m_FlaschenZaehlerSubject.attach(m_KundenZaehler);
 		m_FlaschenZaehlerSubject.attach(m_TagesZaehler);
 	}
