@@ -1,22 +1,18 @@
 package GUI;
-import java.awt.Component;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JTextPane;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 import net.miginfocom.swing.MigLayout;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import Automat.FlaschenType;
 import Fassade.Fassade;
 import javax.swing.JTextArea;
+
 
 public class SimulationGUI {
 
@@ -94,6 +90,8 @@ public class SimulationGUI {
 		
 		txtrMonitoring = new JTextArea();
 		frmSimulationhelper.getContentPane().add(txtrMonitoring, "cell 1 0 2 1,grow");
+		
+		frmSimulationhelper.setLocation(490, 30);
 	}
 	
 	public void MonitoringUpdate(String message)

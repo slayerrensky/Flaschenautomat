@@ -1,24 +1,18 @@
 package GUI;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTextPane;
-
 import Fassade.Fassade;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
-import java.awt.Dialog.ModalExclusionType;
 import java.awt.Component;
 import javax.swing.Box;
-import javax.swing.JSeparator;
 
 
 public class HardwareGUI {
@@ -103,6 +97,8 @@ public class HardwareGUI {
 		
 		JLabel lblTte = new JLabel("Tr\u00F6te:");
 		frmHardware.getContentPane().add(lblTte, "cell 1 0,alignx center");
+		
+		frmHardware.setLocation(20, 30);
 	}
 	
 	public void updateDisplay(String message){
