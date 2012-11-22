@@ -1,5 +1,6 @@
 package Automat;
 
+import java.math.BigDecimal;
 import java.util.Currency;
 
 /**
@@ -10,13 +11,13 @@ import java.util.Currency;
 public class Flasche {
 
 	private FlaschenType type;
-	private Currency guthaben;
+	private BigDecimal pfandwert;
 	private int anzahl;
 	private String scanncode;
 
-	public Flasche(FlaschenType type, Currency guthaben, String scanncode){
+	public Flasche(FlaschenType type, BigDecimal pfandwert, String scanncode){
 		this.type = type;
-		this.guthaben = guthaben;
+		this.pfandwert = pfandwert;
 		this.scanncode = scanncode;
 		
 	}
@@ -25,7 +26,10 @@ public class Flasche {
 
 	}
 	
-	
+	public String getCode()
+	{
+		return scanncode;
+	}
 	
 	public void AnzahlInc()
 	{
@@ -37,8 +41,26 @@ public class Flasche {
 		this.anzahl--;
 	}
 	
-	public Currency getGuthaben(){
-		return guthaben;
+	public BigDecimal getPfandwert(){
+		return pfandwert;
 	}
 
+	public int getAnzahl(){
+		return anzahl;
+	}
+	
+	public void reset()
+	{
+		this.anzahl=0;
+	}
+	
+	public FlaschenType getType()
+	{
+		return type;
+	}
+	
+	public String toString()
+	{
+		return "FlaschenType: " + type.toString() + ";Scancode: " + scanncode + ";Pfandwert: " + pfandwert.toString() + ";Anzahl: " + anzahl;  
+	}
 }

@@ -22,18 +22,24 @@ public class Ablieferung {
 	private BonDrucker m_BonDrucker;
 	private Druckknopf m_Druckknopf;
 	private LinkedList<Flasche> abgelieferteFlaschen;
+	private FlaschenZaehler m_KundenZaehler;
+	private FlaschenZaehler m_TagesZaehler;
+	private FlaschenAbrechnungSubject m_FlaschenZaehlerSubject;
 	private double Guthaben;
 	private Fassade DieFassade;
 	
 	
 	public Ablieferung(Fassade fassade, LinkedList ListofBottls){
 		DieFassade = fassade;
-		this.abgelieferteFlaschen = ListofBottls;
 		m_Automat = new Automat();
 		m_Anzeige = new Anzeige(fassade);
 		m_BonDrucker= new BonDrucker(Adressen.BonDrucker.ordinal());
 		m_Druckknopf = new Druckknopf(Adressen.Druckknopf.ordinal());
-			
+		m_FlaschenZaehlerSubject = new FlaschenAbrechnungSubject();
+		m_KundenZaehler = new FlaschenZaehler(m_FlaschenZaehlerSubject,ListofBottls);
+		m_TagesZaehler = new FlaschenZaehler(m_FlaschenZaehlerSubject,ListofBottls);
+		m_FlaschenZaehlerSubject.attach(m_KundenZaehler);
+		m_FlaschenZaehlerSubject.attach(m_TagesZaehler);
 	}
 
 	public void AbbruchDurchButton(){
