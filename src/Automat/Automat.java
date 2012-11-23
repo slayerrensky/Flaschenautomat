@@ -6,18 +6,18 @@ package Automat;
  */
 public class Automat {
 
-	public Auswahlklappe m_Auswahlklappe;
-	public Laufband m_VorderesLaufband;
-	public Laufband m_DrehLaufband;
-	public Laufband m_HinteresLaufband;
+	private Auswahlklappe m_Auswahlklappe;
+	private Laufband m_VorderesLaufband;
+	private Laufband m_DrehLaufband;
+	private Laufband m_HinteresLaufband;
 	
-	public Scanner m_Scanner;
-	public Lichtschranke s_EingangsLichtschranke;
-	public Lichtschranke s_JstierungLichtschranke;
-	public Lichtschranke s_AusgangLichtschranke;
-	public Lichtschranke s_AuswahlklappeEingangLichtschranke;
-	public Lichtschranke s_MehrwegBeaelterLichtschranke;
-	public Lichtschranke s_PetBeaelterLichtschranke;
+	private Scanner m_Scanner;
+	private Lichtschranke s_EingangsLichtschranke;
+	private Lichtschranke s_JstierungLichtschranke;
+	private Lichtschranke s_AusgangLichtschranke;
+	private Lichtschranke s_AuswahlklappeEingangLichtschranke;
+	private Lichtschranke s_MehrwegBeaelterLichtschranke;
+	private Lichtschranke s_PetBeaelterLichtschranke;
 
 	public Automat(){
 		m_VorderesLaufband = new Laufband(Adressen.LaufbandEingang.ordinal());
