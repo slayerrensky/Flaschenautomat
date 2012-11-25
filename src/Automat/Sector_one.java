@@ -14,9 +14,9 @@ public class Sector_one {
 	
 	private Scanner m_Scanner;
 	
-	private Lichtschranke s_EingangsLichtschranke;
-	private Lichtschranke s_JstierungLichtschranke;
-	private Lichtschranke s_AusgangLichtschranke;
+	private Sensor s_EingangsLichtschranke;
+	private Sensor s_JstierungLichtschranke;
+	private Sensor s_AusgangLichtschranke;
 
 //Konstruktor
 	
@@ -24,9 +24,9 @@ public class Sector_one {
 	
 		m_VorderesLaufband = new Laufband(Adressen.LaufbandEingang.ordinal());
 		m_DrehLaufband = new Laufband(Adressen.LaufbandDrehen.ordinal());
-		s_EingangsLichtschranke = new Lichtschranke(Adressen.Eingangslichtschranke.ordinal());
-		s_JstierungLichtschranke = new Lichtschranke(Adressen.Justierlichtschranke.ordinal());
-		s_AusgangLichtschranke = new Lichtschranke(Adressen.Ausgangslichtschranke.ordinal());
+		s_EingangsLichtschranke = new Sensor(Adressen.Eingangslichtschranke.ordinal());
+		s_JstierungLichtschranke = new Sensor(Adressen.Justierlichtschranke.ordinal());
+		s_AusgangLichtschranke = new Sensor(Adressen.Ausgangslichtschranke.ordinal());
 		}
 	
 //Methoden

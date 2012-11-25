@@ -5,16 +5,10 @@ import java.util.LinkedList;
  * @version 1.0
  * @created 26-Okt-2012 07:42:49
  */
-public class BonDrucker {
+public class BonDrucker extends Aktor{
 	
-	private int adresse;
 	public BonDrucker(int adresse){
-		this.adresse= adresse; 
-
-	}
-
-	public void finalize() throws Throwable {
-
+		super(adresse);
 	}
 
 	/**
@@ -22,7 +16,7 @@ public class BonDrucker {
 	 * @param Liste
 	 */
 	public void BonDrucken(LinkedList ListofBottles){
-		
+		//string erstellen und an HWaccess.write(adresse,text); übergeben
 	}
 
 }

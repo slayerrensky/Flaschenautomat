@@ -5,14 +5,10 @@ package Automat;
  * @version 1.0
  * @created 26-Okt-2012 07:10:45
  */
-public class Auswahlklappe {
-
-	private boolean Mehrweg;
-	private boolean PET;
-	private int adresse;
+public class Auswahlklappe extends Aktor {
 
 	public Auswahlklappe(int adresse) {
-		this.adresse = adresse;
+		super(adresse);
 	}
 	
 	/**
@@ -20,8 +16,17 @@ public class Auswahlklappe {
 	 * 
 	 * @param o0
 	 */
-	public boolean stellen(FlaschenType o0){
-		return false;
+	public void stellen(FlaschenType type){
+		
+		switch (type) {
+		default:
+		case PET:
+			HWaccess.write(adresse, false);
+			break;
+		case Mehrweg:
+			HWaccess.write(adresse, true);
+			break;
+		}
 	}
 
 

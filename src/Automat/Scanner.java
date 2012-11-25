@@ -26,10 +26,11 @@ public class Scanner extends ObserverSubjekt{
 		workerThread.run();
 		while(workerThread.isAlive());
 		
-		int[] passRef = new int[1];
-		HWaccess.read(this.adresse, passRef);
+		//int[] passRef = new int[1];
+		//HWaccess.read(this.adresse, passRef);
 		this.notifyAll();
-		return passRef[1];
+		//return passRef[1];
+		return lastCode;
 	}
 
 	public void stopScann(){

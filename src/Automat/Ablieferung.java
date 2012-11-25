@@ -20,7 +20,7 @@ public class Ablieferung {
 	private Automat m_Automat;
 	private Anzeige m_Anzeige;
 	private BonDrucker m_BonDrucker;
-	private Druckknopf m_Druckknopf;
+	private Sensor m_Druckknopf;
 	private LinkedList<Flasche> abgelieferteFlaschen;
 	private FlaschenZaehler m_KundenZaehler;
 	private FlaschenZaehler m_TagesZaehler;
@@ -35,7 +35,7 @@ public class Ablieferung {
 		m_Automat = new Automat();
 		m_Anzeige = new Anzeige(fassade);
 		m_BonDrucker= new BonDrucker(Adressen.BonDrucker.ordinal());
-		m_Druckknopf = new Druckknopf(Adressen.Druckknopf.ordinal());
+		m_Druckknopf = new Sensor(Adressen.Druckknopf.ordinal());
 		//m_FlaschenZaehlerSubject = new FlaschenAbrechnungSubject();
 		m_Scanner = new Scanner(Adressen.Scanner.ordinal(),10000);
 		m_KundenZaehler = new FlaschenZaehler(m_FlaschenZaehlerSubject,ListofBottlesTag);

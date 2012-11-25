@@ -12,12 +12,12 @@ public class Automat {
 	private Laufband m_HinteresLaufband;
 	
 	private Scanner m_Scanner;
-	private Lichtschranke s_EingangsLichtschranke;
-	private Lichtschranke s_JstierungLichtschranke;
-	private Lichtschranke s_AusgangLichtschranke;
-	private Lichtschranke s_AuswahlklappeEingangLichtschranke;
-	private Lichtschranke s_MehrwegBeaelterLichtschranke;
-	private Lichtschranke s_PetBeaelterLichtschranke;
+	private Sensor s_EingangsLichtschranke;
+	private Sensor s_JstierungLichtschranke;
+	private Sensor s_AusgangLichtschranke;
+	private Sensor s_AuswahlklappeEingangLichtschranke;
+	private Sensor s_MehrwegBeaelterLichtschranke;
+	private Sensor s_PetBeaelterLichtschranke;
 
 	public Automat(){
 		m_VorderesLaufband = new Laufband(Adressen.LaufbandEingang.ordinal());
@@ -28,12 +28,12 @@ public class Automat {
 		//m_Scanner = new Scanner(Adressen.Scanner.ordinal());
 		// ist nach Ablieferung gewandert und kontretes SUbject für Oberserver pattern geworden!
 		
-		s_EingangsLichtschranke = new Lichtschranke(Adressen.Eingangslichtschranke.ordinal());
-		s_JstierungLichtschranke = new Lichtschranke(Adressen.Justierlichtschranke.ordinal());
-		s_AusgangLichtschranke = new Lichtschranke(Adressen.Ausgangslichtschranke.ordinal());
-		s_AuswahlklappeEingangLichtschranke = new Lichtschranke(Adressen.AuswahlklappeEingangslichtschranke.ordinal());
-		s_MehrwegBeaelterLichtschranke = new Lichtschranke(Adressen.UebergabelichtschrankeMehrweg.ordinal());
-		s_PetBeaelterLichtschranke = new Lichtschranke(Adressen.UebergabelichtschrankePET.ordinal());
+		s_EingangsLichtschranke = new Sensor(Adressen.Eingangslichtschranke.ordinal());
+		s_JstierungLichtschranke = new Sensor(Adressen.Justierlichtschranke.ordinal());
+		s_AusgangLichtschranke = new Sensor(Adressen.Ausgangslichtschranke.ordinal());
+		s_AuswahlklappeEingangLichtschranke = new Sensor(Adressen.AuswahlklappeEingangslichtschranke.ordinal());
+		s_MehrwegBeaelterLichtschranke = new Sensor(Adressen.UebergabelichtschrankeMehrweg.ordinal());
+		s_PetBeaelterLichtschranke = new Sensor(Adressen.UebergabelichtschrankePET.ordinal());
 	}
 
 
