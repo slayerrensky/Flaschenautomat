@@ -11,7 +11,7 @@ public class Automat {
 	private Laufband m_DrehLaufband;
 	private Laufband m_HinteresLaufband;
 	
-	private Scanner m_Scanner;
+	//private Scanner m_Scanner;
 	private Sensor s_EingangsLichtschranke;
 	private Sensor s_JstierungLichtschranke;
 	private Sensor s_AusgangLichtschranke;
@@ -24,10 +24,7 @@ public class Automat {
 		m_HinteresLaufband = new Laufband(Adressen.LaufbandAusgang.ordinal());
 		m_DrehLaufband = new Laufband(Adressen.LaufbandDrehen.ordinal());
 		m_Auswahlklappe = new Auswahlklappe(Adressen.Auswahlklappe.ordinal());
-		
-		//m_Scanner = new Scanner(Adressen.Scanner.ordinal());
-		// ist nach Ablieferung gewandert und kontretes SUbject für Oberserver pattern geworden!
-		
+				
 		s_EingangsLichtschranke = new Sensor(Adressen.Eingangslichtschranke.ordinal());
 		s_JstierungLichtschranke = new Sensor(Adressen.Justierlichtschranke.ordinal());
 		s_AusgangLichtschranke = new Sensor(Adressen.Ausgangslichtschranke.ordinal());
