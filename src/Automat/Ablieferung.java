@@ -40,8 +40,10 @@ public class Ablieferung {
 		m_Scanner = new Scanner(Adressen.Scanner.ordinal(),10000);
 		m_KundenZaehler = new FlaschenZaehler(m_FlaschenZaehlerSubject,ListofBottlesTag);
 		m_TagesZaehler = new FlaschenZaehler(m_FlaschenZaehlerSubject,ListofBottlesKunde);
-		m_FlaschenZaehlerSubject.attach(m_KundenZaehler);
-		m_FlaschenZaehlerSubject.attach(m_TagesZaehler);
+		//m_FlaschenZaehlerSubject.attach(m_KundenZaehler);
+		//m_FlaschenZaehlerSubject.attach(m_TagesZaehler);
+		HWLayer HWaccess = HWLayer.getInstance();
+		HWaccess.write(Adressen.Leuchte_Frabe.ordinal(), 2);
 		
 	}
 
@@ -83,6 +85,10 @@ public class Ablieferung {
 
 	public void timeout(){
 
+	}
+	
+	public void test(){
+		m_Anzeige.FehlerMelden(0);
 	}
 
 	public void wartenAufFlasche(){

@@ -12,6 +12,7 @@ public class Anzeige {
 	private Leuchte m_Leuchte;
 	private Aktor m_Troete;
 	private Display m_Display;
+	private SimpleThread leuchte = null, troete = null;
 
 	public Anzeige(Fassade fassade) {
 		m_Leuchte = new Leuchte(Adressen.Leuchte.ordinal(), Adressen.Leuchte_Frabe.ordinal());
@@ -33,25 +34,34 @@ public class Anzeige {
 	 */
 	public void FehlerMelden(int errno) {
 		int pulseEin, pulseAus, wdh;
-		SimpleThread leuchte, troete;
+		
 
 		switch (errno) {
 		default:
 		case 0:
 			wdh = 5;
-			pulseEin = 1000;
-			pulseAus = 1000;
+			pulseEin = 800;
+			pulseAus = 800;
+			m_Leuchte.setColor(0);
 			break;
 		case 1:
 			wdh = 10;
 			pulseEin = 1500;
 			pulseAus = 1000;
+			m_Leuchte.setColor(1);
 			break;
 		case 2:
-			wdh = 5;
+			wdh = 3;
 			pulseEin = 500;
 			pulseAus = 500;
+			m_Leuchte.setColor(2);
 			break;
+		}
+		if(leuchte != null && leuchte.isAlive()){
+			leuchte.interrupt();			
+		}
+		if(troete != null && troete.isAlive()){
+			troete.interrupt();			
 		}
 		
 		leuchte = new SimpleThread(m_Leuchte, wdh, pulseEin, pulseAus);
@@ -76,20 +86,28 @@ public class Anzeige {
 
 		public void run() {
 			for (int i = 0; i <= wdh; i++) {
-
-				aktor.einschalten();
-				try {
-					sleep(pulse_ein);
-				} catch (InterruptedException ie) {
-					System.out
-							.println("Fehler [aktor-Thread]: Aktor konnte nicht eingeschaltet werden.");
+				if(isInterrupted()){
+					i=0;
+					break;
 				}
 				aktor.ausschalten();
 				try {
 					sleep(pulse_aus);
 				} catch (InterruptedException ie) {
-					System.out
-							.println("Fehler [aktor-Thread]: Aktor konnte nicht ausgeschaltet werden.");
+					interrupt();
+					//leer
+				}
+				
+				if(isInterrupted()){
+					i=0;
+					break;
+				}
+				aktor.einschalten();
+				try {
+					sleep(pulse_ein);
+				} catch (InterruptedException ie) {
+					interrupt();
+					//leer
 				}
 			}
 		}

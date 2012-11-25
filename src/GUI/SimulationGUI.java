@@ -9,9 +9,14 @@ import net.miginfocom.swing.MigLayout;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import Automat.Adressen;
 import Automat.FlaschenType;
+import Automat.HWLayer;
 import Fassade.Fassade;
 import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class SimulationGUI {
@@ -78,6 +83,10 @@ public class SimulationGUI {
 		desktopPane.add(comboBox, "cell 0 2,growx,aligny center");
 		
 		JButton btnFlascheeinlegen = new JButton("FlascheEinlegen");		
+		btnFlascheeinlegen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnFlascheeinlegen.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

@@ -1,8 +1,9 @@
 package Fassade;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.util.ArrayList;
 import java.util.LinkedList;
-
 import Automat.*;
 import GUI.HardwareGUI;
 import GUI.SimulationGUI;
@@ -17,17 +18,16 @@ public class Fassade {
 	private SimulationGUI SIMGui;
 	private HardwareGUI HWGui;
 	private Ablieferung FachklasseAblieferung;
+	private HWLayer HWaccess;
 
 	public Fassade() {
 		SIMGui = new SimulationGUI(this);
 		HWGui = new HardwareGUI(this);
+		this.HWaccess = HWLayer.getInstance();
+		this.HWaccess.setF(this);
 		String FlaschenfilePathasString = "./flaschenfile.txt";
 		FachklasseAblieferung = new Ablieferung(this,
 				loadFlaschenFile(FlaschenfilePathasString),loadFlaschenFile(FlaschenfilePathasString));
-	}
-
-	public void finalize() throws Throwable {
-
 	}
 
 	/**
@@ -38,11 +38,28 @@ public class Fassade {
 			public void run() {
 				try {
 					Fassade DieFassade = new Fassade();
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+	}
+	
+	public void aktuallisereHW(ArrayList<Comparable> list){
+		Color c;
+		
+		switch ((Integer)list.get(Adressen.Leuchte_Frabe.ordinal())) {
+		default:
+		case 0: c = Color.red;			
+			break;
+		case 1: c = Color.orange;
+			break;
+		case 2: c = Color.green; 
+			break;
+		}
+		
+		HWGui.setLeuchte((Boolean)list.get(Adressen.Leuchte.ordinal()), c);
 	}
 
 	/**
@@ -59,6 +76,7 @@ public class Fassade {
 	 * Wenn der Bon Button in der GUI gedrückt wurde
 	 */
 	public void bonAnfordern() {
+		FachklasseAblieferung.test();
 		// Ausgabe auf Gui.Monitoring
 		// Automat.Ablieferung etwas tuhen
 		SIMGui.MonitoringUpdate("Bon Button wurde gedrückt");

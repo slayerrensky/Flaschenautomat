@@ -13,6 +13,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import java.awt.Component;
 import javax.swing.Box;
+import javax.swing.JPanel;
+import java.awt.Color;
+import javax.swing.JSplitPane;
+import java.awt.GridLayout;
 
 
 public class HardwareGUI {
@@ -21,6 +25,8 @@ public class HardwareGUI {
 	private Fassade DieFassade;
 	private JTextPane txtdisplay;
 	private JTextArea druckerausgabe;
+	private JLabel lb_Leuchte;
+	private JLabel lb_troete;
 
 	/**
 	 * Launch the application.
@@ -56,7 +62,7 @@ public class HardwareGUI {
 		frmHardware.setTitle("Hardware");
 		frmHardware.setBounds(100, 100, 450, 300);
 		frmHardware.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmHardware.getContentPane().setLayout(new MigLayout("", "[grow][grow]", "[][][][][][grow][grow][][][grow]"));
+		frmHardware.getContentPane().setLayout(new MigLayout("", "[grow][grow]", "[][grow][][][][grow][grow][][][grow]"));
 		
 		JLabel lblFlaschenautomat = new JLabel("Flaschenautomat");
 		frmHardware.getContentPane().add(lblFlaschenautomat, "cell 0 0,alignx center");
@@ -77,6 +83,18 @@ public class HardwareGUI {
 		JLabel lblLeuchte = new JLabel("Leuchte:");
 		frmHardware.getContentPane().add(lblLeuchte, "flowx,cell 1 0,alignx center");
 		frmHardware.getContentPane().add(btnBonDrucken, "cell 0 1,alignx center");
+		
+		JPanel panel = new JPanel();
+		frmHardware.getContentPane().add(panel, "cell 1 1,grow");
+		panel.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		lb_Leuchte = new JLabel("             ");
+		lb_Leuchte.setOpaque(true);
+		panel.add(lb_Leuchte);
+		
+		lb_troete = new JLabel("             ");
+		lb_troete.setOpaque(true);
+		panel.add(lb_troete);
 		
 		JLabel lblNachrichten = new JLabel("Display:");
 		frmHardware.getContentPane().add(lblNachrichten, "cell 0 2,alignx center");
@@ -107,5 +125,14 @@ public class HardwareGUI {
 	
 	public void drucken(String message){
 		druckerausgabe.setText(message);
+	}
+	
+	public void setLeuchte(Boolean an, Color c){
+		if(an){
+			lb_Leuchte.setBackground(c);
+			
+		}else{
+			lb_Leuchte.setBackground(new Color(240,240,240));
+		}
 	}
 }
