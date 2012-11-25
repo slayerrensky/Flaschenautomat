@@ -5,11 +5,11 @@ import java.util.LinkedList;
 
 public class FlaschenZaehler extends Observer{
 
-	protected FlaschenAbrechnungSubject subject;
+	protected Scanner subject;
 	protected LinkedList<Flasche> abgeleiferteFlaschen;
 
 	
-	public FlaschenZaehler(FlaschenAbrechnungSubject subject, LinkedList<Flasche> flaschen)
+	public FlaschenZaehler(Scanner subject, LinkedList<Flasche> flaschen)
 	{
 		this.subject = subject;
 		this.abgeleiferteFlaschen = flaschen;

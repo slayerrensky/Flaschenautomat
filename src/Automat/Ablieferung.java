@@ -24,7 +24,6 @@ public class Ablieferung {
 	private LinkedList<Flasche> abgelieferteFlaschen;
 	private FlaschenZaehler m_KundenZaehler;
 	private FlaschenZaehler m_TagesZaehler;
-	private FlaschenAbrechnungSubject m_FlaschenZaehlerSubject;
 	private double Guthaben;
 	private Fassade DieFassade;
 	private Scanner m_Scanner;
@@ -38,8 +37,8 @@ public class Ablieferung {
 		m_Druckknopf = new Sensor(Adressen.Druckknopf.ordinal());
 		//m_FlaschenZaehlerSubject = new FlaschenAbrechnungSubject();
 		m_Scanner = new Scanner(Adressen.Scanner.ordinal(),10000);
-		m_KundenZaehler = new FlaschenZaehler(m_FlaschenZaehlerSubject,ListofBottlesTag);
-		m_TagesZaehler = new FlaschenZaehler(m_FlaschenZaehlerSubject,ListofBottlesKunde);
+		m_KundenZaehler = new FlaschenZaehler(m_Scanner,ListofBottlesTag);
+		m_TagesZaehler = new FlaschenZaehler(m_Scanner,ListofBottlesKunde);
 		//m_FlaschenZaehlerSubject.attach(m_KundenZaehler);
 		//m_FlaschenZaehlerSubject.attach(m_TagesZaehler);
 		HWLayer HWaccess = HWLayer.getInstance();

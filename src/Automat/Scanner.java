@@ -8,7 +8,7 @@ package Automat;
 public class Scanner extends ObserverSubjekt{
 
 	private int adresse;
-	private int lastCode;
+	private String lastCode;
 	private HWLayer HWaccess;
 	private SimpleThread workerThread;
 	
@@ -18,18 +18,21 @@ public class Scanner extends ObserverSubjekt{
 		workerThread = new SimpleThread(timeoutMS);
 	}
 
-	public int getLastScannCode(){
+	public String getSubjectState(){
 		return lastCode;
 	}
 
-	public int Scan(){
+	public String Scan(){
 		workerThread.run();
 		while(workerThread.isAlive());
 		
 		//int[] passRef = new int[1];
 		//HWaccess.read(this.adresse, passRef);
-		this.notifyAll();
 		//return passRef[1];
+		
+		this.HWaccess.read(adresse, lastCode);
+		this.notifyAll();
+		
 		return lastCode;
 	}
 
