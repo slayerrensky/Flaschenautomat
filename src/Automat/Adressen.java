@@ -3,6 +3,7 @@ package Automat;
 public enum Adressen {
 	Troete,
 	Leuchte,
+	Leuchte_Frabe,
 	AuswahlklappeEingangslichtschranke,
 	Eingangslichtschranke,
 	Justierlichtschranke,
@@ -12,9 +13,10 @@ public enum Adressen {
 	LaufbandEingang,
 	LaufbandDrehen,
 	LaufbandAusgang,
+	Auswahlklappe,
 	Scanner,
 	BonDrucker,
 	Druckknopf,
 	Display,
-	Auswahlklappe;
+	Drucker;
 }

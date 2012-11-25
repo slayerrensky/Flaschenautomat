@@ -1,31 +1,35 @@
 package Automat;
 
-import java.awt.event.ActionEvent;
-
 /**
  * @author Dennis
  * @version 1.0
  * @created 26-Okt-2012 07:10:57
  */
-public class Scanner {
+public class Scanner extends ObserverSubjekt{
 
-	private int lastCode;
 	private int adresse;
+	private int lastCode;
+	private HWLayer HWaccess;
 	private SimpleThread workerThread;
 	
-	public Scanner(int adresse){
+	public Scanner(int adresse, int timeoutMS){
 		this.adresse = adresse;
-		workerThread = new SimpleThread(adresse, lastCode);
+		this.HWaccess = HWLayer.getInstance();
+		workerThread = new SimpleThread(timeoutMS);
 	}
 
 	public int getLastScannCode(){
 		return lastCode;
 	}
 
-	public void startScann(int code){
-		if( ! workerThread.isAlive()){
-			workerThread.start();
-		}
+	public int Scan(){
+		workerThread.run();
+		while(workerThread.isAlive());
+		
+		int[] passRef = new int[1];
+		HWaccess.read(this.adresse, passRef);
+		this.notifyAll();
+		return passRef[1];
 	}
 
 	public void stopScann(){
@@ -33,32 +37,18 @@ public class Scanner {
 	}
 	
 	public class SimpleThread extends Thread {
+		private int timeoutMS;
 		
-		private int adresse;
-		private int lastCode;
-		private boolean stop;
-		
-		public SimpleThread(int adresse, int lastCode) {
-			this.adresse = adresse;
-			this.adresse = lastCode;
-			stop = false;
+		public SimpleThread(int timeoutMS) {
+			this.timeoutMS = timeoutMS;
 		}
 		
-		public void halt() {
-	        stop = true;
-	    }
-		
 		public void run() {
-			// Hardware zugriff
-			while(!stop){
-				//report scanning
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					//report error while sleep
-				}
-			}
-			
+			try {
+				this.sleep(timeoutMS);
+			} catch (InterruptedException e) {
+				// gwollt ohne anweisung
+			}			
 		}
 	}
 

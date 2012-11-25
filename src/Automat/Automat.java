@@ -24,7 +24,10 @@ public class Automat {
 		m_HinteresLaufband = new Laufband(Adressen.LaufbandAusgang.ordinal());
 		m_DrehLaufband = new Laufband(Adressen.LaufbandDrehen.ordinal());
 		m_Auswahlklappe = new Auswahlklappe(Adressen.Auswahlklappe.ordinal());
-		m_Scanner = new Scanner(Adressen.Scanner.ordinal());
+		
+		//m_Scanner = new Scanner(Adressen.Scanner.ordinal());
+		// ist nach Ablieferung gewandert und kontretes SUbject für Oberserver pattern geworden!
+		
 		s_EingangsLichtschranke = new Lichtschranke(Adressen.Eingangslichtschranke.ordinal());
 		s_JstierungLichtschranke = new Lichtschranke(Adressen.Justierlichtschranke.ordinal());
 		s_AusgangLichtschranke = new Lichtschranke(Adressen.Ausgangslichtschranke.ordinal());

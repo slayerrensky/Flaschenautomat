@@ -27,6 +27,7 @@ public class Ablieferung {
 	private FlaschenAbrechnungSubject m_FlaschenZaehlerSubject;
 	private double Guthaben;
 	private Fassade DieFassade;
+	private Scanner m_Scanner;
 	
 	
 	public Ablieferung(Fassade fassade, LinkedList<Flasche> ListofBottlesTag, LinkedList<Flasche> ListofBottlesKunde){
@@ -35,11 +36,13 @@ public class Ablieferung {
 		m_Anzeige = new Anzeige(fassade);
 		m_BonDrucker= new BonDrucker(Adressen.BonDrucker.ordinal());
 		m_Druckknopf = new Druckknopf(Adressen.Druckknopf.ordinal());
-		m_FlaschenZaehlerSubject = new FlaschenAbrechnungSubject();
+		//m_FlaschenZaehlerSubject = new FlaschenAbrechnungSubject();
+		m_Scanner = new Scanner(Adressen.Scanner.ordinal(),10000);
 		m_KundenZaehler = new FlaschenZaehler(m_FlaschenZaehlerSubject,ListofBottlesTag);
 		m_TagesZaehler = new FlaschenZaehler(m_FlaschenZaehlerSubject,ListofBottlesKunde);
 		m_FlaschenZaehlerSubject.attach(m_KundenZaehler);
 		m_FlaschenZaehlerSubject.attach(m_TagesZaehler);
+		
 	}
 
 	public void AbbruchDurchButton(){
