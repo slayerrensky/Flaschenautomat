@@ -1,4 +1,4 @@
-package Temp_Aufteilung;
+package Automat;
 
 //import Automat.Adressen;
 //import Automat.Auswahlklappe;
