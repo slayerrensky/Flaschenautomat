@@ -8,8 +8,8 @@ public class Sector_one {
 	private Laufband m_DrehLaufband;
 	
 	private Sensor s_EingangsLichtschranke;
-	private Sensor s_JstierungLichtschranke;
-	private Sensor s_AusgangLichtschranke;
+	private Sensor s_JustierungLichtschranke;
+	private Sensor s_AusgangsLichtschranke;
 
 //Konstruktor
 	
@@ -18,8 +18,8 @@ public class Sector_one {
 		m_VorderesLaufband = new Laufband(Adressen.LaufbandEingang.ordinal());
 		m_DrehLaufband = new Laufband(Adressen.LaufbandDrehen.ordinal());
 		s_EingangsLichtschranke = new Sensor(Adressen.Eingangslichtschranke.ordinal());
-		s_JstierungLichtschranke = new Sensor(Adressen.Justierlichtschranke.ordinal());
-		s_AusgangLichtschranke = new Sensor(Adressen.Ausgangslichtschranke.ordinal());
+		s_JustierungLichtschranke = new Sensor(Adressen.Justierlichtschranke.ordinal());
+		s_AusgangsLichtschranke = new Sensor(Adressen.Ausgangslichtschranke.ordinal());
 		}
 	
 //Methoden
@@ -40,17 +40,17 @@ public class Sector_one {
 		
 	}
 	
-	public boolean getAusgangslichtschranke(){
+	public boolean getAusgangsLichtschranke(){
 	
 		return false;
 	}
 	
-	public boolean getEingangslichtschranke(){
+	public boolean getEingangsLichtschranke(){
 		
 		return false;
 	}
 	
-	public boolean getJustierlichtschranke(){
+	public boolean getJustierLichtschranke(){
 		
 		return false;
 	}

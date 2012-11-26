@@ -8,9 +8,9 @@ public class Sector_two {
 		
 		private Laufband m_HinteresLaufband;
 		
-		private Sensor s_AuswahlklappeEingangLichtschranke;
-		private Sensor s_MehrwegBeaelterLichtschranke;
-		private Sensor s_PetBeaelterLichtschranke;
+		private Sensor s_AuswahlklappeEingangsLichtschranke;
+		private Sensor s_MehrwegBehaelterLichtschranke;
+		private Sensor s_PetBehaelterLichtschranke;
 	
 //Konstruktor
 		
@@ -18,9 +18,9 @@ public class Sector_two {
 
 			m_Auswahlklappe = new Auswahlklappe(Adressen.Auswahlklappe.ordinal());
 			m_HinteresLaufband = new Laufband(Adressen.LaufbandAusgang.ordinal());
-			s_AuswahlklappeEingangLichtschranke = new Sensor(Adressen.AuswahlklappeEingangslichtschranke.ordinal());
-			s_MehrwegBeaelterLichtschranke = new Sensor(Adressen.UebergabelichtschrankeMehrweg.ordinal());
-			s_PetBeaelterLichtschranke = new Sensor(Adressen.UebergabelichtschrankePET.ordinal());
+			s_AuswahlklappeEingangsLichtschranke = new Sensor(Adressen.AuswahlklappeEingangslichtschranke.ordinal());
+			s_MehrwegBehaelterLichtschranke = new Sensor(Adressen.UebergabelichtschrankeMehrweg.ordinal());
+			s_PetBehaelterLichtschranke = new Sensor(Adressen.UebergabelichtschrankePET.ordinal());
 		}
 
 //Methoden
@@ -29,12 +29,12 @@ public class Sector_two {
 			
 		}
 		
-		public boolean getUebergabeichtschrankeMehrweg(){
+		public boolean getUebergabeLichtschrankeMehrweg(){
 		
 			return false;
 		}
 		
-		public boolean getUebergabeichtschrankePET(){
+		public boolean getUebergabeLichtschrankePET(){
 		
 			return false;
 		}
