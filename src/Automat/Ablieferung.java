@@ -17,7 +17,8 @@ public class Ablieferung {
 	 * in Sekunden
 	 */
 	private int Timeout = 4;
-	private Automat m_Automat;
+	private Sector_one m_Sector_one;
+	private Sector_two m_Sector_two;
 	private Anzeige m_Anzeige;
 	private BonDrucker m_BonDrucker;
 	private Sensor m_Druckknopf;
@@ -31,7 +32,8 @@ public class Ablieferung {
 	
 	public Ablieferung(Fassade fassade, LinkedList<Flasche> ListofBottlesTag, LinkedList<Flasche> ListofBottlesKunde){
 		DieFassade = fassade;
-		m_Automat = new Automat();
+		m_Sector_one = new Sector_one();
+		m_Sector_two = new Sector_two();
 		m_Anzeige = new Anzeige(fassade);
 		m_BonDrucker= new BonDrucker(Adressen.BonDrucker.ordinal());
 		m_Druckknopf = new Sensor(Adressen.Druckknopf.ordinal());
