@@ -12,8 +12,6 @@ public class Sector_one {
 	private Laufband m_VorderesLaufband;
 	private Laufband m_DrehLaufband;
 	
-	private Scanner m_Scanner;
-	
 	private Sensor s_EingangsLichtschranke;
 	private Sensor s_JstierungLichtschranke;
 	private Sensor s_AusgangLichtschranke;
@@ -40,11 +38,6 @@ public class Sector_one {
 	}
 	
 	public void Flasche_auswerfen(){
-		
-	}
-	
-//	@Parameter CODE	
-	public void Flasche_erkannt(int code){
 		
 	}
 	
