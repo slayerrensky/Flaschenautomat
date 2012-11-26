@@ -64,8 +64,8 @@ public class Anzeige {
 			troete.interrupt();			
 		}
 		
-		leuchte = new SimpleThread(m_Leuchte, wdh, pulseEin, pulseAus);
-		troete = new SimpleThread(m_Troete, wdh, pulseEin, pulseAus);
+		leuchte = new SimpleThread(m_Leuchte, wdh, pulseEin, pulseAus, true);
+		troete = new SimpleThread(m_Troete, wdh, pulseEin, pulseAus, false);
 
 		leuchte.start();
 		troete.start();
@@ -75,29 +75,19 @@ public class Anzeige {
 
 		private Aktor aktor;
 		private int wdh, pulse_ein, pulse_aus;
+		private boolean endbehavior;
 
 		public SimpleThread(Aktor aktor, int wdh, int pulse_ein, 
-				int pulse_aus) {
+				int pulse_aus, boolean endbehavior) {
 			this.aktor = aktor;
 			this.wdh = wdh;
 			this.pulse_ein = pulse_ein;
 			this.pulse_aus = pulse_aus;
+			this.endbehavior = endbehavior;
 		}
 
 		public void run() {
 			for (int i = 0; i <= wdh; i++) {
-				if(isInterrupted()){
-					i=0;
-					break;
-				}
-				aktor.ausschalten();
-				try {
-					sleep(pulse_aus);
-				} catch (InterruptedException ie) {
-					interrupt();
-					//leer
-				}
-				
 				if(isInterrupted()){
 					i=0;
 					break;
@@ -109,6 +99,23 @@ public class Anzeige {
 					interrupt();
 					//leer
 				}
+				
+				if(isInterrupted()){
+					i=0;
+					break;
+				}
+				aktor.ausschalten();
+				try {
+					sleep(pulse_aus);
+				} catch (InterruptedException ie) {
+					interrupt();
+					//leer
+				}
+			}
+			if(endbehavior){
+				aktor.einschalten();
+			}else{
+				aktor.ausschalten();
 			}
 		}
 	}
