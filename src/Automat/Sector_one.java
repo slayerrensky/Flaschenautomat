@@ -1,10 +1,5 @@
 package Automat;
 
-//import Automat.Adressen;
-//import Automat.Laufband;
-//import Automat.Lichtschranke;
-//import Automat.Scanner;
-
 public class Sector_one {
 
 //Variablen

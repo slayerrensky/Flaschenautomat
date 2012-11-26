@@ -1,11 +1,8 @@
 package Automat;
 
-//import Automat.Adressen;
-//import Automat.Auswahlklappe;
-//import Automat.Laufband;
-//import Automat.Lichtschranke;
-
 public class Sector_two {
+	
+//Variablen
 
 		private Auswahlklappe m_Auswahlklappe;
 		
@@ -14,6 +11,8 @@ public class Sector_two {
 		private Sensor s_AuswahlklappeEingangLichtschranke;
 		private Sensor s_MehrwegBeaelterLichtschranke;
 		private Sensor s_PetBeaelterLichtschranke;
+	
+//Konstruktor
 		
 		public Sector_two(){
 
@@ -23,6 +22,8 @@ public class Sector_two {
 			s_MehrwegBeaelterLichtschranke = new Sensor(Adressen.UebergabelichtschrankeMehrweg.ordinal());
 			s_PetBeaelterLichtschranke = new Sensor(Adressen.UebergabelichtschrankePET.ordinal());
 		}
+
+//Methoden
 		
 		public void Flasche_weiterleiten(){
 			
