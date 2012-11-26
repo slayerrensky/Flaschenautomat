@@ -47,36 +47,36 @@ public class HWLayer {
 	
 	public void read(int adresse, Boolean status){
 		status = (Boolean) mapping.get(adresse);
-		dieFassade.simKonsolenText(0, "HWLayer[read] an Adr "+adresse+" Wert: "+status);
+		dieFassade.simKonsolenText(0, "[read:"+adresse+"] "+status);
 	}
 	
 	// trick damit es call by referenc ist
 	public void read(int adresse, Integer number){
 		number = (Integer) mapping.get(adresse);
-		dieFassade.simKonsolenText(0, "HWLayer[read] an Adr "+adresse+" Wert: "+number);
+		dieFassade.simKonsolenText(0, "[read:"+adresse+"] "+number);
 	}
 	
 	public void read(int adresse, String text){
 		text = (String) mapping.get(adresse);
-		dieFassade.simKonsolenText(0, "HWLayer[read] an Adr "+adresse+" Wert: "+text);
+		dieFassade.simKonsolenText(0, "[read:"+adresse+"] \""+text+"\"");
 	}
 	
 	public void write(int adresse, Boolean status){
 		mapping.set(adresse, status);
 		dieFassade.aktuallisereHW(mapping);
-		dieFassade.simKonsolenText(0, "HWLayer[write] an Adr "+adresse+" Wert: "+status);
+		dieFassade.simKonsolenText(0, "[write:"+adresse+"] "+status);
 	}
 	
 	public void write(int adresse, Integer number){
 		mapping.set(adresse, number);
 		dieFassade.aktuallisereHW(mapping);
-		dieFassade.simKonsolenText(0, "HWLayer[write] an Adr "+adresse+" Wert: "+number);
+		dieFassade.simKonsolenText(0, "[write:"+adresse+"] "+number);
 	}
 	
 	public void write(int adresse, String text){
 		mapping.set(adresse, text);
 		dieFassade.aktuallisereHW(mapping);
-		dieFassade.simKonsolenText(0, "HWLayer[write] an Adr "+adresse+" Wert: "+text);
+		dieFassade.simKonsolenText(0, "[write:"+adresse+"] \""+text+"\"");
 	}
 	
 	public void setF(Fassade dieFassade){

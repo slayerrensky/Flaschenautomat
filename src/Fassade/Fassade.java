@@ -47,6 +47,7 @@ public class Fassade {
 	}
 	
 	public void aktuallisereHW(ArrayList<Comparable> list){
+		SIMGui.updateUI();
 		Color c;
 		
 		switch ((Integer)list.get(Adressen.Leuchte_Frabe.ordinal())) {
