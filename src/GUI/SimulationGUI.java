@@ -1,6 +1,7 @@
 package GUI;
 
 import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
@@ -22,6 +23,10 @@ import javax.swing.JScrollPane;
 import javax.swing.text.DefaultCaret;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
+import javax.swing.JRadioButton;
+import javax.swing.JPanel;
+import java.awt.GridLayout;
+import javax.swing.JCheckBox;
 
 
 public class SimulationGUI {
@@ -36,11 +41,27 @@ public class SimulationGUI {
 	private JToggleButton tglbtnNewToggleButton;
 	private JToggleButton tglbtnLichtschrankepet;
 	private JToggleButton tglbtnLichtschrankemehrweg;
-	private JToggleButton tglbtnVordereslaufband;
-	private JToggleButton tglbtnDrehlaufband;
-	private JToggleButton tglbtnHintereslaufband;
 	private JToggleButton tglbtnTrte;
+	private int logLevel;
 	private HWLayer HWaccess;
+	private JPanel pVorderesLaufband;
+	private JRadioButton rdbtnVorderesStop;
+	private JRadioButton rdbtnVorderesVorwaerts;
+	private JRadioButton rdbtnVorderesRueckwaerts;
+	private JCheckBox chckbxVorderesGesperrt;
+	private JLabel lblVordereslaufband;
+	private JPanel pDrehLaufband;
+	private JLabel lableDreh;
+	private JCheckBox chckbxDrehGesperrt;
+	private JRadioButton rdbtnDrehStop;
+	private JRadioButton rdbtnDrehRechts;
+	private JRadioButton rdbtnDrehLinks;
+	private JPanel pHinteresLaufband;
+	private JLabel lblHintereslaufband;
+	private JCheckBox chckbxHinteresGesperrt;
+	private JRadioButton rdbtnHinteresStop;
+	private JRadioButton rdbtnHinteresVorwaerts;
+	private JRadioButton rdbtnHinteresRueckwaerts;
 
 //	/**
 //	 * Launch the application.
@@ -65,6 +86,7 @@ public class SimulationGUI {
 	public SimulationGUI(Fassade fassade) {
 		HWaccess = HWLayer.getInstance();
 		DieFassade = fassade;
+		logLevel = 0;
 		initialize();
 		this.frmSimulationhelper.setVisible(true);
 	}
@@ -76,14 +98,14 @@ public class SimulationGUI {
 		frmSimulationhelper = new JFrame();
 		frmSimulationhelper.setResizable(false);
 		frmSimulationhelper.setTitle("Simulation");
-		frmSimulationhelper.setBounds(100, 100, 500, 600);
+		frmSimulationhelper.setBounds(100, 100, 500, 710);
 		frmSimulationhelper.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSimulationhelper.getContentPane().setLayout(new MigLayout("", "[144px][144px,grow][193.00px]", "[554.00px,grow]"));
 		
 		JDesktopPane desktopPane = new JDesktopPane();
 		desktopPane.setBackground(Color.LIGHT_GRAY);
 		frmSimulationhelper.getContentPane().add(desktopPane, "cell 0 0,grow");
-		desktopPane.setLayout(new MigLayout("", "[140px]", "[12px][24px][25px][25px][15px][][][19px][][][][][][][]"));
+		desktopPane.setLayout(new MigLayout("", "[140px,grow]", "[12px][24px][25px][25px][15px][][][19px][][][][grow][grow][grow][]"));
 		
 		JLabel lblFlaschenautomat = new JLabel("Flaschenautomat");
 		desktopPane.add(lblFlaschenautomat, "cell 0 0,alignx center,aligny center");
@@ -97,7 +119,15 @@ public class SimulationGUI {
 		
 		comboBox =  new JComboBox(comboStrings);
 		
-		desktopPane.add(comboBox, "cell 0 2,growx,aligny center");
+		desktopPane.add(comboBox, "cell 0 1,growx,aligny center");
+		
+		tglbtnEingangslichtschranke = new JToggleButton("Eingangslichtschranke");
+		tglbtnEingangslichtschranke.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent actionEvent) {
+				AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+		        HWaccess.write(Automat.Adressen.Eingangslichtschranke.ordinal(), abstractButton.getModel().isSelected());
+			}
+		});
 		
 		JButton btnFlascheeinlegen = new JButton("FlascheEinlegen");
 		btnFlascheeinlegen.setHorizontalAlignment(SwingConstants.LEFT);
@@ -113,15 +143,7 @@ public class SimulationGUI {
 				//Glue.InsertBottle();
 			}
 		});
-		desktopPane.add(btnFlascheeinlegen, "cell 0 3,alignx left");
-		
-		tglbtnEingangslichtschranke = new JToggleButton("Eingangslichtschranke");
-		tglbtnEingangslichtschranke.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
-		        HWaccess.write(Automat.Adressen.Eingangslichtschranke.ordinal(), abstractButton.getModel().isSelected());
-			}
-		});
+		desktopPane.add(btnFlascheeinlegen, "cell 0 2,alignx left");
 		tglbtnEingangslichtschranke.setHorizontalAlignment(SwingConstants.LEFT);
 		desktopPane.add(tglbtnEingangslichtschranke, "cell 0 4");
 		
@@ -165,36 +187,6 @@ public class SimulationGUI {
 		tglbtnLichtschrankemehrweg.setHorizontalAlignment(SwingConstants.LEFT);
 		desktopPane.add(tglbtnLichtschrankemehrweg, "cell 0 8");
 		
-		tglbtnVordereslaufband = new JToggleButton("Vordereslaufband");
-		tglbtnVordereslaufband.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
-		        HWaccess.write(Automat.Adressen.LaufbandEingang.ordinal(), abstractButton.getModel().isSelected());
-			}
-		});
-		tglbtnVordereslaufband.setHorizontalAlignment(SwingConstants.LEFT);
-		desktopPane.add(tglbtnVordereslaufband, "cell 0 9");
-		
-		tglbtnDrehlaufband = new JToggleButton("Drehlaufband");
-		tglbtnDrehlaufband.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
-		        HWaccess.write(Automat.Adressen.LaufbandDrehen.ordinal(), abstractButton.getModel().isSelected());
-			}
-		});
-		tglbtnDrehlaufband.setHorizontalAlignment(SwingConstants.LEFT);
-		desktopPane.add(tglbtnDrehlaufband, "cell 0 10");
-		
-		tglbtnHintereslaufband = new JToggleButton("Hintereslaufband");
-		tglbtnHintereslaufband.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
-				AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
-		        HWaccess.write(Automat.Adressen.LaufbandAusgang.ordinal(), abstractButton.getModel().isSelected());
-			}
-		});
-		tglbtnHintereslaufband.setHorizontalAlignment(SwingConstants.LEFT);
-		desktopPane.add(tglbtnHintereslaufband, "cell 0 11");
-		
 		tglbtnLeuchte = new JToggleButton("Leuchte");
 		tglbtnLeuchte.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent actionEvent) {
@@ -203,7 +195,7 @@ public class SimulationGUI {
 			}
 		});
 		tglbtnLeuchte.setHorizontalAlignment(SwingConstants.LEFT);
-		desktopPane.add(tglbtnLeuchte, "cell 0 12");
+		desktopPane.add(tglbtnLeuchte, "cell 0 9");
 		
 		tglbtnTrte = new JToggleButton("Tr\u00F6te");
 		tglbtnTrte.addActionListener(new ActionListener() {
@@ -213,7 +205,175 @@ public class SimulationGUI {
 			}
 		});
 		tglbtnTrte.setHorizontalAlignment(SwingConstants.LEFT);
-		desktopPane.add(tglbtnTrte, "cell 0 13");
+		desktopPane.add(tglbtnTrte, "cell 0 10");
+		
+		pVorderesLaufband = new JPanel();
+		desktopPane.add(pVorderesLaufband, "cell 0 11,growx,aligny top");
+		pVorderesLaufband.setLayout(new GridLayout(5, 0, 0, 0));
+		
+		lblVordereslaufband = new JLabel("Vorderes-Laufband");
+		pVorderesLaufband.add(lblVordereslaufband);
+		
+		chckbxVorderesGesperrt = new JCheckBox("gesperrt");
+		chckbxVorderesGesperrt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent actionEvent) {
+				AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+				
+		        if(abstractButton.getModel().isSelected()){
+		        	rdbtnVorderesStop.setEnabled(false);
+		        	rdbtnVorderesVorwaerts.setEnabled(false);
+		        	rdbtnVorderesRueckwaerts.setEnabled(false);
+		        	HWaccess.write(Automat.Adressen.LaufbandEingang.ordinal(), -1);
+		        }else{
+		        	rdbtnVorderesStop.setEnabled(true);
+		        	rdbtnVorderesVorwaerts.setEnabled(true);
+		        	rdbtnVorderesRueckwaerts.setEnabled(true);
+		        	HWaccess.write(Automat.Adressen.LaufbandEingang.ordinal(), 0);
+		        }
+			}
+		});
+		pVorderesLaufband.add(chckbxVorderesGesperrt);
+		
+		rdbtnVorderesStop = new JRadioButton("stop");
+		rdbtnVorderesStop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HWaccess.write(Automat.Adressen.LaufbandEingang.ordinal(), 0);
+			}
+		});
+		pVorderesLaufband.add(rdbtnVorderesStop);
+		
+		rdbtnVorderesVorwaerts = new JRadioButton("vorw\u00E4rts");
+		rdbtnVorderesVorwaerts.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HWaccess.write(Automat.Adressen.LaufbandEingang.ordinal(), 1);
+			}
+		});
+		pVorderesLaufband.add(rdbtnVorderesVorwaerts);
+		
+		rdbtnVorderesRueckwaerts = new JRadioButton("r\u00FCckw\u00E4rts");
+		rdbtnVorderesRueckwaerts.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HWaccess.write(Automat.Adressen.LaufbandEingang.ordinal(), 2);
+			}
+		});
+		pVorderesLaufband.add(rdbtnVorderesRueckwaerts);
+		
+		ButtonGroup groupL1 = new ButtonGroup();
+        groupL1.add(rdbtnVorderesStop);
+        groupL1.add(rdbtnVorderesVorwaerts);
+        groupL1.add(rdbtnVorderesRueckwaerts);
+		
+		pDrehLaufband = new JPanel();
+		desktopPane.add(pDrehLaufband, "cell 0 12,growx,aligny top");
+		pDrehLaufband.setLayout(new GridLayout(5, 0, 0, 0));
+		
+		lableDreh = new JLabel("Dreh-Laufband");
+		pDrehLaufband.add(lableDreh);
+		
+		chckbxDrehGesperrt = new JCheckBox("gesperrt");
+		chckbxDrehGesperrt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent actionEvent) {
+				AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+				
+		        if(abstractButton.getModel().isSelected()){
+		        	rdbtnDrehStop.setEnabled(false);
+		        	rdbtnDrehRechts.setEnabled(false);
+		        	rdbtnDrehLinks.setEnabled(false);
+		        	HWaccess.write(Automat.Adressen.LaufbandDrehen.ordinal(), -1);
+		        }else{
+		        	rdbtnDrehStop.setEnabled(true);
+		        	rdbtnDrehRechts.setEnabled(true);
+		        	rdbtnDrehLinks.setEnabled(true);
+		        	HWaccess.write(Automat.Adressen.LaufbandDrehen.ordinal(), 0);
+		        }
+			}
+		});
+		pDrehLaufband.add(chckbxDrehGesperrt);
+		
+		rdbtnDrehStop = new JRadioButton("stop");
+		rdbtnDrehStop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HWaccess.write(Automat.Adressen.LaufbandDrehen.ordinal(), 0);
+			}
+		});
+		pDrehLaufband.add(rdbtnDrehStop);
+		
+		rdbtnDrehRechts = new JRadioButton("drehe rechts");
+		rdbtnDrehRechts.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HWaccess.write(Automat.Adressen.LaufbandDrehen.ordinal(), 1);
+			}
+		});
+		pDrehLaufband.add(rdbtnDrehRechts);
+		
+		rdbtnDrehLinks = new JRadioButton("drehe links");
+		rdbtnDrehLinks.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HWaccess.write(Automat.Adressen.LaufbandDrehen.ordinal(), 2);
+			}
+		});
+		pDrehLaufband.add(rdbtnDrehLinks);
+		
+		ButtonGroup groupL2 = new ButtonGroup();
+        groupL2.add(rdbtnDrehStop);
+        groupL2.add(rdbtnDrehRechts);
+        groupL2.add(rdbtnDrehLinks);
+		
+		pHinteresLaufband = new JPanel();
+		desktopPane.add(pHinteresLaufband, "cell 0 13,grow");
+		pHinteresLaufband.setLayout(new GridLayout(5, 0, 0, 0));
+		
+		lblHintereslaufband = new JLabel("Hinteres-Laufband");
+		pHinteresLaufband.add(lblHintereslaufband);
+		
+		chckbxHinteresGesperrt = new JCheckBox("gesperrt");
+		chckbxHinteresGesperrt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent actionEvent) {
+				AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+				
+		        if(abstractButton.getModel().isSelected()){
+		        	rdbtnHinteresStop.setEnabled(false);
+		        	rdbtnHinteresVorwaerts.setEnabled(false);
+		        	rdbtnHinteresRueckwaerts.setEnabled(false);
+		        	HWaccess.write(Automat.Adressen.LaufbandAusgang.ordinal(), -1);
+		        }else{
+		        	rdbtnHinteresStop.setEnabled(true);
+		        	rdbtnHinteresVorwaerts.setEnabled(true);
+		        	rdbtnHinteresRueckwaerts.setEnabled(true);
+		        	HWaccess.write(Automat.Adressen.LaufbandAusgang.ordinal(), 0);
+		        }
+			}
+		});
+		pHinteresLaufband.add(chckbxHinteresGesperrt);
+		
+		rdbtnHinteresStop = new JRadioButton("stop");
+		rdbtnHinteresStop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HWaccess.write(Automat.Adressen.LaufbandAusgang.ordinal(), 0);
+			}
+		});
+		pHinteresLaufband.add(rdbtnHinteresStop);
+		
+		rdbtnHinteresVorwaerts = new JRadioButton("vorw\u00E4rts");
+		rdbtnHinteresVorwaerts.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HWaccess.write(Automat.Adressen.LaufbandAusgang.ordinal(), 1);
+			}
+		});
+		pHinteresLaufband.add(rdbtnHinteresVorwaerts);
+		
+		rdbtnHinteresRueckwaerts = new JRadioButton("r\u00FCckw\u00E4rts");
+		rdbtnHinteresRueckwaerts.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HWaccess.write(Automat.Adressen.LaufbandAusgang.ordinal(), 2);
+			}
+		});
+		pHinteresLaufband.add(rdbtnHinteresRueckwaerts);
+		
+		ButtonGroup groupL3 = new ButtonGroup();
+        groupL3.add(rdbtnHinteresStop);
+        groupL3.add(rdbtnHinteresVorwaerts);
+        groupL3.add(rdbtnHinteresRueckwaerts);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		frmSimulationhelper.getContentPane().add(scrollPane, "cell 1 0 2 1,grow");
@@ -245,10 +405,38 @@ public class SimulationGUI {
 		tglbtnLichtschrankemehrweg.setSelected((Boolean)list.get(Automat.Adressen.UebergabelichtschrankeMehrweg.ordinal()));;
 		tglbtnTrte.setSelected((Boolean)list.get(Automat.Adressen.Troete.ordinal()));;
 		
-		//tglbtnVordereslaufband.setSelected((Boolean)list.get(Automat.Adressen.LaufbandEingang.ordinal()));;
-		//tglbtnDrehlaufband.setSelected((Boolean)list.get(Automat.Adressen.LaufbandDrehen.ordinal()));;
-		//tglbtnHintereslaufband.setSelected((Boolean)list.get(Automat.Adressen.LaufbandAusgang.ordinal()));;
-		//rework here
+		switch ((Integer)list.get(Automat.Adressen.LaufbandEingang.ordinal())) {
+		default:chckbxVorderesGesperrt.setSelected(true); 
+		case 0: rdbtnVorderesStop.setSelected(true);			
+			break;
+
+		case 1: rdbtnVorderesVorwaerts.setSelected(true);
+			break;
+		case 2: rdbtnVorderesRueckwaerts.setSelected(true);
+			break;
+		}		
+
+		switch ((Integer)list.get(Automat.Adressen.LaufbandDrehen.ordinal())) {
+		default:chckbxDrehGesperrt.setSelected(true);
+		case 0: rdbtnDrehStop.setSelected(true);			
+			break;
+
+		case 1: rdbtnDrehRechts.setSelected(true);
+			break;
+		case 2: rdbtnDrehLinks.setSelected(true);
+			break;
+		}
+		
+		switch ((Integer)list.get(Automat.Adressen.LaufbandAusgang.ordinal())) {
+		default:chckbxHinteresGesperrt.setSelected(true);
+		case 0: rdbtnHinteresStop.setSelected(true);			
+			break;
+
+		case 1: rdbtnHinteresVorwaerts.setSelected(true);
+			break;
+		case 2: rdbtnHinteresRueckwaerts.setSelected(true);
+			break;
+		}	
 	}
 	
 

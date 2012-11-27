@@ -65,7 +65,7 @@ public class Anzeige {
 		}
 		
 		leuchte = new SimpleThread(m_Leuchte, wdh, pulseEin, pulseAus, true);
-		troete = new SimpleThread(m_Troete, wdh, pulseEin, pulseAus, false);
+		troete = new SimpleThread(m_Troete, wdh, pulseEin+300, pulseAus-300, false);
 
 		leuchte.start();
 		troete.start();
