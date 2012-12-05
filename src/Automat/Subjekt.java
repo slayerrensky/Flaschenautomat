@@ -2,7 +2,7 @@ package Automat;
 
 import java.util.LinkedList;
 
-public abstract class ObserverSubjekt {
+public abstract class Subjekt {
 	
 	protected LinkedList<Observer> observers = new LinkedList<Observer>();
 	

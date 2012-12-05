@@ -6,8 +6,8 @@ import Fassade.Fassade;
 /**
  * Performante und thread-safe Implementierung des Singleton-Patterns
  */
-public class HWLayer {
-	private static HWLayer instance = new HWLayer();
+public class HWSimulation {
+	private static HWSimulation instance = new HWSimulation();
 	private ArrayList<Comparable> mapping;
 	private Fassade dieFassade;
 
@@ -15,7 +15,7 @@ public class HWLayer {
 	 * Default-Konstruktor, der nicht außerhalb dieser Klasse
 	 * aufgerufen werden kann
 	 */
-	private HWLayer() {
+	private HWSimulation() {
 		mapping = new ArrayList<Comparable>();
 		mapping.add(new Boolean(false)); // Troete
 		mapping.add(new Boolean(true));  // Leuchte
@@ -41,7 +41,7 @@ public class HWLayer {
 	 * Statische Methode, liefert die einzige Instanz dieser
 	 * Klasse zurück
 	 */
-	public static HWLayer getInstance() {
+	public static HWSimulation getInstance() {
 		return instance;
 	}
 	

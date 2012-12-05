@@ -1,6 +1,6 @@
 package Automat;
 
-public class Sector_one {
+public class Annahme {
 
 //Variablen
 	
@@ -13,7 +13,7 @@ public class Sector_one {
 
 //Konstruktor
 	
-	public Sector_one(){
+	public Annahme(){
 	
 		m_VorderesLaufband = new Laufband(Adressen.LaufbandEingang.ordinal());
 		m_DrehLaufband = new Laufband(Adressen.LaufbandDrehen.ordinal());

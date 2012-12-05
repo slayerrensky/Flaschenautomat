@@ -8,12 +8,12 @@ package Automat;
 public class Sensor {
 
 	protected int adresse;
-	protected HWLayer HWaccess;
+	protected HWSimulation HWaccess;
 
 	// type = 0 == Leuchte; 1 == Troete
 	public Sensor(int adresse) {
 		this.adresse = adresse;
-		HWaccess = HWLayer.getInstance();
+		HWaccess = HWSimulation.getInstance();
 	}
 
 	public Boolean read() {

@@ -12,7 +12,7 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import Automat.FlaschenType;
-import Automat.HWLayer;
+import Automat.HWSimulation;
 import Fassade.Fassade;
 import javax.swing.JTextArea;
 import java.awt.event.ActionListener;
@@ -43,7 +43,7 @@ public class SimulationGUI {
 	private JToggleButton tglbtnLichtschrankemehrweg;
 	private JToggleButton tglbtnTrte;
 	private int logLevel;
-	private HWLayer HWaccess;
+	private HWSimulation HWaccess;
 	private JPanel pVorderesLaufband;
 	private JRadioButton rdbtnVorderesStop;
 	private JRadioButton rdbtnVorderesVorwaerts;
@@ -84,7 +84,7 @@ public class SimulationGUI {
 	 * Create the application.
 	 */
 	public SimulationGUI(Fassade fassade) {
-		HWaccess = HWLayer.getInstance();
+		HWaccess = HWSimulation.getInstance();
 		DieFassade = fassade;
 		logLevel = 0;
 		initialize();

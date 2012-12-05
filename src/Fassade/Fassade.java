@@ -18,12 +18,12 @@ public class Fassade {
 	private SimulationGUI SIMGui;
 	private HardwareGUI HWGui;
 	private Ablieferung FachklasseAblieferung;
-	private HWLayer HWaccess;
+	private HWSimulation HWaccess;
 
 	public Fassade() {
 		SIMGui = new SimulationGUI(this);
 		HWGui = new HardwareGUI(this);
-		this.HWaccess = HWLayer.getInstance();
+		this.HWaccess = HWSimulation.getInstance();
 		this.HWaccess.setF(this);
 		String FlaschenfilePathasString = "./flaschenfile.txt";
 		FachklasseAblieferung = new Ablieferung(this,

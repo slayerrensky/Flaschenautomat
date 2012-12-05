@@ -5,7 +5,7 @@ package Automat;
  *  
  */
 
-public class FlaschenAbrechnungSubject extends ObserverSubjekt {
+public class FlaschenAbrechnungSubject extends Subjekt {
 
 	protected String code;
 	

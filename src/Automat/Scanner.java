@@ -5,16 +5,16 @@ package Automat;
  * @version 1.0
  * @created 26-Okt-2012 07:10:57
  */
-public class Scanner extends ObserverSubjekt{
+public class Scanner extends Subjekt{
 
 	private int adresse;
 	private String lastCode;
-	private HWLayer HWaccess;
+	private HWSimulation HWaccess;
 	private SimpleThread workerThread;
 	
 	public Scanner(int adresse, int timeoutMS){
 		this.adresse = adresse;
-		this.HWaccess = HWLayer.getInstance();
+		this.HWaccess = HWSimulation.getInstance();
 		workerThread = new SimpleThread(timeoutMS);
 	}
 

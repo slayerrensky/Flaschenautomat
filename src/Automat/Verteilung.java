@@ -1,6 +1,6 @@
 package Automat;
 
-public class Sector_two {
+public class Verteilung {
 	
 //Variablen
 
@@ -14,7 +14,7 @@ public class Sector_two {
 	
 //Konstruktor
 		
-		public Sector_two(){
+		public Verteilung(){
 
 			m_Auswahlklappe = new Auswahlklappe(Adressen.Auswahlklappe.ordinal());
 			m_HinteresLaufband = new Laufband(Adressen.LaufbandAusgang.ordinal());
