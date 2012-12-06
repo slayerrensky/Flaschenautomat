@@ -25,8 +25,80 @@ public class Verteilung {
 
 //Methoden
 		
-		public void Flasche_weiterleiten(){
+		public void Flasche_weiterleiten(FlaschenType Flasche){
 			
+			
+//			switch (Flasche) {
+//			
+//				case Flasche == FlaschenType.PET:
+//					
+//						m_HinteresLaufband.vorwaerts();
+//						m_Auswahlklappe.stellen(Flasche.PET);
+//						
+//						while(s_PetBehaelterLichtschranke.read() != true){
+//							//wait(1000);
+//						}
+//						while(s_PetBehaelterLichtschranke.read() !=false){
+//							//Thread.currentThread().sleep(1000);
+//						}
+//						
+//						m_HinteresLaufband.stopp();
+//						
+//						break;
+//				
+//				case Flasche == FlaschenType.Mehrweg:
+//					
+//						m_HinteresLaufband.vorwaerts();
+//						m_Auswahlklappe.stellen(Flasche.Mehrweg);	
+//						
+//						while(s_MehrwegBehaelterLichtschranke.read() != true){
+//							//Thread.currentThread().sleep(1000);
+//						}
+//						while(s_MehrwegBehaelterLichtschranke.read() !=false){
+//							//Thread.currentThread().sleep(1000);
+//						}	
+//						
+//						m_HinteresLaufband.stopp();
+//						
+//						break;
+//	
+//				default:
+//						
+//						m_HinteresLaufband.rueckwerts();
+//						
+//				break;
+//			
+//			}
+			
+				if(Flasche == FlaschenType.PET){
+				
+					m_HinteresLaufband.vorwaerts();
+					m_Auswahlklappe.stellen(Flasche.PET);
+					
+					while(s_PetBehaelterLichtschranke.read() != true){
+						//wait(1000);
+					}
+					while(s_PetBehaelterLichtschranke.read() !=false){
+						//Thread.currentThread().sleep(1000);
+					}
+					
+					m_HinteresLaufband.stopp();
+				}
+					
+				if(Flasche == FlaschenType.Mehrweg){
+						
+					m_HinteresLaufband.vorwaerts();
+					m_Auswahlklappe.stellen(Flasche.Mehrweg);
+					
+					while(s_MehrwegBehaelterLichtschranke.read() != true){
+						//Thread.currentThread().sleep(1000);
+					}
+					while(s_MehrwegBehaelterLichtschranke.read() !=false){
+						//Thread.currentThread().sleep(1000);
+					}
+					
+					m_HinteresLaufband.stopp();
+				}
 		}
 		
 		public boolean getUebergabeLichtschrankeMehrweg(){
