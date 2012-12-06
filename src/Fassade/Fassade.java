@@ -77,13 +77,13 @@ public class Fassade {
 	}
 
 	/**
-	 * Wenn der Bon Button in der GUI gedrï¿½ckt wurde
+	 * Wenn der Bon Button in der GUI gedrückt wurde
 	 */
 	public void bonAnfordern() {
 		FachklasseAblieferung.test();
 		// Ausgabe auf Gui.Monitoring
 		// Automat.Ablieferung etwas tuhen
-		SIMGui.MonitoringUpdate("Bon Button wurde gedrï¿½ckt");
+		SIMGui.MonitoringUpdate("Bon Button wurde gedrückt");
 	}
 
 	/**

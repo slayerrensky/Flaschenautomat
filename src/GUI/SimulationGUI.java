@@ -100,7 +100,7 @@ public class SimulationGUI {
 		frmSimulationhelper.setTitle("Simulation");
 		frmSimulationhelper.setBounds(100, 100, 500, 710);
 		frmSimulationhelper.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmSimulationhelper.getContentPane().setLayout(new MigLayout("", "[144px][144px,grow][193.00px]", "[554.00px,grow]"));
+		frmSimulationhelper.getContentPane().setLayout(new MigLayout("", "[196.00px][144px,grow][193.00px]", "[675.00px,grow]"));
 		
 		JDesktopPane desktopPane = new JDesktopPane();
 		desktopPane.setBackground(Color.LIGHT_GRAY);

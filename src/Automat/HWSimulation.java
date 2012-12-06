@@ -66,20 +66,22 @@ public class HWSimulation {
 		return instance;
 	}
 	
-	public void read(int adresse, Boolean status){
-		status = (Boolean) mapping.get(adresse);
+	public Boolean readBool(int adresse){
+		Boolean status = (Boolean) mapping.get(adresse);
 		dieFassade.simKonsolenText(0, "[read:"+adresse+"] "+status);
+		return status;		
 	}
 	
-	// trick damit es call by referenc ist
-	public void read(int adresse, Integer number){
-		number = (Integer) mapping.get(adresse);
+	public Integer readInt(int adresse){
+		Integer number = (Integer) mapping.get(adresse);
 		dieFassade.simKonsolenText(0, "[read:"+adresse+"] "+number);
+		return number;		
 	}
 	
-	public void read(int adresse, String text){
-		text = (String) mapping.get(adresse);
+	public String readStr(int adresse){
+		String text = (String) mapping.get(adresse);
 		dieFassade.simKonsolenText(0, "[read:"+adresse+"] \""+text+"\"");
+		return text;
 	}
 	
 	public void write(int adresse, Boolean status){

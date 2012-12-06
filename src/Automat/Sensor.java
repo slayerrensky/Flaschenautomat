@@ -18,7 +18,7 @@ public class Sensor {
 
 	public Boolean read() {
 		Boolean tmp = false;
-		HWaccess.read(adresse, tmp);
+		tmp = HWaccess.readBool(adresse);
 		return tmp;
 	}
 

@@ -7,6 +7,10 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JTextPane;
+
+import Automat.Adressen;
+import Automat.Automat;
+import Automat.HWSimulation;
 import Fassade.Fassade;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -71,6 +75,7 @@ public class HardwareGUI {
 		btnBonDrucken.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				DieFassade.bonAnfordern();
+				HWSimulation test = HWSimulation.getInstance();
 			}
 		});
 		btnBonDrucken.addMouseListener(new MouseAdapter() {

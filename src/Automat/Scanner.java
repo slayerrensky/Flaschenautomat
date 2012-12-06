@@ -30,7 +30,7 @@ public class Scanner extends Subjekt{
 		//HWaccess.read(this.adresse, passRef);
 		//return passRef[1];
 		
-		this.HWaccess.read(adresse, lastCode);
+		lastCode = this.HWaccess.readStr(adresse);
 		this.notifyAll();
 		
 		return lastCode;
