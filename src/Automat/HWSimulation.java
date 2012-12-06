@@ -10,36 +10,57 @@ public class HWSimulation {
 	private static HWSimulation instance = new HWSimulation();
 	private ArrayList<Comparable> mapping;
 	private Fassade dieFassade;
+	
+	//define adressing constants
+	public final int Troete = 0;
+	public final int Leuchte = 1;
+	public final int LFarbe = 2;
+	public final int AuswahlEingLS = 3;
+	public final int EingLS = 4;
+	public final int JustierLS = 5;
+	public final int AusgangsLS = 6;
+	public final int UebergabeLSPET = 7;
+	public final int UebergabeLSMehrweg = 8;
+	public final int LBEingang = 9;
+	public final int LBDrehen = 10;
+	public final int LBAusgang = 11;
+	public final int Auswahlklappe = 12;
+	public final int Scanner = 13;
+	public final int BonDrucker = 14;
+	public final int Druckknopf = 15;
+	public final int Display = 16;
+	public final int Drucker = 17;
+	
 
 	/**
-	 * Default-Konstruktor, der nicht außerhalb dieser Klasse
+	 * Default-Konstruktor, der nicht auï¿½erhalb dieser Klasse
 	 * aufgerufen werden kann
 	 */
 	private HWSimulation() {
 		mapping = new ArrayList<Comparable>();
-		mapping.add(new Boolean(false)); // Troete
-		mapping.add(new Boolean(true));  // Leuchte
-		mapping.add(new Integer(0)); 	 // Leuchte -Farbe
-		mapping.add(new Boolean(false)); // AuswahlklappeEingangslichtschranke
-		mapping.add(new Boolean(false)); // Eingangslichtschranke
-		mapping.add(new Boolean(false)); // Justierlichtschranke
-		mapping.add(new Boolean(false)); // Ausgangslichtschranke
-		mapping.add(new Boolean(false)); // UebergabelichtschrankePET
-		mapping.add(new Boolean(false)); // UebergabelichtschrankeMehrweg
-		mapping.add(new Integer(0)); // LaufbandEingang
-		mapping.add(new Integer(0)); // LaufbandDrehen
-		mapping.add(new Integer(0)); // LaufbandAusgang
-		mapping.add(new Boolean(false)); // Auswahlklappe
-		mapping.add(new Integer(0)); 	 // Scanner
-		mapping.add(new Boolean(false)); // BonDrucker
-		mapping.add(new Boolean(false)); // Druckknopf
-		mapping.add(new String("init")); // Display
-		mapping.add(new String("init")); // Drucker
+		mapping.add(new Boolean(false)); // 0 Troete
+		mapping.add(new Boolean(true));  // 1 Leuchte
+		mapping.add(new Integer(0)); 	 // 2 Leuchte -Farbe
+		mapping.add(new Boolean(false)); // 3 AuswahlklappeEingangslichtschranke
+		mapping.add(new Boolean(false)); // 4 Eingangslichtschranke
+		mapping.add(new Boolean(false)); // 5 Justierlichtschranke
+		mapping.add(new Boolean(false)); // 6 Ausgangslichtschranke
+		mapping.add(new Boolean(false)); // 7 UebergabelichtschrankePET
+		mapping.add(new Boolean(false)); // 8 UebergabelichtschrankeMehrweg
+		mapping.add(new Integer(0)); // 9 LaufbandEingang
+		mapping.add(new Integer(0)); // 10 LaufbandDrehen
+		mapping.add(new Integer(0)); // 11 LaufbandAusgang
+		mapping.add(new Boolean(false)); // 12 Auswahlklappe
+		mapping.add(new Integer(0)); 	 // 13 Scanner
+		mapping.add(new Boolean(false)); // 14 BonDrucker
+		mapping.add(new Boolean(false)); // 15 Druckknopf
+		mapping.add(new String("init")); // 16 Display
+		mapping.add(new String("init")); // 17 Drucker
 	}
 
 	/**
 	 * Statische Methode, liefert die einzige Instanz dieser
-	 * Klasse zurück
+	 * Klasse zurï¿½ck
 	 */
 	public static HWSimulation getInstance() {
 		return instance;
