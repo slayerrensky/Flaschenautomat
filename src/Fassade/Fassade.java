@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import Automat.*;
 import GUI.HardwareGUI;
 import GUI.SimulationGUI;
+import Test.SimulationAblauf;
 
 /**
  * @author Dennis
@@ -19,10 +20,12 @@ public class Fassade {
 	private HardwareGUI HWGui;
 	private Ablieferung FachklasseAblieferung;
 	private HWSimulation HWaccess;
+	private SimulationAblauf SimAblauf;
 
 	public Fassade() {
 		SIMGui = new SimulationGUI(this);
 		HWGui = new HardwareGUI(this);
+		SimAblauf = new SimulationAblauf(this);
 		this.HWaccess = HWSimulation.getInstance();
 		this.HWaccess.setF(this);
 		String FlaschenfilePathasString = "./flaschenfile.txt";
@@ -74,13 +77,13 @@ public class Fassade {
 	}
 
 	/**
-	 * Wenn der Bon Button in der GUI gedrückt wurde
+	 * Wenn der Bon Button in der GUI gedrï¿½ckt wurde
 	 */
 	public void bonAnfordern() {
 		FachklasseAblieferung.test();
 		// Ausgabe auf Gui.Monitoring
 		// Automat.Ablieferung etwas tuhen
-		SIMGui.MonitoringUpdate("Bon Button wurde gedrückt");
+		SIMGui.MonitoringUpdate("Bon Button wurde gedrï¿½ckt");
 	}
 
 	/**
@@ -122,16 +125,15 @@ public class Fassade {
 	 * @param Type
 	 */
 	public void simFlascheEinlegen(FlaschenType Type) {
-		simKonsolenText(0, "Flasche mit dem Code " + Type.toString()
-				+ " wurde eingelegt.");
+		SimAblauf.simBeginn(Type);
 	}
 
 	public void warnsignalAN() {
-		SIMGui.MonitoringUpdate("Tröte wurd eingeschaltet");
+		SIMGui.MonitoringUpdate("Trï¿½te wurd eingeschaltet");
 	}
 
 	public void warnsignalAUS() {
-		SIMGui.MonitoringUpdate("Tröte wurd AUSgeschaltet");
+		SIMGui.MonitoringUpdate("Trï¿½te wurd AUSgeschaltet");
 	}
 
 }
