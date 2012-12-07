@@ -7,6 +7,8 @@ public class FlaschenZaehler extends Observer{
 
 	protected Scanner subject;
 	protected LinkedList<Flasche> abgeleiferteFlaschen;
+	protected FlaschenType lastFlaschenType;
+	protected int GesamtAnzahlFlaschen = 0; 
 
 	
 	public FlaschenZaehler(Scanner subject, LinkedList<Flasche> flaschen)
@@ -24,6 +26,8 @@ public class FlaschenZaehler extends Observer{
 			if (f.getCode().compareTo(flaschencode)==0)
 			{
 				f.AnzahlInc();
+				GesamtAnzahlFlaschen++;
+				lastFlaschenType = f.getType();
 			}
 		}
 	}
@@ -48,5 +52,14 @@ public class FlaschenZaehler extends Observer{
 		{
 			f.reset();
 		}
+	}
+	
+	public FlaschenType getLastFlaschenType()
+	{
+		return lastFlaschenType;
+	}
+	
+	public int getGesamtAnzahlFlaschen(){
+		return GesamtAnzahlFlaschen;
 	}
 }
