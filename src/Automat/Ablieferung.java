@@ -59,17 +59,27 @@ public class Ablieferung {
 		wartenAufFlasche();
 		if (m_Annahme.Flasche_positionieren())
 		{
-			int flaschenanzahl = m_KundenZaehler.getFlaschenListe().size();
+			int flaschenanzahl = m_KundenZaehler.getGesamtAnzahlFlaschen();
 			if (m_scanner.Scan())
 			{
 				//anzahl kontrollieren
-				if (flaschenanzahl == (m_KundenZaehler.getFlaschenListe().size() - 1))
+				if (flaschenanzahl == (m_KundenZaehler.getGesamtAnzahlFlaschen() - 1))
 				{
-					
+					DieFassade.simKonsolenText(0, "Annahme: Flasche weiterleiten.");
+					m_Annahme.flascheWeiterLeiten();
+					DieFassade.simKonsolenText(0, "verteilung: Flasche weiterleiten.");
+					if (m_Verteilung.Flasche_weiterleiten(m_KundenZaehler.getLastFlaschenType()))
+					{
+						DieFassade.simKonsolenText(0, "Flasche erfolgreich abgegeben.");						
+					}
+					else
+					{
+						flascheZurueckGeben();
+					}
 				}
 				else
 				{
-				flascheZurueckGeben();
+					flascheZurueckGeben();
 				}
 			}
 			else
