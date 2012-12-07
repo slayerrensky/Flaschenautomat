@@ -102,7 +102,6 @@ public class Verteilung {
 		
 			return Durchlauf(s_MehrwegBehaelterLichtschranke);
 			
-			
 		}
 		
 		public boolean getUebergabeLichtschrankePET(){
