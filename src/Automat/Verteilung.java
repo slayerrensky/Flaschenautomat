@@ -11,6 +11,8 @@ public class Verteilung {
 		private Sensor s_AuswahlklappeEingangsLichtschranke;
 		private Sensor s_MehrwegBehaelterLichtschranke;
 		private Sensor s_PetBehaelterLichtschranke;
+		
+		private ParallelWarteClass workerThread;
 	
 //Konstruktor
 		
@@ -21,6 +23,8 @@ public class Verteilung {
 			s_AuswahlklappeEingangsLichtschranke = new Sensor(Adressen.AuswahlklappeEingangslichtschranke.ordinal());
 			s_MehrwegBehaelterLichtschranke = new Sensor(Adressen.UebergabelichtschrankeMehrweg.ordinal());
 			s_PetBehaelterLichtschranke = new Sensor(Adressen.UebergabelichtschrankePET.ordinal());
+			
+			workerThread = new ParallelWarteClass(10000);
 		}
 
 //Methoden
@@ -29,32 +33,26 @@ public class Verteilung {
 			//Thread.currentThread().sleep(1000);
 		}
 		
-		public boolean Durchlauf(Sensor s){
-			
-			int i = 0;
-			int grenze = 10;
-			
-			while(s.read() != true && i < grenze){
+		protected boolean Durchlauf(Sensor s){
 				
-				i++;
-				wait(1000);
-				
-			}
+			workerThread.run();
 			
-			if (i >= grenze){
+			while(!s.read() && workerThread.isAlive());
+			
+			if (!workerThread.isAlive()){
 				
 				return false;
 			}
 			
-			i = 0;
+			if(workerThread.isAlive()){
+				workerThread.interrupt();			
+			}
 			
-			while(s.read() !=false && i < grenze){
-				
-				i++;
-				wait(1000);
-			}	
+			workerThread.run();
 			
-			if (i >= grenze){
+			while(s.read() && workerThread.isAlive());
+			
+			if (!workerThread.isAlive()){
 				
 				return false;
 			}
