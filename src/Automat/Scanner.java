@@ -10,12 +10,12 @@ public class Scanner extends Subjekt{
 	private int adresse;
 	private String lastCode;
 	private HWSimulation HWaccess;
-	private SimpleThread workerThread;
+	private ParallelWarteClass workerThread;
 	
 	public Scanner(int adresse, int timeoutMS){
 		this.adresse = adresse;
 		this.HWaccess = HWSimulation.getInstance();
-		workerThread = new SimpleThread(timeoutMS);
+		workerThread = new ParallelWarteClass(timeoutMS);
 	}
 
 	public String getSubjectState(){
@@ -46,21 +46,4 @@ public class Scanner extends Subjekt{
 	public void stopScann(){
 	
 	}
-	
-	public class SimpleThread extends Thread {
-		private int timeoutMS;
-		
-		public SimpleThread(int timeoutMS) {
-			this.timeoutMS = timeoutMS;
-		}
-		
-		public void run() {
-			try {
-				this.sleep(timeoutMS);
-			} catch (InterruptedException e) {
-				// gwollt ohne anweisung
-			}			
-		}
-	}
-
 }
