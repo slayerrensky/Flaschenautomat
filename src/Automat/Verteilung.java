@@ -24,91 +24,89 @@ public class Verteilung {
 		}
 
 //Methoden
-		
-		public void Flasche_weiterleiten(FlaschenType Flasche){
+		protected void wait (int Sek){
 			
-			
-//			switch (Flasche) {
-//			
-//				case Flasche == FlaschenType.PET:
-//					
-//						m_HinteresLaufband.vorwaerts();
-//						m_Auswahlklappe.stellen(Flasche.PET);
-//						
-//						while(s_PetBehaelterLichtschranke.read() != true){
-//							//wait(1000);
-//						}
-//						while(s_PetBehaelterLichtschranke.read() !=false){
-//							//Thread.currentThread().sleep(1000);
-//						}
-//						
-//						m_HinteresLaufband.stopp();
-//						
-//						break;
-//				
-//				case Flasche == FlaschenType.Mehrweg:
-//					
-//						m_HinteresLaufband.vorwaerts();
-//						m_Auswahlklappe.stellen(Flasche.Mehrweg);	
-//						
-//						while(s_MehrwegBehaelterLichtschranke.read() != true){
-//							//Thread.currentThread().sleep(1000);
-//						}
-//						while(s_MehrwegBehaelterLichtschranke.read() !=false){
-//							//Thread.currentThread().sleep(1000);
-//						}	
-//						
-//						m_HinteresLaufband.stopp();
-//						
-//						break;
-//	
-//				default:
-//						
-//						m_HinteresLaufband.rueckwerts();
-//						
-//				break;
-//			
-//			}
-			
-				if(Flasche == FlaschenType.PET){
-				
-					m_HinteresLaufband.vorwaerts();
-					m_Auswahlklappe.stellen(Flasche.PET);
-					
-					while(s_PetBehaelterLichtschranke.read() != true){
-						//wait(1000);
-					}
-					while(s_PetBehaelterLichtschranke.read() !=false){
-						//Thread.currentThread().sleep(1000);
-					}
-					
-					m_HinteresLaufband.stopp();
-				}
-					
-				if(Flasche == FlaschenType.Mehrweg){
-						
-					m_HinteresLaufband.vorwaerts();
-					m_Auswahlklappe.stellen(Flasche.Mehrweg);
-					
-					while(s_MehrwegBehaelterLichtschranke.read() != true){
-						//Thread.currentThread().sleep(1000);
-					}
-					while(s_MehrwegBehaelterLichtschranke.read() !=false){
-						//Thread.currentThread().sleep(1000);
-					}
-					
-					m_HinteresLaufband.stopp();
-				}
+			//Thread.currentThread().sleep(1000);
 		}
 		
+		public boolean Durchlauf(Sensor s){
+			
+			int i = 0;
+			int grenze = 10;
+			
+			while(s.read() != true && i < grenze){
+				
+				i++;
+				wait(1000);
+				
+			}
+			
+			if (i >= grenze){
+				
+				return false;
+			}
+			
+			i = 0;
+			
+			while(s.read() !=false && i < grenze){
+				
+				i++;
+				wait(1000);
+			}	
+			
+			if (i >= grenze){
+				
+				return false;
+			}
+			
+			return true;
+		}
+		
+		public boolean Flasche_weiterleiten(FlaschenType Flasche){
+			
+			switch (Flasche) {
+			
+				case PET:
+					
+						m_HinteresLaufband.vorwaerts();
+						m_Auswahlklappe.stellen(Flasche);
+						
+						getUebergabeLichtschrankePET();
+						
+						m_HinteresLaufband.stopp();
+						
+						return true;
+				
+				case Mehrweg:
+					
+						m_HinteresLaufband.vorwaerts();
+						m_Auswahlklappe.stellen(Flasche);	
+						
+						getUebergabeLichtschrankeMehrweg();
+						
+						m_HinteresLaufband.stopp();
+						
+						return true;
+	
+				default:
+						
+						m_HinteresLaufband.rueckwerts();
+						
+						return false;
+				
+			}
+		}
+			
+
 		public boolean getUebergabeLichtschrankeMehrweg(){
 		
-			return false;
+			return Durchlauf(s_MehrwegBehaelterLichtschranke);
+			
 		}
 		
 		public boolean getUebergabeLichtschrankePET(){
 		
-			return false;
+			return Durchlauf(s_PetBehaelterLichtschranke);
 		}
 		
 }
