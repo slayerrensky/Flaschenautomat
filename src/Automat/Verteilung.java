@@ -29,6 +29,39 @@ public class Verteilung {
 			//Thread.currentThread().sleep(1000);
 		}
 		
+		public boolean Durchlauf(Sensor s){
+			
+			int i = 0;
+			int grenze = 10;
+			
+			while(s.read() != true && i < grenze){
+				
+				i++;
+				wait(1000);
+				
+			}
+			
+			if (i >= grenze){
+				
+				return false;
+			}
+			
+			i = 0;
+			
+			while(s.read() !=false && i < grenze){
+				
+				i++;
+				wait(1000);
+			}	
+			
+			if (i >= grenze){
+				
+				return false;
+			}
+			
+			return true;
+		}
+		
 		public boolean Flasche_weiterleiten(FlaschenType Flasche){
 			
 			switch (Flasche) {
@@ -67,68 +100,13 @@ public class Verteilung {
 
 		public boolean getUebergabeLichtschrankeMehrweg(){
 		
-			int i = 0;
-			int grenze = 10;
+			return Durchlauf(s_MehrwegBehaelterLichtschranke);
 			
-			while(s_MehrwegBehaelterLichtschranke.read() != true && i < grenze){
-				
-				i++;
-				wait(1000);
-				
-			}
-			
-			if (i >= grenze){
-				
-				return false;
-			}
-			
-			i = 0;
-			
-			while(s_MehrwegBehaelterLichtschranke.read() !=false && i < grenze){
-				
-				i++;
-				wait(1000);
-			}	
-			
-			if (i >= grenze){
-				
-				return false;
-			}
-			
-			return true;
 		}
 		
 		public boolean getUebergabeLichtschrankePET(){
 		
-			int i = 0;
-			int grenze = 10;
-			
-			while(s_PetBehaelterLichtschranke.read() != true && i < grenze){
-				
-				i++;
-				wait(1000);
-				
-			}
-			
-			if (i >= grenze){
-				
-				return false;
-			}
-			
-			i = 0;
-			
-			while(s_PetBehaelterLichtschranke.read() !=false && i < grenze){
-				
-				i++;
-				wait(1000);
-			}	
-			
-			if (i >= grenze){
-				
-				return false;
-			}
-			
-			return true;
+			return Durchlauf(s_PetBehaelterLichtschranke);
 		}
 		
 }
