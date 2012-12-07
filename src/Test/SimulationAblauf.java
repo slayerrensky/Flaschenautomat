@@ -2,6 +2,7 @@ package Test;
 
 import Automat.FlaschenType;
 import Automat.HWSimulation;
+import Automat.Adressen;
 import Fassade.Fassade;
 
 public class SimulationAblauf {
@@ -15,7 +16,7 @@ public class SimulationAblauf {
 	}
 	
 	public void simBeginn(FlaschenType FType) {
-		
+
 		int tmp=0;
 		
 		
@@ -24,11 +25,11 @@ public class SimulationAblauf {
 		/* 
 		 * Flasche wird eingelegt und aktiviert die vordere LS
 		 */
-		HW.write(HW.EingLS, true);
+		HW.write(Adressen.Eingangslichtschranke.ordinal(), true);
 		Fassade.simKonsolenText(0, "Sim: Eingangslichschranke aktiviert durch Flasche einlegen.");
 		try { Thread.sleep(1000); }
 		catch(Exception e){ System.out.println(e); }
-		HW.write(HW.EingLS, false);
+		HW.write(Adressen.Eingangslichtschranke.ordinal(), false);
 		
 		/*
 		 * Das System sollte nun das vordere Laufband aktivieren
@@ -36,13 +37,13 @@ public class SimulationAblauf {
 		 * die Flasche an der richtigen Position ist
 		 */
 		// hier warten auf aktivierung des Laufbandes einfügen
-		tmp = HW.readInt(HW.Scanner).intValue();
+		tmp = HW.readInt(Adressen.Scanner.ordinal()).intValue();
 		if(tmp > 0){ 
 			
-			HW.write(HW.JustierLS, true);
+			HW.write(Adressen.Justierlichtschranke.ordinal(), true);
 			Fassade.simKonsolenText(0, "Sim: Justierlichtschranke aktiviert weil vorderes Laufband. "
 										+ "die Flasche richtig positioniert hat");
-			HW.write(HW.JustierLS, false);
+			HW.write(Adressen.Justierlichtschranke.ordinal(), false);
 		}
 		else if(tmp == 0){ Fassade.simKonsolenText(0, "Fehler: vorderes Laufband" +
 				" aktiviert nicht beim Flasche einziehen."); }
@@ -58,24 +59,30 @@ public class SimulationAblauf {
 			case CodeUnlesbar :
 				
 				/*
-				 *  LaufbandDrehen dreht die Flasche zum Scannen.
-				 *  Die Simulation liefert einen Fehlercode vom Scanner,
-				 *  da kein Flaschencode gefunden werden konnte
+				 *  Testen ob das Laufband dreht
 				 */
 				tmp=0;
-				tmp=HW.readInt(HW.LBDrehen).intValue();
+				tmp=HW.readInt(Adressen.LaufbandDrehen.ordinal()).intValue();
 				if( tmp != 0){
-					Fassade.simKonsolenText(0, "Laufband dreht Flasche. Scanner liefert einen Fehlercode.");
-					HW.write(HW.Scanner, new Integer(-1));
+					Fassade.simKonsolenText(0, "Laufband dreht Flasche.");
 				}
-				else { Fassade.simKonsolenText(0, "Fehler: dreh Laufband aktiviert nicht"); }
-				
+				else { Fassade.simKonsolenText(0, "Fehler: Dreh-Laufband aktiviert nicht"); }
+				/*
+				 * testen ob der scanner funktioniert
+				 */
+				tmp=0;
+				tmp=HW.readInt(Adressen.Scanner.ordinal());
+				if( tmp == -1){
+					Fassade.simKonsolenText(0, "Scanner hat die flasche korrekt nicht erkannt.");
+				}
+				else { Fassade.simKonsolenText(0, "Fehler: Scanner hat nicht das" +
+												" korrekte Ergebnis geliefert"); }
 				
 				/*
-				 * da die Flasche nicht erkannt wurde muss sie wieder ausgeworfen werden.
+				 * da die Flasche nicht erkannt wurde muss das System sie wieder auswerfen.
 				 */
 				tmp=0;
-				tmp=HW.readInt(HW.LBEingang).intValue();
+				tmp=HW.readInt(Adressen.LaufbandEingang.ordinal()).intValue();
 				if( tmp < 0){
 					Fassade.simKonsolenText(0, "Laufband wirft Flasche wieder aus.");
 				}

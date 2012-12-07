@@ -10,27 +10,6 @@ public class HWSimulation {
 	private static HWSimulation instance = new HWSimulation();
 	private ArrayList<Comparable> mapping;
 	private Fassade dieFassade;
-	
-	//define adressing constants
-	public final int Troete = 0;
-	public final int Leuchte = 1;
-	public final int LFarbe = 2;
-	public final int AuswahlEingLS = 3;
-	public final int EingLS = 4;
-	public final int JustierLS = 5;
-	public final int AusgangsLS = 6;
-	public final int UebergabeLSPET = 7;
-	public final int UebergabeLSMehrweg = 8;
-	public final int LBEingang = 9;
-	public final int LBDrehen = 10;
-	public final int LBAusgang = 11;
-	public final int Auswahlklappe = 12;
-	public final int Scanner = 13;
-	public final int BonDrucker = 14;
-	public final int Druckknopf = 15;
-	public final int Display = 16;
-	public final int Drucker = 17;
-	
 
 	/**
 	 * Default-Konstruktor, der nicht au�erhalb dieser Klasse
