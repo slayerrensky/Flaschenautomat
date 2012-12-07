@@ -24,19 +24,24 @@ public class Annahme {
 	
 //Methoden
 	
-	public void flasch_erkenneStart(){
-		
-	}
-	
-	public void flasch_erkenneStop(){
-		
-	}
 	
 	public void Flasche_auswerfen(){
 		
 	}
 	
-	public void Flasche_positionieren(){
+	/**
+	 * Spricht alle Sensoren Aktoren an welche zum Positionieren benötigt werden
+	 * @return true wenn alles geklappt hat, false wenn flasche zurückgegeben wird (Fehlerfall)
+	 */
+	public boolean Flasche_positionieren(){
+		return false;
+	}
+	
+	public boolean flascheWeiterLeiten(){
+		
+		m_VorderesLaufband.einschalten();
+		// gegebenfalls einbauen das lichtschranke abgeprüft wird.
+		return true;
 		
 	}
 	
