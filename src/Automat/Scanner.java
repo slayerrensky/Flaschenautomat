@@ -22,7 +22,7 @@ public class Scanner extends Subjekt{
 		return lastCode;
 	}
 
-	public String Scan(){
+	public boolean Scan(){
 		workerThread.run();
 		while(workerThread.isAlive());
 		
@@ -31,9 +31,16 @@ public class Scanner extends Subjekt{
 		//return passRef[1];
 		
 		lastCode = this.HWaccess.readStr(adresse);
-		this.notifyAll();
 		
-		return lastCode;
+		if (lastCode != "")
+		{
+			this.notifyAll();
+			return true;
+		}
+		else 
+		{
+			return false;
+		}
 	}
 
 	public void stopScann(){
