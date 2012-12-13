@@ -42,7 +42,6 @@ public class Annahme {
 
 		// Laufband Rückwerts starten
 		m_VorderesLaufband.rueckwerts();
-		m_VorderesLaufband.einschalten();
 
 		// sicherstellen dass die flasche am ausgang liegt und bei evtl.
 		// reinfassen nicht gestoppt wird
@@ -73,7 +72,7 @@ public class Annahme {
 		}
 
 		// Band abschalten
-		m_VorderesLaufband.ausschalten();
+		m_VorderesLaufband.stop();
 
 		return;
 	}
@@ -94,14 +93,13 @@ public class Annahme {
 
 		// Band einschalten
 		m_VorderesLaufband.vorwaerts();
-		m_VorderesLaufband.einschalten();
 
 		// sicherstellen dass die flasche an justierung angekommen ist
 		while (s_JustierungLichtschranke.read() && workerThread.isAlive())
 			;
 
 		// Band abschalten
-		m_VorderesLaufband.ausschalten();
+		m_VorderesLaufband.stop();
 
 		// wenn wartThread aktive: beenden
 		// else zeit abgelaufen: return false
@@ -114,6 +112,11 @@ public class Annahme {
 		return true;
 	}
 
+	/**
+	 * Leitet die Flasche zum nächten Modul weiter
+	 * 
+	 * @return true wenn alles geklappt hat, false bei misserfolg
+	 */
 	public boolean flascheWeiterLeiten() {
 
 		// warte Zeit ändern in 10 sek.
@@ -124,7 +127,6 @@ public class Annahme {
 
 		// Band einschalten
 		m_VorderesLaufband.vorwaerts();
-		m_VorderesLaufband.einschalten();
 
 		// sicherstellen dass die flasche nicht an justierlichtschranke und
 		// nicht an Ausgangslichtschranke mehr ist
@@ -133,7 +135,7 @@ public class Annahme {
 			;
 
 		// Band abschalten
-		m_VorderesLaufband.ausschalten();
+		m_VorderesLaufband.stop();
 
 		// wenn wartThread aktive: beenden
 		// else zeit abgelaufen: return false
@@ -145,54 +147,58 @@ public class Annahme {
 
 		return true;
 	}
-	
-	public boolean flascheDrehenLinks() {
 
-		// warte Zeit ändern in 10 sek.
-		workerThread.setTimeout(1000);
+	/**
+	 * Dreh die Flasche immer ein stück nach rinks
+	 */
+	public void flascheDrehenLinks(int timeMS) {
+
+		// warte Zeit ändern in timeMS
+		workerThread.setTimeout(timeMS);
 
 		// warte Thread starten
 		workerThread.run();
 
 		// Band einschalten
-		// vorwaerts  == linksherum
+		// vorwaerts == linksherum
 		// rueckwerts == rechtsherum
 		m_DrehLaufband.vorwaerts();
-		m_DrehLaufband.einschalten();
 
 		// sicherstellen dass die flasche nicht an justierlichtschranke und
 		// nicht an Ausgangslichtschranke mehr ist
-		while (!s_JustierungLichtschranke.read()
-				&& !s_AusgangsLichtschranke.read() && workerThread.isAlive())
+		while (workerThread.isAlive())
 			;
 
 		// Band abschalten
-		m_VorderesLaufband.ausschalten();
-
-		// wenn wartThread aktive: beenden
-		// else zeit abgelaufen: return false
-		if (workerThread.isAlive()) {
-			workerThread.interrupt();
-		} else {
-			return false;
-		}
-
-		return true;
+		m_VorderesLaufband.stop();
 	}
 
-	public boolean getAusgangsLichtschranke() {
+	/**
+	 * Dreh die Flasche immer ein stück nach rechts
+	 */
+	public void flascheDrehenRechts(int timeMS) {
 
-		return false;
+		// warte Zeit ändern in timeMS
+		workerThread.setTimeout(timeMS);
+
+		// warte Thread starten
+		workerThread.run();
+
+		// Band einschalten
+		// vorwaerts == linksherum
+		// rueckwerts == rechtsherum
+		m_DrehLaufband.rueckwerts();
+
+		// sicherstellen dass die flasche nicht an justierlichtschranke und
+		// nicht an Ausgangslichtschranke mehr ist
+		while (workerThread.isAlive())
+			;
+
+		// Band abschalten
+		m_VorderesLaufband.stop();
 	}
 
-	public boolean getEingangsLichtschranke() {
-
-		return false;
+	public boolean getEingangsLichtschranke(){
+		return s_EingangsLichtschranke.read();
 	}
-
-	public boolean getJustierLichtschranke() {
-
-		return false;
-	}
-
 }

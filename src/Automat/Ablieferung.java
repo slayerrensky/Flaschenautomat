@@ -132,7 +132,7 @@ public class Ablieferung {
 	}
 
 	public void wartenAufFlasche(){
-		while (! m_Annahme.getAusgangsLichtschranke());
+		while (! m_Annahme.getEingangsLichtschranke());
 	}
 
 	/**

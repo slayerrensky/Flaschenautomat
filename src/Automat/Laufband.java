@@ -8,6 +8,7 @@ package Automat;
 public class Laufband extends Aktor {
 
 	private boolean gesperrt;
+	private int lastState;
 
 	public Laufband(int adresse) {
 		super(adresse);
@@ -16,17 +17,19 @@ public class Laufband extends Aktor {
 
 	public void rueckwerts(){
 		if(!gesperrt){
-			this.HWaccess.write(adresse, 0);
+			this.HWaccess.write(adresse, -1);
+			lastState = -1;
 		}
 	}
 
-	public void stopp(){
+	public void stop(){
 		this.HWaccess.write(adresse, 0);
 	}
 
 	public void vorwaerts(){
 		if(!gesperrt){
 			this.HWaccess.write(adresse, 1);
+			lastState = 1;
 		}
 	}
 	
@@ -36,5 +39,16 @@ public class Laufband extends Aktor {
 	
 	public void entsperren(){
 		gesperrt = false;
+	}
+	
+	public void ausschalten() {
+			this.HWaccess.write(adresse, 0);
+			lastState = 0;
+	}
+
+	public void einschalten() {
+		if(!gesperrt){
+			this.HWaccess.write(adresse, lastState);
+		}
 	}
 }
