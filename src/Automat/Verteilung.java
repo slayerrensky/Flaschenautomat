@@ -64,7 +64,7 @@ public class Verteilung {
 			}
 			
 			//Stopp
-			m_HinteresLaufband.stopp();
+			m_HinteresLaufband.stop();
 			
 			return true;
 		}
@@ -74,24 +74,15 @@ public class Verteilung {
 			switch (Flasche) {
 			
 				case PET:
-			
-						Durchlauf(s_PetBehaelterLichtschranke, Flasche);
-						
-						return true;
+									
+						return Durchlauf(s_PetBehaelterLichtschranke, Flasche);
+				
+				default:		
 					
 				case Mehrweg:
-						
-						Durchlauf(s_MehrwegBehaelterLichtschranke, Flasche);
 												
-						return true;
-	
-				default:
-						
-//						m_HinteresLaufband.stopp();
-						m_HinteresLaufband.rueckwerts();
-						
-						return false;
-				
+						return Durchlauf(s_MehrwegBehaelterLichtschranke, Flasche);
+		
 			}
 		}
 	
