@@ -29,29 +29,42 @@ public class Verteilung {
 
 //Methoden
 		
-		protected boolean Durchlauf(Sensor s){
-				
+		protected boolean Durchlauf(Sensor s, FlaschenType Flasche){
+			
+			//Vorwärts + Auswahlklappe
+			m_HinteresLaufband.vorwaerts();
+			m_Auswahlklappe.stellen(Flasche);
+			
 			workerThread.run();
 			
+			//Warten
 			while(!s.read() && workerThread.isAlive());
 			
+			//Wenn nicht mehr Aktiv, dann Fehler
 			if (!workerThread.isAlive()){
 				
 				return false;
 			}
 			
+			//Wenn Aktiv, dann Unterbrechen
 			if(workerThread.isAlive()){
 				workerThread.interrupt();			
 			}
 			
+			//Wieder Starten
 			workerThread.run();
 			
+			//Warten
 			while(s.read() && workerThread.isAlive());
 			
+			//Wenn nicht mehr Aktiv, dann Fehler
 			if (!workerThread.isAlive()){
 				
 				return false;
 			}
+			
+			//Stopp
+			m_HinteresLaufband.stopp();
 			
 			return true;
 		}
@@ -61,46 +74,39 @@ public class Verteilung {
 			switch (Flasche) {
 			
 				case PET:
-					
-						m_HinteresLaufband.vorwaerts();
-						m_Auswahlklappe.stellen(Flasche);
-						
-						getUebergabeLichtschrankePET();
-						
-						m_HinteresLaufband.stopp();
+			
+						Durchlauf(s_PetBehaelterLichtschranke, Flasche);
 						
 						return true;
-				
-				case Mehrweg:
 					
-						m_HinteresLaufband.vorwaerts();
-						m_Auswahlklappe.stellen(Flasche);	
+				case Mehrweg:
 						
-						getUebergabeLichtschrankeMehrweg();
-						
-						m_HinteresLaufband.stopp();
-						
+						Durchlauf(s_MehrwegBehaelterLichtschranke, Flasche);
+												
 						return true;
 	
 				default:
 						
+//						m_HinteresLaufband.stopp();
 						m_HinteresLaufband.rueckwerts();
 						
 						return false;
 				
 			}
 		}
-			
-
-		public boolean getUebergabeLichtschrankeMehrweg(){
+	
 		
-			return Durchlauf(s_MehrwegBehaelterLichtschranke);
-			
-		}
+//OLD Version
 		
-		public boolean getUebergabeLichtschrankePET(){
-		
-			return Durchlauf(s_PetBehaelterLichtschranke);
-		}
+//		public boolean getUebergabeLichtschrankeMehrweg(){
+//		
+//			return Durchlauf(s_MehrwegBehaelterLichtschranke);
+//			
+//		}
+//		
+//		public boolean getUebergabeLichtschrankePET(){
+//		
+//			return Durchlauf(s_PetBehaelterLichtschranke);
+//		}
 		
 }
