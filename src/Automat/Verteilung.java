@@ -52,9 +52,8 @@ public class Verteilung {
 			
 			m_HinteresLaufband.vorwaerts();
 			m_Auswahlklappe.stellen(Flasche);
-			Durchlauf_B(s_AuswahlklappeEingangsLichtschranke);
-			
-			return true;
+	
+			return Durchlauf_B(s_AuswahlklappeEingangsLichtschranke);
 		}
 		
 		protected boolean Durchlauf_B (Sensor s){
@@ -77,7 +76,7 @@ public class Verteilung {
 				return false;
 			}
 
-			if(s == s_PetBehaelterLichtschranke){
+			if((s.equals(s_PetBehaelterLichtschranke)) || (s.equals(s_MehrwegBehaelterLichtschranke))){
 				m_HinteresLaufband.stop();
 			}
 				
