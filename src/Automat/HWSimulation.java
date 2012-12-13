@@ -8,7 +8,7 @@ import Fassade.Fassade;
  */
 public class HWSimulation {
 	private static HWSimulation instance = new HWSimulation();
-	private ArrayList<Comparable> mapping;
+	private ArrayList<Comparable> ea_area;
 	private Fassade dieFassade;
 
 	/**
@@ -16,25 +16,25 @@ public class HWSimulation {
 	 * aufgerufen werden kann
 	 */
 	private HWSimulation() {
-		mapping = new ArrayList<Comparable>();
-		mapping.add(new Boolean(false)); // 0 Troete
-		mapping.add(new Boolean(true));  // 1 Leuchte
-		mapping.add(new Integer(0)); 	 // 2 Leuchte -Farbe
-		mapping.add(new Boolean(false)); // 3 AuswahlklappeEingangslichtschranke
-		mapping.add(new Boolean(false)); // 4 Eingangslichtschranke
-		mapping.add(new Boolean(false)); // 5 Justierlichtschranke
-		mapping.add(new Boolean(false)); // 6 Ausgangslichtschranke
-		mapping.add(new Boolean(false)); // 7 UebergabelichtschrankePET
-		mapping.add(new Boolean(false)); // 8 UebergabelichtschrankeMehrweg
-		mapping.add(new Integer(0)); // 9 LaufbandEingang
-		mapping.add(new Integer(0)); // 10 LaufbandDrehen
-		mapping.add(new Integer(0)); // 11 LaufbandAusgang
-		mapping.add(new Boolean(false)); // 12 Auswahlklappe
-		mapping.add(new Integer(0)); 	 // 13 Scanner
-		mapping.add(new Boolean(false)); // 14 BonDrucker
-		mapping.add(new Boolean(false)); // 15 Druckknopf
-		mapping.add(new String("init")); // 16 Display
-		mapping.add(new String("init")); // 17 Drucker
+		ea_area = new ArrayList<Comparable>();
+		ea_area.add(new Boolean(false)); // 0 Troete
+		ea_area.add(new Boolean(true));  // 1 Leuchte
+		ea_area.add(new Integer(0)); 	 // 2 Leuchte -Farbe
+		ea_area.add(new Boolean(false)); // 3 AuswahlklappeEingangslichtschranke
+		ea_area.add(new Boolean(false)); // 4 Eingangslichtschranke
+		ea_area.add(new Boolean(false)); // 5 Justierlichtschranke
+		ea_area.add(new Boolean(false)); // 6 Ausgangslichtschranke
+		ea_area.add(new Boolean(false)); // 7 UebergabelichtschrankePET
+		ea_area.add(new Boolean(false)); // 8 UebergabelichtschrankeMehrweg
+		ea_area.add(new Integer(0)); // 9 LaufbandEingang
+		ea_area.add(new Integer(0)); // 10 LaufbandDrehen
+		ea_area.add(new Integer(0)); // 11 LaufbandAusgang
+		ea_area.add(new Boolean(false)); // 12 Auswahlklappe
+		ea_area.add(new Integer(0)); 	 // 13 Scanner
+		ea_area.add(new Boolean(false)); // 14 BonDrucker
+		ea_area.add(new Boolean(false)); // 15 Druckknopf
+		ea_area.add(new String("init")); // 16 Display
+		ea_area.add(new String("init")); // 17 Drucker
 	}
 
 	/**
@@ -46,43 +46,43 @@ public class HWSimulation {
 	}
 	
 	public Boolean readBool(int adresse){
-		Boolean status = (Boolean) mapping.get(adresse);
+		Boolean status = (Boolean) ea_area.get(adresse);
 		dieFassade.simKonsolenText(0, "[read:"+adresse+"] "+status);
 		return status;		
 	}
 	
 	public Integer readInt(int adresse){
-		Integer number = (Integer) mapping.get(adresse);
+		Integer number = (Integer) ea_area.get(adresse);
 		dieFassade.simKonsolenText(0, "[read:"+adresse+"] "+number);
 		return number;		
 	}
 	
 	public String readStr(int adresse){
-		String text = (String) mapping.get(adresse);
+		String text = (String) ea_area.get(adresse);
 		dieFassade.simKonsolenText(0, "[read:"+adresse+"] \""+text+"\"");
 		return text;
 	}
 	
 	public void write(int adresse, Boolean status){
-		mapping.set(adresse, status);
-		dieFassade.aktuallisereHW(mapping);
+		ea_area.set(adresse, status);
+		dieFassade.aktuallisereHW(ea_area);
 		dieFassade.simKonsolenText(0, "[write:"+adresse+"] "+status);
 	}
 	
 	public void write(int adresse, Integer number){
-		mapping.set(adresse, number);
-		dieFassade.aktuallisereHW(mapping);
+		ea_area.set(adresse, number);
+		dieFassade.aktuallisereHW(ea_area);
 		dieFassade.simKonsolenText(0, "[write:"+adresse+"] "+number);
 	}
 	
 	public void write(int adresse, String text){
-		mapping.set(adresse, text);
-		dieFassade.aktuallisereHW(mapping);
+		ea_area.set(adresse, text);
+		dieFassade.aktuallisereHW(ea_area);
 		dieFassade.simKonsolenText(0, "[write:"+adresse+"] \""+text+"\"");
 	}
 	
 	public void setF(Fassade dieFassade){
 		this.dieFassade = dieFassade;
-		this.dieFassade.aktuallisereHW(mapping);
+		this.dieFassade.aktuallisereHW(ea_area);
 	}
 }
