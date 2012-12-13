@@ -29,37 +29,41 @@ public class Verteilung {
 
 //Methoden
 		
-		protected boolean Durchlauf(Sensor s){
-			
+		protected boolean Durchlauf_B(Sensor s){
 			
 			workerThread.run();
-				
-			//Warten
+		
 			while(!s.read() && workerThread.isAlive());
-				
-			//Wenn nicht mehr Aktiv, dann Fehler
+
 			if (!workerThread.isAlive()){
 					
 				return false;
 			}
-				
-			//Wenn Aktiv, dann Unterbrechen
+		
 			if(workerThread.isAlive()){
 				workerThread.interrupt();			
 			}
-				
-			//Wieder Starten
+
 			workerThread.run();
-				
-			//Warten
+
 			while(s.read() && workerThread.isAlive());
 				
-			//Wenn nicht mehr Aktiv, dann Fehler
 			if (!workerThread.isAlive()){
 					
 				return false;
 			}
-
+			
+			
+			
+			return true;
+		}
+		
+		protected boolean Durchlauf_A (FlaschenType Flasche){
+			
+			m_HinteresLaufband.vorwaerts();
+			m_Auswahlklappe.stellen(Flasche);
+			Durchlauf_B(s_AuswahlklappeEingangsLichtschranke);
+			
 			return true;
 		}
 		
@@ -68,28 +72,18 @@ public class Verteilung {
 			switch (Flasche) {
 			
 				case PET:
-						m_HinteresLaufband.vorwaerts();
-						m_Auswahlklappe.stellen(Flasche);			
 						
-						Durchlauf(s_AuswahlklappeEingangsLichtschranke);
-						Durchlauf(s_PetBehaelterLichtschranke);
-						
+						Durchlauf_A(Flasche);
+						Durchlauf_B(s_PetBehaelterLichtschranke);
 						m_HinteresLaufband.stop();
-						
 						return true;
-				
 				default:		
 					
 				case Mehrweg:
 						
-						m_HinteresLaufband.vorwaerts();
-						m_Auswahlklappe.stellen(Flasche);			
-						
-						Durchlauf(s_AuswahlklappeEingangsLichtschranke);
-						Durchlauf(s_MehrwegBehaelterLichtschranke);
-						
+						Durchlauf_A(Flasche);
+						Durchlauf_B(s_MehrwegBehaelterLichtschranke);
 						m_HinteresLaufband.stop();
-												
 						return true;
 		
 			}
