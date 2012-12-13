@@ -28,10 +28,6 @@ public class Verteilung {
 		}
 
 //Methoden
-		protected void wait (int Sek){
-			
-			//Thread.currentThread().sleep(1000);
-		}
 		
 		protected boolean Durchlauf(Sensor s){
 				
