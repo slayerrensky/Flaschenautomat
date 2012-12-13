@@ -29,47 +29,36 @@ public class Verteilung {
 
 //Methoden
 		
-		protected boolean Durchlauf(Sensor s, FlaschenType Flasche){
+		protected boolean Durchlauf(Sensor s){
 			
-			//Vorwärts + Auswahlklappe
-			m_HinteresLaufband.vorwaerts();
-			m_Auswahlklappe.stellen(Flasche);
 			
-			if(s_AuswahlklappeEingangsLichtschranke.read()){
+			workerThread.run();
 				
-				workerThread.run();
+			//Warten
+			while(!s.read() && workerThread.isAlive());
 				
-				//Warten
-				while(!s.read() && workerThread.isAlive());
-				
-				//Wenn nicht mehr Aktiv, dann Fehler
-				if (!workerThread.isAlive()){
+			//Wenn nicht mehr Aktiv, dann Fehler
+			if (!workerThread.isAlive()){
 					
-					return false;
-				}
-				
-				//Wenn Aktiv, dann Unterbrechen
-				if(workerThread.isAlive()){
-					workerThread.interrupt();			
-				}
-				
-				//Wieder Starten
-				workerThread.run();
-				
-				//Warten
-				while(s.read() && workerThread.isAlive());
-				
-				//Wenn nicht mehr Aktiv, dann Fehler
-				if (!workerThread.isAlive()){
-					
-					return false;
-				}
-				
-				//Stopp
-				m_HinteresLaufband.stop();
-				
-			}else
 				return false;
+			}
+				
+			//Wenn Aktiv, dann Unterbrechen
+			if(workerThread.isAlive()){
+				workerThread.interrupt();			
+			}
+				
+			//Wieder Starten
+			workerThread.run();
+				
+			//Warten
+			while(s.read() && workerThread.isAlive());
+				
+			//Wenn nicht mehr Aktiv, dann Fehler
+			if (!workerThread.isAlive()){
+					
+				return false;
+			}
 
 			return true;
 		}
@@ -79,14 +68,29 @@ public class Verteilung {
 			switch (Flasche) {
 			
 				case PET:
-									
-						return Durchlauf(s_PetBehaelterLichtschranke, Flasche);
+						m_HinteresLaufband.vorwaerts();
+						m_Auswahlklappe.stellen(Flasche);			
+						
+						Durchlauf(s_AuswahlklappeEingangsLichtschranke);
+						Durchlauf(s_PetBehaelterLichtschranke);
+						
+						m_HinteresLaufband.stop();
+						
+						return true;
 				
 				default:		
 					
 				case Mehrweg:
+						
+						m_HinteresLaufband.vorwaerts();
+						m_Auswahlklappe.stellen(Flasche);			
+						
+						Durchlauf(s_AuswahlklappeEingangsLichtschranke);
+						Durchlauf(s_MehrwegBehaelterLichtschranke);
+						
+						m_HinteresLaufband.stop();
 												
-						return Durchlauf(s_MehrwegBehaelterLichtschranke, Flasche);
+						return true;
 		
 			}
 		}
