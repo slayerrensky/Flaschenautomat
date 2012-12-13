@@ -71,7 +71,7 @@ public class Verteilung {
 						
 						getUebergabeLichtschrankePET();
 						
-						m_HinteresLaufband.stopp();
+						m_HinteresLaufband.stop();
 						
 						return true;
 				
@@ -82,7 +82,7 @@ public class Verteilung {
 						
 						getUebergabeLichtschrankeMehrweg();
 						
-						m_HinteresLaufband.stopp();
+						m_HinteresLaufband.stop();
 						
 						return true;
 	
