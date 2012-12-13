@@ -14,4 +14,11 @@ public class ParallelWarteClass extends Thread {
 			interrupt();
 		}
 	}
+	
+	public void setTimeout(int timeoutMS){
+		if(! this.isAlive())
+		{
+			this.timeoutMS = timeoutMS;
+		}
+	}
 }
