@@ -29,33 +29,23 @@ public class Verteilung {
 
 //Methoden
 		
-		protected boolean Durchlauf_B(Sensor s){
+		public boolean Flasche_weiterleiten (FlaschenType Flasche){
 			
-			workerThread.run();
-		
-			while(!s.read() && workerThread.isAlive());
-
-			if (!workerThread.isAlive()){
+			switch (Flasche) {
+			
+				case PET:
+						
+						Durchlauf_A(Flasche);		
+						return Durchlauf_B(s_PetBehaelterLichtschranke);
+						
+				default:		
 					
-				return false;
-			}
+				case Mehrweg:
+						
+						Durchlauf_A(Flasche);
+						return Durchlauf_B(s_MehrwegBehaelterLichtschranke);
 		
-			if(workerThread.isAlive()){
-				workerThread.interrupt();			
 			}
-
-			workerThread.run();
-
-			while(s.read() && workerThread.isAlive());
-				
-			if (!workerThread.isAlive()){
-					
-				return false;
-			}
-			
-			
-			
-			return true;
 		}
 		
 		protected boolean Durchlauf_A (FlaschenType Flasche){
@@ -67,25 +57,30 @@ public class Verteilung {
 			return true;
 		}
 		
-		public boolean Flasche_weiterleiten(FlaschenType Flasche){
+		protected boolean Durchlauf_B (Sensor s){
 			
-			switch (Flasche) {
+			workerThread.run();
+			while(!s.read() && workerThread.isAlive());
 			
-				case PET:
-						
-						Durchlauf_A(Flasche);
-						Durchlauf_B(s_PetBehaelterLichtschranke);
-						m_HinteresLaufband.stop();
-						return true;
-				default:		
-					
-				case Mehrweg:
-						
-						Durchlauf_A(Flasche);
-						Durchlauf_B(s_MehrwegBehaelterLichtschranke);
-						m_HinteresLaufband.stop();
-						return true;
-		
+			if (!workerThread.isAlive()){		
+				return false;
 			}
+		
+			if(workerThread.isAlive()){
+				workerThread.interrupt();			
+			}
+
+			workerThread.run();
+			while(s.read() && workerThread.isAlive());
+				
+			if (!workerThread.isAlive()){
+				return false;
+			}
+
+			if(s == s_PetBehaelterLichtschranke){
+				m_HinteresLaufband.stop();
+			}
+				
+			return true;
 		}
 }
