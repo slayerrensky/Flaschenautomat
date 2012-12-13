@@ -35,36 +35,41 @@ public class Verteilung {
 			m_HinteresLaufband.vorwaerts();
 			m_Auswahlklappe.stellen(Flasche);
 			
-			workerThread.run();
-			
-			//Warten
-			while(!s.read() && workerThread.isAlive());
-			
-			//Wenn nicht mehr Aktiv, dann Fehler
-			if (!workerThread.isAlive()){
+			if(s_AuswahlklappeEingangsLichtschranke.read()){
 				
-				return false;
-			}
-			
-			//Wenn Aktiv, dann Unterbrechen
-			if(workerThread.isAlive()){
-				workerThread.interrupt();			
-			}
-			
-			//Wieder Starten
-			workerThread.run();
-			
-			//Warten
-			while(s.read() && workerThread.isAlive());
-			
-			//Wenn nicht mehr Aktiv, dann Fehler
-			if (!workerThread.isAlive()){
+				workerThread.run();
 				
+				//Warten
+				while(!s.read() && workerThread.isAlive());
+				
+				//Wenn nicht mehr Aktiv, dann Fehler
+				if (!workerThread.isAlive()){
+					
+					return false;
+				}
+				
+				//Wenn Aktiv, dann Unterbrechen
+				if(workerThread.isAlive()){
+					workerThread.interrupt();			
+				}
+				
+				//Wieder Starten
+				workerThread.run();
+				
+				//Warten
+				while(s.read() && workerThread.isAlive());
+				
+				//Wenn nicht mehr Aktiv, dann Fehler
+				if (!workerThread.isAlive()){
+					
+					return false;
+				}
+				
+				//Stopp
+				m_HinteresLaufband.stop();
+				
+			}else
 				return false;
-			}
-			
-			//Stopp
-			m_HinteresLaufband.stop();
 
 			return true;
 		}
@@ -85,19 +90,4 @@ public class Verteilung {
 		
 			}
 		}
-	
-		
-//OLD Version
-		
-//		public boolean getUebergabeLichtschrankeMehrweg(){
-//		
-//			return Durchlauf(s_MehrwegBehaelterLichtschranke);
-//			
-//		}
-//		
-//		public boolean getUebergabeLichtschrankePET(){
-//		
-//			return Durchlauf(s_PetBehaelterLichtschranke);
-//		}
-		
 }
