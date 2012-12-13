@@ -76,7 +76,8 @@ public class Verteilung {
 				return false;
 			}
 
-			if((s.equals(s_PetBehaelterLichtschranke)) || (s.equals(s_MehrwegBehaelterLichtschranke))){
+			if((s.equals(s_PetBehaelterLichtschranke)) || 
+					(s.equals(s_MehrwegBehaelterLichtschranke))){
 				m_HinteresLaufband.stop();
 			}
 				
