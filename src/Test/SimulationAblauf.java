@@ -5,17 +5,22 @@ import Automat.HWSimulation;
 import Automat.Adressen;
 import Fassade.Fassade;
 
-public class SimulationAblauf {
+public class SimulationAblauf extends Thread {
 	
 	private Fassade Fassade;
 	private HWSimulation HW;
 	
-	public SimulationAblauf(Fassade fassade) {
+	private FlaschenType FType;
+	
+	public SimulationAblauf(Fassade fassade,FlaschenType FTypeIn) {
 		Fassade = fassade;
 		HW = HWSimulation.getInstance();
+		FType = FTypeIn;
 	}
 	
-	public void simBeginn(FlaschenType FType) {
+	
+	
+	public void run() {
 
 		int tmp=0;
 		
@@ -23,7 +28,7 @@ public class SimulationAblauf {
 		Fassade.simKonsolenText(0, "Simulation einer Flasche des Typs: " + FType.toString());
 		
 		/* 
-		 * Flasche wird eingelegt und aktiviert die vordere LS
+		 * Flasche wird eingelegt und aktiviert die vordere LS für eine Sekunde
 		 */
 		HW.write(Adressen.Eingangslichtschranke.ordinal(), true);
 		Fassade.simKonsolenText(0, "Sim: Eingangslichschranke aktiviert durch Flasche einlegen.");
@@ -36,7 +41,9 @@ public class SimulationAblauf {
 		 * Die Justierungslichtschranke wird aktiviert sobald
 		 * die Flasche an der richtigen Position ist
 		 */
+		
 		// hier warten auf aktivierung des Laufbandes einfügen
+		
 		tmp = HW.readInt(Adressen.Scanner.ordinal()).intValue();
 		if(tmp > 0){ 
 			

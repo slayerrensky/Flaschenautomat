@@ -25,7 +25,6 @@ public class Fassade {
 	public Fassade() {
 		SIMGui = new SimulationGUI(this);
 		HWGui = new HardwareGUI(this);
-		SimAblauf = new SimulationAblauf(this);
 		this.HWaccess = HWSimulation.getInstance();
 		this.HWaccess.setF(this);
 		String FlaschenfilePathasString = "./flaschenfile.txt";
@@ -77,13 +76,13 @@ public class Fassade {
 	}
 
 	/**
-	 * Wenn der Bon Button in der GUI gedrückt wurde
+	 * Wenn der Bon Button in der GUI gedrï¿½ckt wurde
 	 */
 	public void bonAnfordern() {
 		FachklasseAblieferung.test();
 		// Ausgabe auf Gui.Monitoring
 		// Automat.Ablieferung etwas tuhen
-		SIMGui.MonitoringUpdate("Bon Button wurde gedrückt");
+		SIMGui.MonitoringUpdate("Bon Button wurde gedrï¿½ckt");
 	}
 
 	/**
@@ -125,15 +124,16 @@ public class Fassade {
 	 * @param Type
 	 */
 	public void simFlascheEinlegen(FlaschenType Type) {
-		SimAblauf.simBeginn(Type);
+		SimAblauf = new SimulationAblauf(this,Type);
+		SimAblauf.start();
 	}
 
 	public void warnsignalAN() {
-		SIMGui.MonitoringUpdate("Trï¿½te wurd eingeschaltet");
+		SIMGui.MonitoringUpdate("TrÃ¶te wurde eingeschaltet");
 	}
 
 	public void warnsignalAUS() {
-		SIMGui.MonitoringUpdate("Trï¿½te wurd AUSgeschaltet");
+		SIMGui.MonitoringUpdate("TrÃ¶te wurde AUSgeschaltet");
 	}
 
 }
