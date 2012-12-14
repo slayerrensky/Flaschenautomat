@@ -31,19 +31,23 @@ public class Verteilung {
 		
 		public boolean Flasche_weiterleiten (FlaschenType Flasche){
 			
+			if( ! Durchlauf_A(Flasche)){
+				return false;
+			}
+			
 			switch (Flasche) {
 			
 				case PET:
-						
-					Durchlauf_A(Flasche);		
-					return Durchlauf_B(s_PetBehaelterLichtschranke);
-						
-				default:		
+							
+					return Durchlauf_B(s_PetBehaelterLichtschranke);		
 					
 				case Mehrweg:
 						
-					Durchlauf_A(Flasche);
 					return Durchlauf_B(s_MehrwegBehaelterLichtschranke);
+				
+				default:
+					
+					return false;
 			}
 		}
 		
