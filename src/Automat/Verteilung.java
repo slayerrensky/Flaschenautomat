@@ -35,16 +35,15 @@ public class Verteilung {
 			
 				case PET:
 						
-						Durchlauf_A(Flasche);		
-						return Durchlauf_B(s_PetBehaelterLichtschranke);
+					Durchlauf_A(Flasche);		
+					return Durchlauf_B(s_PetBehaelterLichtschranke);
 						
 				default:		
 					
 				case Mehrweg:
 						
-						Durchlauf_A(Flasche);
-						return Durchlauf_B(s_MehrwegBehaelterLichtschranke);
-		
+					Durchlauf_A(Flasche);
+					return Durchlauf_B(s_MehrwegBehaelterLichtschranke);
 			}
 		}
 		
