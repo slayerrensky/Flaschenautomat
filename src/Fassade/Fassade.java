@@ -40,6 +40,7 @@ public class Fassade {
 			public void run() {
 				try {
 					Fassade DieFassade = new Fassade();
+					DieFassade.startAblieferung();
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -135,5 +136,8 @@ public class Fassade {
 	public void warnsignalAUS() {
 		SIMGui.MonitoringUpdate("Tröte wurde AUSgeschaltet");
 	}
-
+	public void startAblieferung()
+	{
+		FachklasseAblieferung.run();
+	}
 }

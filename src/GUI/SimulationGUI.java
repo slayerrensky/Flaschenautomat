@@ -98,7 +98,7 @@ public class SimulationGUI {
 		frmSimulationhelper = new JFrame();
 		frmSimulationhelper.setResizable(false);
 		frmSimulationhelper.setTitle("Simulation");
-		frmSimulationhelper.setBounds(100, 100, 500, 710);
+		frmSimulationhelper.setBounds(100, 100, 669, 710);
 		frmSimulationhelper.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSimulationhelper.getContentPane().setLayout(new MigLayout("", "[196.00px][144px,grow][193.00px]", "[675.00px,grow]"));
 		

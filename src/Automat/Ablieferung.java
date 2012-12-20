@@ -9,7 +9,7 @@ import Fassade.Fassade;
  * @version 1.0
  * @created 26-Okt-2012 07:10:54
  */
-public class Ablieferung {
+public class Ablieferung extends Thread{
 
 	private boolean ButtonPressed = false;
 	/**
@@ -51,6 +51,11 @@ public class Ablieferung {
 
 	}
 	
+	public void run()
+	{
+		ablaufFlaschenablieferung();
+	}
+	
 	/**
 	 * Hier ist der UseCase Ablauf für eine Flaschenablieferung niedergeschrieben.
 	 */
@@ -66,7 +71,10 @@ public class Ablieferung {
 			workerThread.run();
 			while (!(scan = m_scanner.Scan()) && versuche <= 6)
 			{
+				DieFassade.simKonsolenText(0, "Flasche nicht erkannt.");
+				DieFassade.simKonsolenText(0, "Sleep 1000 ms.");
 				workerThread.isAlive();
+				DieFassade.simKonsolenText(0, "Flasche nach rechts drehen.");
 				m_Annahme.flascheDrehenRechts(1000);
 				versuche++;
 			}
