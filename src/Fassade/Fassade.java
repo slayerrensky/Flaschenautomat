@@ -40,7 +40,7 @@ public class Fassade {
 			public void run() {
 				try {
 					Fassade DieFassade = new Fassade();
-					DieFassade.startAblieferung();
+					//DieFassade.startAblieferung();
 					
 				} catch (Exception e) {
 					e.printStackTrace();
