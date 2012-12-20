@@ -27,7 +27,7 @@ public class Ablieferung {
 	private double Guthaben;
 	private Fassade DieFassade;
 	private Scanner m_scanner;
-	
+	private ParallelWarteClass workerThread;
 	
 	public Ablieferung(Fassade fassade, LinkedList<Flasche> ListofBottlesTag, LinkedList<Flasche> ListofBottlesKunde){
 		DieFassade = fassade;
@@ -44,7 +44,7 @@ public class Ablieferung {
 		//m_FlaschenZaehlerSubject.attach(m_TagesZaehler);
 		HWSimulation HWaccess = HWSimulation.getInstance();
 		HWaccess.write(Adressen.Leuchte_Frabe.ordinal(), 2);
-		
+		workerThread = new ParallelWarteClass(1000);
 	}
 
 	public void AbbruchDurchButton(){
@@ -60,36 +60,54 @@ public class Ablieferung {
 		if (m_Annahme.Flasche_positionieren())
 		{
 			int flaschenanzahl = m_KundenZaehler.getGesamtAnzahlFlaschen();
-			if (m_scanner.Scan())
+			
+			int versuche; versuche = 0;
+			boolean scan;
+			workerThread.run();
+			while (!(scan = m_scanner.Scan()) && versuche <= 6)
+			{
+				workerThread.isAlive();
+				m_Annahme.flascheDrehenRechts(1000);
+				versuche++;
+			}
+			if (scan)
 			{
 				//anzahl kontrollieren
 				if (flaschenanzahl == (m_KundenZaehler.getGesamtAnzahlFlaschen() - 1))
 				{
 					DieFassade.simKonsolenText(0, "Annahme: Flasche weiterleiten.");
 					m_Annahme.flascheWeiterLeiten();
-					DieFassade.simKonsolenText(0, "verteilung: Flasche weiterleiten.");
+					DieFassade.simKonsolenText(0, "Verteilung: Flasche weiterleiten.");
 					if (m_Verteilung.Flasche_weiterleiten(m_KundenZaehler.getLastFlaschenType()))
 					{
 						DieFassade.simKonsolenText(0, "Flasche erfolgreich abgegeben.");						
 					}
 					else
 					{
+						DieFassade.simKonsolenText(0, "Flasche konnte nicht weitergeleitet werden.");
+						DieFassade.simKonsolenText(0, "Flasche wird zurück gegeben.");
 						flascheZurueckGeben();
 					}
 				}
 				else
 				{
+					DieFassade.simKonsolenText(0, "Flaschencode ist nicht im System.");
+					DieFassade.simKonsolenText(0, "Flasche wird zurück gegeben.");
 					flascheZurueckGeben();
 				}
 			}
 			else
 			{
+				DieFassade.simKonsolenText(0, "Flasche Code ist nicht im System.");
+				DieFassade.simKonsolenText(0, "Flasche wird zurück gegeben.");
 				flascheZurueckGeben();
 			}
 				
 		}
 		else
 		{
+			DieFassade.simKonsolenText(0, "Flasche konnte nicht positioniert werden.");
+			DieFassade.simKonsolenText(0, "Flasche wird zurück gegeben.");
 			flascheZurueckGeben();
 		}
 		
