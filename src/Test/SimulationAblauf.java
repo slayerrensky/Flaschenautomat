@@ -3,23 +3,26 @@ package Test;
 import Automat.FlaschenType;
 import Automat.HWSimulation;
 import Automat.Adressen;
+import Automat.ParallelWarteClass;
 import Fassade.Fassade;
 
 public class SimulationAblauf extends Thread {
 	
 	private Fassade Fassade;
 	private HWSimulation HW;
-	
 	private FlaschenType FType;
+	private ParallelWarteClass workerThread;
 	
 	public SimulationAblauf(Fassade fassade,FlaschenType FTypeIn) {
 		Fassade = fassade;
 		HW = HWSimulation.getInstance();
 		FType = FTypeIn;
+		workerThread = new ParallelWarteClass(1000);
 	}
 	
 	
 	
+		
 	public void run() {
 
 		int tmp=0;
@@ -36,6 +39,8 @@ public class SimulationAblauf extends Thread {
 		catch(Exception e){ System.out.println(e); }
 		HW.write(Adressen.Eingangslichtschranke.ordinal(), false);
 		
+		
+		
 		/*
 		 * Das System sollte nun das vordere Laufband aktivieren
 		 * Die Justierungslichtschranke wird aktiviert sobald
@@ -46,6 +51,15 @@ public class SimulationAblauf extends Thread {
 		
 		tmp = HW.readInt(Adressen.Scanner.ordinal()).intValue();
 		if(tmp > 0){ 
+			// warten bis das Laufband angeschaltet wurde
+			while (HW.readInt(Adressen.LaufbandEingang.ordinal()) == 1)
+			{
+				workerThread.run();
+				workerThread.isAlive();
+			}
+			
+			try { Thread.sleep(3000); }
+			catch(Exception e){ System.out.println(e); }
 			
 			HW.write(Adressen.Justierlichtschranke.ordinal(), true);
 			Fassade.simKonsolenText(0, "Sim: Justierlichtschranke aktiviert weil vorderes Laufband. "
