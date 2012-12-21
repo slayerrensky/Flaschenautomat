@@ -8,14 +8,16 @@ package Automat;
 public class Scanner extends Subjekt{
 
 	private int adresse;
-	private String lastCode;
+	private String lastCode = "00000";
 	private HWSimulation HWaccess;
 	private ParallelWarteClass workerThread;
+	private int timeoutMS; 
 	
 	public Scanner(int adresse, int timeoutMS){
 		this.adresse = adresse;
 		this.HWaccess = HWSimulation.getInstance();
-		workerThread = new ParallelWarteClass(timeoutMS);
+		workerThread = new ParallelWarteClass(1000);
+		this.timeoutMS = timeoutMS;
 	}
 
 	public String getSubjectState(){
@@ -23,18 +25,25 @@ public class Scanner extends Subjekt{
 	}
 
 	public boolean Scan(){
-		workerThread.run();
-		while(workerThread.isAlive());
+		
+		int time = 0;
+		while(( null == (lastCode = this.HWaccess.readStr(adresse))) && time <= timeoutMS);
+		{
+			workerThread.run();
+			workerThread.isAlive();
+			time += 1000;
+			
+		}
 		
 		//int[] passRef = new int[1];
 		//HWaccess.read(this.adresse, passRef);
 		//return passRef[1];
 		
-		lastCode = this.HWaccess.readStr(adresse);
+		
 		
 		if (lastCode != "")
 		{
-			this.notifyAll();
+			this.notifyObservers();
 			return true;
 		}
 		else 

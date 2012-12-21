@@ -21,13 +21,16 @@ public class FlaschenZaehler extends Observer{
 	public void update() {
 		String flaschencode = subject.getSubjectState();
 		
-		for (Flasche f : abgeleiferteFlaschen)
-		{
-			if (f.getCode().compareTo(flaschencode)==0)
+		if (abgeleiferteFlaschen != null)
+		{	
+			for (Flasche f : abgeleiferteFlaschen)
 			{
-				f.AnzahlInc();
-				GesamtAnzahlFlaschen++;
-				lastFlaschenType = f.getType();
+				if (f.getCode().compareTo(flaschencode)==0)
+				{
+					f.AnzahlInc();
+					GesamtAnzahlFlaschen++;
+					lastFlaschenType = f.getType();
+				}
 			}
 		}
 	}

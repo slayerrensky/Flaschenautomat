@@ -86,20 +86,25 @@ public class Annahme {
 	public boolean Flasche_positionieren() {
 
 		// warte Zeit ändern in 10 sek.
-		workerThread.setTimeout(1000);
+		workerThread = new ParallelWarteClass(10000);
 
 		// warte Thread starten
-		workerThread.run();
+		workerThread.start();
 
 		// Band einschalten
 		m_VorderesLaufband.vorwaerts();
+		
 
 		// sicherstellen dass die flasche an justierung angekommen ist
-		while (s_JustierungLichtschranke.read() && workerThread.isAlive())
-			;
-
+		while (!s_JustierungLichtschranke.read() && workerThread.isAlive())
+		{
+			workerThread.wait(1000);
+		}
+		
+		
 		// Band abschalten
 		m_VorderesLaufband.stop();
+
 
 		// wenn wartThread aktive: beenden
 		// else zeit abgelaufen: return false
@@ -108,7 +113,6 @@ public class Annahme {
 		} else {
 			return false;
 		}
-
 		return true;
 	}
 
@@ -120,19 +124,22 @@ public class Annahme {
 	public boolean flascheWeiterLeiten() {
 
 		// warte Zeit ändern in 10 sek.
-		workerThread.setTimeout(1000);
+		workerThread = new ParallelWarteClass(10000);
 
 		// warte Thread starten
-		workerThread.run();
+		workerThread.start();
 
 		// Band einschalten
 		m_VorderesLaufband.vorwaerts();
 
+		
 		// sicherstellen dass die flasche nicht an justierlichtschranke und
 		// nicht an Ausgangslichtschranke mehr ist
 		while (!s_JustierungLichtschranke.read()
 				&& !s_AusgangsLichtschranke.read() && workerThread.isAlive())
-			;
+		{
+			workerThread.wait(1000);
+		}
 
 		// Band abschalten
 		m_VorderesLaufband.stop();
@@ -154,10 +161,10 @@ public class Annahme {
 	public void flascheDrehenLinks(int timeMS) {
 
 		// warte Zeit ändern in timeMS
-		workerThread.setTimeout(timeMS);
+		workerThread =  new ParallelWarteClass(timeMS);
 
 		// warte Thread starten
-		workerThread.run();
+		workerThread.start();
 
 		// Band einschalten
 		// vorwaerts == linksherum
@@ -179,10 +186,10 @@ public class Annahme {
 	public void flascheDrehenRechts(int timeMS) {
 
 		// warte Zeit ändern in timeMS
-		workerThread.setTimeout(timeMS);
+		workerThread = new ParallelWarteClass(timeMS);
 
 		// warte Thread starten
-		workerThread.run();
+		workerThread.start();
 
 		// Band einschalten
 		// vorwaerts == linksherum

@@ -40,8 +40,8 @@ public class Ablieferung extends Thread{
 		m_scanner = new Scanner(Adressen.Scanner.ordinal(),10000);
 		m_KundenZaehler = new FlaschenZaehler(m_scanner,ListofBottlesTag);
 		m_TagesZaehler = new FlaschenZaehler(m_scanner,ListofBottlesKunde);
-		//m_FlaschenZaehlerSubject.attach(m_KundenZaehler);
-		//m_FlaschenZaehlerSubject.attach(m_TagesZaehler);
+		m_scanner.attach(m_KundenZaehler);
+		m_scanner.attach(m_TagesZaehler);
 		HWSimulation HWaccess = HWSimulation.getInstance();
 		HWaccess.write(Adressen.Leuchte_Frabe.ordinal(), 2);
 		workerThread = new ParallelWarteClass(1000);
@@ -84,30 +84,35 @@ public class Ablieferung extends Thread{
 				if (flaschenanzahl == (m_KundenZaehler.getGesamtAnzahlFlaschen() - 1))
 				{
 					DieFassade.simKonsolenText(0, "Ableferung: Flasche weiterleiten.");
-					m_Annahme.flascheWeiterLeiten();
-					DieFassade.simKonsolenText(0, "Ableferung: Flasche weiterleiten.");
-					if (m_Verteilung.Flasche_weiterleiten(m_KundenZaehler.getLastFlaschenType()))
+					if (m_Annahme.flascheWeiterLeiten())
 					{
-						DieFassade.simKonsolenText(0, "Ableferung: Flasche erfolgreich abgegeben.");						
+						if (m_Verteilung.Flasche_weiterleiten(m_KundenZaehler.getLastFlaschenType()))
+						{
+							DieFassade.simKonsolenText(0, "Ableferung: Flasche erfolgreich abgegeben.");						
+						}
+						else
+						{
+							DieFassade.simKonsolenText(0, "Ableferung: Flasche konnte nicht an den Endbekälter "+
+															m_KundenZaehler.getLastFlaschenType().toString() +
+															" weitergeleitet werden.");
+							flascheZurueckGeben();
+						}
 					}
 					else
 					{
-						DieFassade.simKonsolenText(0, "Ableferung: Flasche konnte nicht weitergeleitet werden.");
-						DieFassade.simKonsolenText(0, "Ableferung: Ableferung: Flasche wird zurück gegeben.");
+						DieFassade.simKonsolenText(0, "Ableferung: Flasche konnte nicht an die Auswahlklappe weitergeleitet werden.");
 						flascheZurueckGeben();
 					}
 				}
 				else
 				{
 					DieFassade.simKonsolenText(0, "Ableferung: Flaschencode ist nicht im System.");
-					DieFassade.simKonsolenText(0, "Ableferung: Flasche wird zurück gegeben.");
 					flascheZurueckGeben();
 				}
 			}
 			else
 			{
 				DieFassade.simKonsolenText(0, "Ableferung: Flasche Code ist nicht im System.");
-				DieFassade.simKonsolenText(0, "Ableferung: Flasche wird zurück gegeben.");
 				flascheZurueckGeben();
 			}
 				
@@ -115,7 +120,6 @@ public class Ablieferung extends Thread{
 		else
 		{
 			DieFassade.simKonsolenText(0, "Ableferung: Flasche konnte nicht positioniert werden.");
-			DieFassade.simKonsolenText(0, "Ableferung: Flasche wird zurück gegeben.");
 			flascheZurueckGeben();
 		}
 		

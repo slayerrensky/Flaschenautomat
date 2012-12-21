@@ -61,8 +61,12 @@ public class Verteilung {
 		
 		protected boolean Durchlauf_B (Sensor s){
 			
-			workerThread.run();
-			while(!s.read() && workerThread.isAlive());
+			workerThread =  new ParallelWarteClass(10000);
+			workerThread.start();
+			while(!s.read() && workerThread.isAlive())
+			{
+				workerThread.wait(1000);
+			}
 			
 			if (!workerThread.isAlive()){		
 				return false;
@@ -72,8 +76,12 @@ public class Verteilung {
 				workerThread.interrupt();			
 			}
 
-			workerThread.run();
-			while(s.read() && workerThread.isAlive());
+			workerThread =  new ParallelWarteClass(10000);
+			workerThread.start();
+			while(s.read() && workerThread.isAlive())
+			{
+				workerThread.wait(1000);
+			}
 				
 			if (!workerThread.isAlive()){
 				return false;

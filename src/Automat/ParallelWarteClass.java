@@ -21,4 +21,13 @@ public class ParallelWarteClass extends Thread {
 			this.timeoutMS = timeoutMS;
 		}
 	}
+	
+	public void wait(int timeout)
+	{
+		try {
+			Thread.sleep(timeout);
+		} catch (InterruptedException e) {
+			interrupt();
+		}
+	}
 }

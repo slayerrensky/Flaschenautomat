@@ -30,7 +30,7 @@ public class HWSimulation {
 		ea_area.add(new Integer(0)); // 10 LaufbandDrehen
 		ea_area.add(new Integer(0)); // 11 LaufbandAusgang
 		ea_area.add(new Boolean(false)); // 12 Auswahlklappe
-		ea_area.add(new Integer(0)); 	 // 13 Scanner
+		ea_area.add(new String("00000")); 	 // 13 Scanner
 		ea_area.add(new Boolean(false)); // 14 BonDrucker
 		ea_area.add(new Boolean(false)); // 15 Druckknopf
 		ea_area.add(new String("init")); // 16 Display
