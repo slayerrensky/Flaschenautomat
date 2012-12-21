@@ -9,7 +9,7 @@ import Fassade.Fassade;
  * @version 1.0
  * @created 26-Okt-2012 07:10:54
  */
-public class Ablieferung {
+public class Ablieferung extends Thread{
 
 	private boolean ButtonPressed = false;
 	/**
@@ -27,7 +27,7 @@ public class Ablieferung {
 	private double Guthaben;
 	private Fassade DieFassade;
 	private Scanner m_scanner;
-	
+	private ParallelWarteClass workerThread;
 	
 	public Ablieferung(Fassade fassade, LinkedList<Flasche> ListofBottlesTag, LinkedList<Flasche> ListofBottlesKunde){
 		DieFassade = fassade;
@@ -44,11 +44,16 @@ public class Ablieferung {
 		//m_FlaschenZaehlerSubject.attach(m_TagesZaehler);
 		HWSimulation HWaccess = HWSimulation.getInstance();
 		HWaccess.write(Adressen.Leuchte_Frabe.ordinal(), 2);
-		
+		workerThread = new ParallelWarteClass(1000);
 	}
 
 	public void AbbruchDurchButton(){
 
+	}
+	
+	public void run()
+	{
+		ablaufFlaschenablieferung();
 	}
 	
 	/**
@@ -60,36 +65,57 @@ public class Ablieferung {
 		if (m_Annahme.Flasche_positionieren())
 		{
 			int flaschenanzahl = m_KundenZaehler.getGesamtAnzahlFlaschen();
-			if (m_scanner.Scan())
+			
+			int versuche; versuche = 0;
+			boolean scan;
+			workerThread.run();
+			while (!(scan = m_scanner.Scan()) && versuche <= 6)
+			{
+				DieFassade.simKonsolenText(0, "Ableferung: Flasche nicht erkannt.");
+				DieFassade.simKonsolenText(0, "Ableferung: Sleep 1000 ms.");
+				workerThread.isAlive();
+				DieFassade.simKonsolenText(0, "Ableferung: Flasche nach rechts drehen.");
+				m_Annahme.flascheDrehenRechts(1000);
+				versuche++;
+			}
+			if (scan)
 			{
 				//anzahl kontrollieren
 				if (flaschenanzahl == (m_KundenZaehler.getGesamtAnzahlFlaschen() - 1))
 				{
-					DieFassade.simKonsolenText(0, "Annahme: Flasche weiterleiten.");
+					DieFassade.simKonsolenText(0, "Ableferung: Flasche weiterleiten.");
 					m_Annahme.flascheWeiterLeiten();
-					DieFassade.simKonsolenText(0, "verteilung: Flasche weiterleiten.");
+					DieFassade.simKonsolenText(0, "Ableferung: Flasche weiterleiten.");
 					if (m_Verteilung.Flasche_weiterleiten(m_KundenZaehler.getLastFlaschenType()))
 					{
-						DieFassade.simKonsolenText(0, "Flasche erfolgreich abgegeben.");						
+						DieFassade.simKonsolenText(0, "Ableferung: Flasche erfolgreich abgegeben.");						
 					}
 					else
 					{
+						DieFassade.simKonsolenText(0, "Ableferung: Flasche konnte nicht weitergeleitet werden.");
+						DieFassade.simKonsolenText(0, "Ableferung: Ableferung: Flasche wird zurück gegeben.");
 						flascheZurueckGeben();
 					}
 				}
 				else
 				{
+					DieFassade.simKonsolenText(0, "Ableferung: Flaschencode ist nicht im System.");
+					DieFassade.simKonsolenText(0, "Ableferung: Flasche wird zurück gegeben.");
 					flascheZurueckGeben();
 				}
 			}
 			else
 			{
+				DieFassade.simKonsolenText(0, "Ableferung: Flasche Code ist nicht im System.");
+				DieFassade.simKonsolenText(0, "Ableferung: Flasche wird zurück gegeben.");
 				flascheZurueckGeben();
 			}
 				
 		}
 		else
 		{
+			DieFassade.simKonsolenText(0, "Ableferung: Flasche konnte nicht positioniert werden.");
+			DieFassade.simKonsolenText(0, "Ableferung: Flasche wird zurück gegeben.");
 			flascheZurueckGeben();
 		}
 		
@@ -111,7 +137,7 @@ public class Ablieferung {
 
 	public void flascheZurueckGeben()
 	{
-		DieFassade.simKonsolenText(0, "Flasche wird zurück gegeben.");
+		DieFassade.simKonsolenText(0, "Ableferung: Flasche wird zurück gegeben.");
 		m_Annahme.Flasche_auswerfen();
 	}
 
@@ -130,9 +156,14 @@ public class Ablieferung {
 	public void test(){
 		m_Anzeige.FehlerMelden(0);
 	}
-
+	
+	
 	public void wartenAufFlasche(){
-		while (! m_Annahme.getEingangsLichtschranke());
+		while (! m_Annahme.getEingangsLichtschranke())
+		{
+			workerThread.run();
+			workerThread.isAlive();
+		}
 	}
 
 	/**

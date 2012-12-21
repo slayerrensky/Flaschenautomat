@@ -40,6 +40,7 @@ public class Fassade {
 			public void run() {
 				try {
 					Fassade DieFassade = new Fassade();
+					DieFassade.FachklasseAblieferung.start();
 					
 				} catch (Exception e) {
 					e.printStackTrace();

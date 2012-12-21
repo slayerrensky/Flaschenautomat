@@ -47,38 +47,38 @@ public class HWSimulation {
 	
 	public Boolean readBool(int adresse){
 		Boolean status = (Boolean) ea_area.get(adresse);
-		dieFassade.simKonsolenText(0, "[read:"+adresse+"] "+status);
+		dieFassade.simKonsolenText(0, "[read:"+Adressen.values()[adresse].toString()+"] "+status);
 		return status;		
 	}
 	
 	public Integer readInt(int adresse){
 		Integer number = (Integer) ea_area.get(adresse);
-		dieFassade.simKonsolenText(0, "[read:"+adresse+"] "+number);
+		dieFassade.simKonsolenText(0, "[read:"+Adressen.values()[adresse].toString()+"] "+number);
 		return number;		
 	}
 	
 	public String readStr(int adresse){
 		String text = (String) ea_area.get(adresse);
-		dieFassade.simKonsolenText(0, "[read:"+adresse+"] \""+text+"\"");
+		dieFassade.simKonsolenText(0, "[read:"+Adressen.values()[adresse].toString()+"] \""+text+"\"");
 		return text;
 	}
 	
 	public void write(int adresse, Boolean status){
 		ea_area.set(adresse, status);
 		dieFassade.aktuallisereHW(ea_area);
-		dieFassade.simKonsolenText(0, "[write:"+adresse+"] "+status);
+		dieFassade.simKonsolenText(0, "[write:"+ Adressen.values()[adresse].toString() +"] "+status);
 	}
 	
 	public void write(int adresse, Integer number){
 		ea_area.set(adresse, number);
 		dieFassade.aktuallisereHW(ea_area);
-		dieFassade.simKonsolenText(0, "[write:"+adresse+"] "+number);
+		dieFassade.simKonsolenText(0, "[write:"+Adressen.values()[adresse].toString()+"] "+number);
 	}
 	
 	public void write(int adresse, String text){
 		ea_area.set(adresse, text);
 		dieFassade.aktuallisereHW(ea_area);
-		dieFassade.simKonsolenText(0, "[write:"+adresse+"] \""+text+"\"");
+		dieFassade.simKonsolenText(0, "[write:"+Adressen.values()[adresse].toString()+"] \""+text+"\"");
 	}
 	
 	public void setF(Fassade dieFassade){

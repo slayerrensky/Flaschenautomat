@@ -1,6 +1,7 @@
 package Automat;
 
 public enum Adressen {
+	
 	Troete,
 	Leuchte,
 	Leuchte_Frabe,

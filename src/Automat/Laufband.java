@@ -5,6 +5,12 @@ package Automat;
  * @version 1.0
  * @created 26-Okt-2012 07:10:51
  */
+
+/*
+ * 	vorwärts 	= 1
+ *  stehen 		= 0
+ *  rückwärts 	= -1
+ */
 public class Laufband extends Aktor {
 
 	private boolean gesperrt;
