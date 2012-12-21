@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import Automat.*;
 import GUI.HardwareGUI;
 import GUI.SimulationGUI;
-import Test.SimulationAblauf;
+import Test.SimulationFlasche;
 
 /**
  * @author Dennis
@@ -20,7 +20,7 @@ public class Fassade {
 	private HardwareGUI HWGui;
 	private Ablieferung FachklasseAblieferung;
 	private HWSimulation HWaccess;
-	private SimulationAblauf SimAblauf;
+	private SimulationFlasche SimAblauf;
 
 	public Fassade() {
 		SIMGui = new SimulationGUI(this);
@@ -124,7 +124,7 @@ public class Fassade {
 	 * @param Type
 	 */
 	public void simFlascheEinlegen(FlaschenType Type) {
-		SimAblauf = new SimulationAblauf(this,Type);
+		SimAblauf = new SimulationFlasche(this,Type);
 		SimAblauf.start();
 	}
 
