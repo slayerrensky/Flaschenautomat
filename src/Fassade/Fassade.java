@@ -126,7 +126,7 @@ public class Fassade {
 	 */
 	public void simFlascheEinlegen(FlaschenType Type) {
 		SimAblauf = new SimulationFlasche(this,Type);
-		SimAblauf.start();
+		//SimAblauf.start();
 	}
 
 	public void warnsignalAN() {
