@@ -35,20 +35,23 @@ public class Annahme {
 	public void Flasche_auswerfen() {
 
 		// warte Zeit ändern in 10 sek.
-		workerThread.setTimeout(1000);
+		workerThread = new ParallelWarteClass(10000);
 
 		// warte Thread starten
-		workerThread.run();
+		workerThread.start();
 
 		// Laufband Rückwerts starten
 		m_VorderesLaufband.rueckwerts();
 
 		// sicherstellen dass die flasche am ausgang liegt und bei evtl.
 		// reinfassen nicht gestoppt wird
-		while (s_EingangsLichtschranke.read()
-				&& !s_JustierungLichtschranke.read()
-				&& !s_AusgangsLichtschranke.read() && workerThread.isAlive())
-			;
+		while (!s_EingangsLichtschranke.read()
+				//&& !s_JustierungLichtschranke.read()
+				//&& !s_AusgangsLichtschranke.read() 
+				&& workerThread.isAlive())
+		{
+			workerThread.wait(1000);
+		}
 
 		// wenn wartThread aktive: beenden
 		if (workerThread.isAlive()) {
@@ -56,10 +59,10 @@ public class Annahme {
 		}
 
 		// warte Zeit ändern in 400ms
-		workerThread.setTimeout(400);
+		workerThread = new ParallelWarteClass(400);
 
 		// warte Thread starten
-		workerThread.run();
+		workerThread.start();
 
 		// nachlauf für das Laufband, damit der Flaschenkopf ein Stück tausguckt
 		while (workerThread.isAlive())
@@ -73,6 +76,11 @@ public class Annahme {
 
 		// Band abschalten
 		m_VorderesLaufband.stop();
+		
+		while (s_EingangsLichtschranke.read())
+		{
+			workerThread.wait(1000);
+		}
 
 		return;
 	}
@@ -135,12 +143,39 @@ public class Annahme {
 		
 		// sicherstellen dass die flasche nicht an justierlichtschranke und
 		// nicht an Ausgangslichtschranke mehr ist
-		while (!s_JustierungLichtschranke.read()
-				&& !s_AusgangsLichtschranke.read() && workerThread.isAlive())
+		while (s_JustierungLichtschranke.read()
+				&& workerThread.isAlive())
 		{
 			workerThread.wait(1000);
 		}
-
+		
+		if (workerThread.isAlive()) {
+			workerThread.interrupt();
+		} else {
+			return false;
+		}
+		
+		workerThread = new ParallelWarteClass(10000);
+		workerThread.start();
+		
+		while (!s_AusgangsLichtschranke.read() && workerThread.isAlive())
+		{
+			workerThread.wait(1000);
+		}
+		
+		if (workerThread.isAlive()) {
+			workerThread.interrupt();
+		} else {
+			return false;
+		}
+		workerThread = new ParallelWarteClass(10000);
+		workerThread.start();
+		
+		while (s_AusgangsLichtschranke.read() && workerThread.isAlive())
+		{
+			workerThread.wait(1000);
+		}
+		
 		// Band abschalten
 		m_VorderesLaufband.stop();
 
@@ -177,7 +212,7 @@ public class Annahme {
 			;
 
 		// Band abschalten
-		m_VorderesLaufband.stop();
+		m_DrehLaufband.stop();
 	}
 
 	/**
@@ -202,7 +237,7 @@ public class Annahme {
 			;
 
 		// Band abschalten
-		m_VorderesLaufband.stop();
+		m_DrehLaufband.stop();
 	}
 
 	public boolean getEingangsLichtschranke(){

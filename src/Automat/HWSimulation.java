@@ -30,7 +30,7 @@ public class HWSimulation {
 		ea_area.add(new Integer(0)); // 10 LaufbandDrehen
 		ea_area.add(new Integer(0)); // 11 LaufbandAusgang
 		ea_area.add(new Boolean(false)); // 12 Auswahlklappe
-		ea_area.add(new String("00000")); 	 // 13 Scanner
+		ea_area.add(FlaschenType.CodeNichtValide); 	 // 13 Scanner
 		ea_area.add(new Boolean(false)); // 14 BonDrucker
 		ea_area.add(new Boolean(false)); // 15 Druckknopf
 		ea_area.add(new String("init")); // 16 Display
@@ -63,6 +63,13 @@ public class HWSimulation {
 		return text;
 	}
 	
+	public FlaschenType readFlaschenType(int adresse)
+	{
+		FlaschenType fType = (FlaschenType) ea_area.get(adresse);
+		dieFassade.simKonsolenText(0, "[read:"+Adressen.values()[adresse].toString()+"] "+fType.toString());
+		return fType;		
+	}
+	
 	public void write(int adresse, Boolean status){
 		ea_area.set(adresse, status);
 		dieFassade.aktuallisereHW(ea_area);
@@ -80,9 +87,19 @@ public class HWSimulation {
 		dieFassade.aktuallisereHW(ea_area);
 		dieFassade.simKonsolenText(0, "[write:"+Adressen.values()[adresse].toString()+"] \""+text+"\"");
 	}
+
+	public void write(int adresse, FlaschenType fType){
+		ea_area.set(adresse, fType);
+		dieFassade.aktuallisereHW(ea_area);
+		dieFassade.simKonsolenText(0, "[write:"+ Adressen.values()[adresse].toString() +"] "+fType.toString());
+	}
 	
 	public void setF(Fassade dieFassade){
 		this.dieFassade = dieFassade;
 		this.dieFassade.aktuallisereHW(ea_area);
 	}
+	
+
+	
+
 }

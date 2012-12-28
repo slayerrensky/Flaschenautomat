@@ -2,6 +2,7 @@ package Fassade;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import Automat.*;
@@ -98,8 +99,10 @@ public class Fassade {
 	
 	private LinkedList<Flasche> loadFlaschenFile(String Path)
 	{
-		
-		return null;
+		LinkedList<Flasche> flaschen = new LinkedList<Flasche>();
+		flaschen.add(new Flasche(FlaschenType.PET,new BigDecimal(0.25),"00000"));
+		flaschen.add(new Flasche(FlaschenType.Mehrweg,new BigDecimal(0.08),"00001"));
+		return flaschen;
 	}
 	
 	public void warnleuchteAN() {
@@ -125,6 +128,7 @@ public class Fassade {
 	 * @param Type
 	 */
 	public void simFlascheEinlegen(FlaschenType Type) {
+		HWaccess.write(Adressen.Scanner.ordinal(), Type);
 		SimAblauf = new SimulationFlasche(this,Type);
 		//SimAblauf.start();
 	}

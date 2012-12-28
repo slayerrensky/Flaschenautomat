@@ -82,6 +82,7 @@ public class HardwareGUI {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//.PressedBonButton();
+				DieFassade.displayAktualisieren("Bon wird gedruckt!");
 			}
 		});
 		

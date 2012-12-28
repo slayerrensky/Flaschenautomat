@@ -1,5 +1,7 @@
 package Automat;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.LinkedList;
 import Fassade.Fassade;
 
@@ -24,7 +26,7 @@ public class Ablieferung extends Thread{
 	private LinkedList<Flasche> abgelieferteFlaschen;
 	private FlaschenZaehler m_KundenZaehler;
 	private FlaschenZaehler m_TagesZaehler;
-	private double Guthaben;
+	private BigDecimal Guthaben = new BigDecimal(0.0);
 	private Fassade DieFassade;
 	private Scanner m_scanner;
 	private ParallelWarteClass workerThread;
@@ -60,69 +62,84 @@ public class Ablieferung extends Thread{
 	 * Hier ist der UseCase Ablauf für eine Flaschenablieferung niedergeschrieben.
 	 */
 	public void ablaufFlaschenablieferung(){
-
-		wartenAufFlasche();
-		if (m_Annahme.Flasche_positionieren())
+		
+		
+		while (true)
 		{
-			int flaschenanzahl = m_KundenZaehler.getGesamtAnzahlFlaschen();
-			
-			int versuche; versuche = 0;
-			boolean scan;
-			workerThread.run();
-			while (!(scan = m_scanner.Scan()) && versuche <= 6)
+			if (m_Druckknopf.read())
 			{
-				DieFassade.simKonsolenText(0, "Ableferung: Flasche nicht erkannt.");
-				DieFassade.simKonsolenText(0, "Ableferung: Sleep 1000 ms.");
-				workerThread.isAlive();
-				DieFassade.simKonsolenText(0, "Ableferung: Flasche nach rechts drehen.");
-				m_Annahme.flascheDrehenRechts(1000);
-				versuche++;
+				// Guthaben errechnen, Bon Drucken, Flaschenzähler leeren
+				
+				m_KundenZaehler.reset();
 			}
-			if (scan)
+			DisplayAktualisieren("Warten auf Flasche.");
+			wartenAufFlasche();
+			if (m_Annahme.Flasche_positionieren())
 			{
-				//anzahl kontrollieren
-				if (flaschenanzahl == (m_KundenZaehler.getGesamtAnzahlFlaschen() - 1))
+				int flaschenanzahl = m_KundenZaehler.getGesamtAnzahlFlaschen();
+				
+				int versuche; versuche = 0;
+				boolean scan;
+				while (!(scan = m_scanner.Scan()) && versuche <= 6)
 				{
-					DieFassade.simKonsolenText(0, "Ableferung: Flasche weiterleiten.");
-					if (m_Annahme.flascheWeiterLeiten())
+					DieFassade.simKonsolenText(0, "Ablieferung: Flasche nicht erkannt.");
+					workerThread.wait(1000);
+					DieFassade.simKonsolenText(0, "Ablieferung: Flasche nach rechts drehen.");
+					m_Annahme.flascheDrehenRechts(2000);
+					versuche++;
+				}
+				if (scan)
+				{
+					DisplayAktualisieren("Flasche erkannt, bitte warten.");
+					//anzahl kontrollieren
+					if (flaschenanzahl == (m_KundenZaehler.getGesamtAnzahlFlaschen() - 1))
 					{
-						if (m_Verteilung.Flasche_weiterleiten(m_KundenZaehler.getLastFlaschenType()))
+						DieFassade.simKonsolenText(0, "Ablieferung: Flasche weiterleiten.");
+						if (m_Annahme.flascheWeiterLeiten())
 						{
-							DieFassade.simKonsolenText(0, "Ableferung: Flasche erfolgreich abgegeben.");						
+							if (m_Verteilung.Flasche_weiterleiten(m_KundenZaehler.getLastFlaschenType()))
+							{
+								DieFassade.simKonsolenText(0, "Ablieferung: Flasche erfolgreich abgegeben.");
+								Guthaben = m_KundenZaehler.getGesamtGuthaben();
+								Guthaben.setScale(2,BigDecimal.ROUND_HALF_UP);
+								
+								// Display Aktualisieren
+								DisplayAktualisieren("Flasche gutgeschrieben.");
+								
+							}
+							else
+							{
+								DieFassade.simKonsolenText(0, "Ablieferung: Flasche konnte nicht an den Endbekälter "+
+																m_KundenZaehler.getLastFlaschenType().toString() +
+																" weitergeleitet werden.");
+								flascheZurueckGeben();
+							}
 						}
 						else
 						{
-							DieFassade.simKonsolenText(0, "Ableferung: Flasche konnte nicht an den Endbekälter "+
-															m_KundenZaehler.getLastFlaschenType().toString() +
-															" weitergeleitet werden.");
+							DieFassade.simKonsolenText(0, "Ablieferung: Flasche konnte nicht an die Auswahlklappe weitergeleitet werden.");
 							flascheZurueckGeben();
 						}
 					}
 					else
 					{
-						DieFassade.simKonsolenText(0, "Ableferung: Flasche konnte nicht an die Auswahlklappe weitergeleitet werden.");
+						DieFassade.simKonsolenText(0, "Ablieferung: Flaschencode ist nicht im System.");
 						flascheZurueckGeben();
 					}
 				}
 				else
 				{
-					DieFassade.simKonsolenText(0, "Ableferung: Flaschencode ist nicht im System.");
+					DieFassade.simKonsolenText(0, "Ablieferung: Flasche Code ist nicht im System.");
 					flascheZurueckGeben();
 				}
+					
 			}
 			else
 			{
-				DieFassade.simKonsolenText(0, "Ableferung: Flasche Code ist nicht im System.");
+				DieFassade.simKonsolenText(0, "Ablieferung: Flasche konnte nicht positioniert werden.");
 				flascheZurueckGeben();
 			}
-				
 		}
-		else
-		{
-			DieFassade.simKonsolenText(0, "Ableferung: Flasche konnte nicht positioniert werden.");
-			flascheZurueckGeben();
-		}
-		
 		
 		
 	}
@@ -135,13 +152,23 @@ public class Ablieferung extends Thread{
 
 	}
 
+	public void DisplayAktualisieren(String info)
+	{
+		String str = "";
+		str += "Guthaben:          " + NumberFormat.getCurrencyInstance().format(Guthaben) + "\n";
+		str += info;
+		DieFassade.displayAktualisieren(str);
+	
+	}
+	
 	public void BonDrucken(){
 		
 	}
 
 	public void flascheZurueckGeben()
 	{
-		DieFassade.simKonsolenText(0, "Ableferung: Flasche wird zurück gegeben.");
+		DisplayAktualisieren("Falsche könnte nicht angenommen werden.");
+		DieFassade.simKonsolenText(0, "Ablieferung: Flasche wird zurück gegeben.");
 		m_Annahme.Flasche_auswerfen();
 	}
 

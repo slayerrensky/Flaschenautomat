@@ -8,7 +8,7 @@ package Automat;
 public class Scanner extends Subjekt{
 
 	private int adresse;
-	private String lastCode = "00000";
+	private FlaschenType lastCode ;
 	private HWSimulation HWaccess;
 	private ParallelWarteClass workerThread;
 	private int timeoutMS; 
@@ -20,14 +20,14 @@ public class Scanner extends Subjekt{
 		this.timeoutMS = timeoutMS;
 	}
 
-	public String getSubjectState(){
+	public FlaschenType getSubjectState(){
 		return lastCode;
 	}
 
 	public boolean Scan(){
 		
 		int time = 0;
-		while(( null == (lastCode = this.HWaccess.readStr(adresse))) && time <= timeoutMS);
+		while(( null == (lastCode = this.HWaccess.readFlaschenType(adresse))) && time <= timeoutMS);
 		{
 			workerThread.run();
 			workerThread.isAlive();
@@ -41,7 +41,7 @@ public class Scanner extends Subjekt{
 		
 		
 		
-		if (lastCode != "")
+		if (lastCode != FlaschenType.CodeUnlesbar)
 		{
 			this.notifyObservers();
 			return true;

@@ -19,13 +19,13 @@ public class FlaschenZaehler extends Observer{
 	
 	@Override	
 	public void update() {
-		String flaschencode = subject.getSubjectState();
+		FlaschenType fType = subject.getSubjectState();
 		
 		if (abgeleiferteFlaschen != null)
 		{	
 			for (Flasche f : abgeleiferteFlaschen)
 			{
-				if (f.getCode().compareTo(flaschencode)==0)
+				if (f.getType().compareTo(fType)==0)
 				{
 					f.AnzahlInc();
 					GesamtAnzahlFlaschen++;
@@ -40,7 +40,7 @@ public class FlaschenZaehler extends Observer{
 		BigDecimal guthaben = new BigDecimal(0);
 		for (Flasche f : abgeleiferteFlaschen)
 		{
-			guthaben.add(f.getPfandwert().multiply(new BigDecimal(f.getAnzahl())));
+			guthaben = guthaben.add(f.getPfandwert().multiply(new BigDecimal(f.getAnzahl())));
 		}
 		return guthaben;
 	}
