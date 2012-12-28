@@ -52,6 +52,7 @@ public class Fassade {
 	
 	public void aktuallisereHW(ArrayList<Comparable> list){
 		SIMGui.updateUI(list);
+		HWGui.updateUI(list);
 		Color c;
 		
 		switch ((Integer)list.get(Adressen.Leuchte_Frabe.ordinal())) {
@@ -81,10 +82,10 @@ public class Fassade {
 	 * Wenn der Bon Button in der GUI gedrï¿½ckt wurde
 	 */
 	public void bonAnfordern() {
-		FachklasseAblieferung.test();
 		// Ausgabe auf Gui.Monitoring
 		// Automat.Ablieferung etwas tuhen
-		SIMGui.MonitoringUpdate("Bon Button wurde gedrï¿½ckt");
+		SIMGui.MonitoringUpdate("Bon Button wurde gedrückt.");
+		FachklasseAblieferung.BonButtonPresst = true;
 	}
 
 	/**

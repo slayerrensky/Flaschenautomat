@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JSplitPane;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 
 
 public class HardwareGUI {
@@ -74,7 +75,6 @@ public class HardwareGUI {
 		JButton btnBonDrucken = new JButton("Bon Drucken");
 		btnBonDrucken.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				DieFassade.bonAnfordern();
 				HWSimulation test = HWSimulation.getInstance();
 			}
 		});
@@ -83,6 +83,7 @@ public class HardwareGUI {
 			public void mouseClicked(MouseEvent e) {
 				//.PressedBonButton();
 				DieFassade.displayAktualisieren("Bon wird gedruckt!");
+				DieFassade.bonAnfordern();
 			}
 		});
 		
@@ -140,5 +141,14 @@ public class HardwareGUI {
 		}else{
 			lb_Leuchte.setBackground(new Color(240,240,240));
 		}
+	}
+	
+	public void updateUI(ArrayList<Comparable> list){
+		//HWLayer HWaccess = HWLayer.getInstance();
+		//Boolean tmp_bool = new Boolean(false);
+		// sollte lieber so sein
+		//HWaccess.read(Automat.Adressen.Leuchte.ordinal(), tmp_bool);
+		
+		drucken(((String)list.get(Adressen.BonDrucker.ordinal())));;
 	}
 }

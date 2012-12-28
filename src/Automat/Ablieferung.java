@@ -2,6 +2,8 @@ package Automat;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import Fassade.Fassade;
 
@@ -30,6 +32,7 @@ public class Ablieferung extends Thread{
 	private Fassade DieFassade;
 	private Scanner m_scanner;
 	private ParallelWarteClass workerThread;
+	public boolean BonButtonPresst = false;
 	
 	public Ablieferung(Fassade fassade, LinkedList<Flasche> ListofBottlesTag, LinkedList<Flasche> ListofBottlesKunde){
 		DieFassade = fassade;
@@ -66,12 +69,7 @@ public class Ablieferung extends Thread{
 		
 		while (true)
 		{
-			if (m_Druckknopf.read())
-			{
-				// Guthaben errechnen, Bon Drucken, Flaschenzähler leeren
-				
-				m_KundenZaehler.reset();
-			}
+
 			DisplayAktualisieren("Warten auf Flasche.");
 			wartenAufFlasche();
 			if (m_Annahme.Flasche_positionieren())
@@ -90,40 +88,51 @@ public class Ablieferung extends Thread{
 				}
 				if (scan)
 				{
-					DisplayAktualisieren("Flasche erkannt, bitte warten.");
-					//anzahl kontrollieren
-					if (flaschenanzahl == (m_KundenZaehler.getGesamtAnzahlFlaschen() - 1))
+					if (!checkFuellstand(m_scanner.lastCode)) //wenn füllstand nicht voll ist
 					{
-						DieFassade.simKonsolenText(0, "Ablieferung: Flasche weiterleiten.");
-						if (m_Annahme.flascheWeiterLeiten())
+						
+						//anzahl kontrollieren
+						if (m_scanner.lastCode != FlaschenType.CodeNichtValide)
 						{
-							if (m_Verteilung.Flasche_weiterleiten(m_KundenZaehler.getLastFlaschenType()))
+							DisplayAktualisieren("Flasche erkannt, bitte warten.");
+							DieFassade.simKonsolenText(0, "Ablieferung: Flasche weiterleiten.");
+							if (m_Annahme.flascheWeiterLeiten())
 							{
-								DieFassade.simKonsolenText(0, "Ablieferung: Flasche erfolgreich abgegeben.");
-								Guthaben = m_KundenZaehler.getGesamtGuthaben();
-								Guthaben.setScale(2,BigDecimal.ROUND_HALF_UP);
-								
-								// Display Aktualisieren
-								DisplayAktualisieren("Flasche gutgeschrieben.");
-								
+								if (m_Verteilung.Flasche_weiterleiten(m_scanner.lastCode))
+								{
+									m_scanner.notifyObservers(); // Flaschenzähler aktualisieren
+									DieFassade.simKonsolenText(0, "Ablieferung: Flasche erfolgreich abgegeben.");
+									Guthaben = m_KundenZaehler.getGesamtGuthaben();
+									Guthaben.setScale(2,BigDecimal.ROUND_HALF_UP);
+									
+									// Display Aktualisieren
+									DisplayAktualisieren("Flasche gutgeschrieben.");
+									
+								}
+								else
+								{
+									DieFassade.simKonsolenText(0, "Ablieferung: Flasche konnte nicht an den Endbekälter "+
+																	m_KundenZaehler.getLastFlaschenType().toString() +
+																	" weitergeleitet werden.");
+									flascheZurueckGeben();
+								}
 							}
 							else
 							{
-								DieFassade.simKonsolenText(0, "Ablieferung: Flasche konnte nicht an den Endbekälter "+
-																m_KundenZaehler.getLastFlaschenType().toString() +
-																" weitergeleitet werden.");
+								DieFassade.simKonsolenText(0, "Ablieferung: Flasche konnte nicht an die Auswahlklappe weitergeleitet werden.");
 								flascheZurueckGeben();
 							}
 						}
 						else
 						{
-							DieFassade.simKonsolenText(0, "Ablieferung: Flasche konnte nicht an die Auswahlklappe weitergeleitet werden.");
+							DieFassade.simKonsolenText(0, "Ablieferung: Flaschencode ist nicht im System.");
 							flascheZurueckGeben();
 						}
 					}
 					else
 					{
-						DieFassade.simKonsolenText(0, "Ablieferung: Flaschencode ist nicht im System.");
+						DisplayAktualisieren("Der "+ m_scanner.lastCode.toString() +" Behälter ist voll.");
+						DieFassade.simKonsolenText(0, "Der "+ m_scanner.lastCode.toString() +" Behälter ist voll.");
 						flascheZurueckGeben();
 					}
 				}
@@ -161,15 +170,15 @@ public class Ablieferung extends Thread{
 	
 	}
 	
-	public void BonDrucken(){
-		
-	}
 
 	public void flascheZurueckGeben()
 	{
-		DisplayAktualisieren("Falsche könnte nicht angenommen werden.");
 		DieFassade.simKonsolenText(0, "Ablieferung: Flasche wird zurück gegeben.");
-		m_Annahme.Flasche_auswerfen();
+		if (m_Annahme.Flasche_auswerfen())
+		{
+			DisplayAktualisieren("Bitte Flasche entnehmen.");
+			m_Anzeige.FehlerMelden(0);
+		}
 	}
 
 	/**
@@ -183,18 +192,35 @@ public class Ablieferung extends Thread{
 	public void timeout(){
 
 	}
-	
-	public void test(){
-		m_Anzeige.FehlerMelden(0);
-	}
-	
+		
 	
 	public void wartenAufFlasche(){
 		while (! m_Annahme.getEingangsLichtschranke())
 		{
+			if (BonButtonPresst)
+			{
+				// Guthaben errechnen, Bon Drucken, Flaschenzähler leeren
+				m_BonDrucker.BonDrucken(m_KundenZaehler.getFlaschenListe());
+				m_KundenZaehler.reset();
+				BonButtonPresst = false;
+				workerThread.wait(5000);
+			}
 			workerThread.run();
 			workerThread.isAlive();
 		}
+	}
+	
+	private boolean checkFuellstand(FlaschenType fType)
+	{
+		switch(fType)
+		{
+		case PET:
+			return m_Verteilung.s_FuellstandPET.read();
+		case Mehrweg:
+			return m_Verteilung.s_FuellstandMehrweg.read();
+		default:
+			return false;
+		}			
 	}
 
 	/**

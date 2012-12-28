@@ -32,10 +32,10 @@ public class Annahme {
 
 	// Methoden
 
-	public void Flasche_auswerfen() {
+	public boolean Flasche_auswerfen() {
 
 		// warte Zeit ändern in 10 sek.
-		workerThread = new ParallelWarteClass(10000);
+		workerThread = new ParallelWarteClass(20000);
 
 		// warte Thread starten
 		workerThread.start();
@@ -56,10 +56,11 @@ public class Annahme {
 		// wenn wartThread aktive: beenden
 		if (workerThread.isAlive()) {
 			workerThread.interrupt();
+			return false;
 		}
 
 		// warte Zeit ändern in 400ms
-		workerThread = new ParallelWarteClass(400);
+		workerThread = new ParallelWarteClass(1000);
 
 		// warte Thread starten
 		workerThread.start();
@@ -67,12 +68,6 @@ public class Annahme {
 		// nachlauf für das Laufband, damit der Flaschenkopf ein Stück tausguckt
 		while (workerThread.isAlive())
 			;
-
-		// wenn wartThread aktive: beenden
-		if (workerThread.isAlive()) {
-
-			workerThread.interrupt();
-		}
 
 		// Band abschalten
 		m_VorderesLaufband.stop();
@@ -82,7 +77,7 @@ public class Annahme {
 			workerThread.wait(1000);
 		}
 
-		return;
+		return true;
 	}
 
 	/**

@@ -65,6 +65,10 @@ public class SimulationGUI {
 	private JRadioButton rdbtnHinteresVorwaerts;
 	private JRadioButton rdbtnHinteresRueckwaerts;
 	private JButton btnEingangslichtschrankeAuswahlklappe;
+	private JPanel pEndbehaelter;
+	private JLabel lblEndbehaelter;
+	private JToggleButton tglbtnPetBehlter;
+	private JToggleButton tglbtnMehrwegBehlter;
 
 //	/**
 //	 * Launch the application.
@@ -101,14 +105,14 @@ public class SimulationGUI {
 		frmSimulationhelper = new JFrame();
 		frmSimulationhelper.setResizable(false);
 		frmSimulationhelper.setTitle("Simulation");
-		frmSimulationhelper.setBounds(100, 100, 669, 792);
+		frmSimulationhelper.setBounds(100, 100, 669, 890);
 		frmSimulationhelper.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSimulationhelper.getContentPane().setLayout(new MigLayout("", "[289.00px][144px,grow][193.00px]", "[675.00px,grow]"));
 		
 		JDesktopPane desktopPane = new JDesktopPane();
 		desktopPane.setBackground(Color.LIGHT_GRAY);
 		frmSimulationhelper.getContentPane().add(desktopPane, "cell 0 0,grow");
-		desktopPane.setLayout(new MigLayout("", "[140px,grow]", "[12px][24px][25px][25px][15px][][][19px][][][][][][][][][][][][][][][][][][][][][][][][grow][grow][grow][]"));
+		desktopPane.setLayout(new MigLayout("", "[140px,grow]", "[12px][24px][25px][25px][15px][][][19px][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow][grow][grow][]"));
 		
 		JLabel lblFlaschenautomat = new JLabel("Flaschenautomat");
 		desktopPane.add(lblFlaschenautomat, "cell 0 0,alignx center,aligny center");
@@ -216,7 +220,7 @@ public class SimulationGUI {
         	}
         });
         tglbtnLeuchte.setHorizontalAlignment(SwingConstants.LEFT);
-        desktopPane.add(tglbtnLeuchte, "cell 0 19");
+        desktopPane.add(tglbtnLeuchte, "cell 0 17");
         
         tglbtnTrte = new JToggleButton("Tr\u00F6te");
         tglbtnTrte.addActionListener(new ActionListener() {
@@ -226,10 +230,10 @@ public class SimulationGUI {
         	}
         });
         tglbtnTrte.setHorizontalAlignment(SwingConstants.LEFT);
-        desktopPane.add(tglbtnTrte, "cell 0 20");
+        desktopPane.add(tglbtnTrte, "cell 0 19");
         
         pVorderesLaufband = new JPanel();
-        desktopPane.add(pVorderesLaufband, "cell 0 21,growx,aligny top");
+        desktopPane.add(pVorderesLaufband, "cell 0 20,growx,aligny top");
         pVorderesLaufband.setLayout(new GridLayout(5, 0, 0, 0));
         
         lblVordereslaufband = new JLabel("Vorderes-Laufband");
@@ -283,7 +287,7 @@ public class SimulationGUI {
         groupL1.add(rdbtnVorderesRueckwaerts);
         
         pDrehLaufband = new JPanel();
-        desktopPane.add(pDrehLaufband, "cell 0 22,growx,aligny top");
+        desktopPane.add(pDrehLaufband, "cell 0 21,growx,aligny top");
         pDrehLaufband.setLayout(new GridLayout(5, 0, 0, 0));
         
         lableDreh = new JLabel("Dreh-Laufband");
@@ -335,10 +339,20 @@ public class SimulationGUI {
         groupL2.add(rdbtnDrehStop);
         groupL2.add(rdbtnDrehRechts);
         groupL2.add(rdbtnDrehLinks);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		frmSimulationhelper.getContentPane().add(scrollPane, "cell 1 0 2 1,grow");
+		
+		txtrMonitoring = new JTextArea();
+		scrollPane.setViewportView(txtrMonitoring);
+		DefaultCaret caret = (DefaultCaret)txtrMonitoring.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		
+		frmSimulationhelper.setLocation(490, 30);
         
         pHinteresLaufband = new JPanel();
         desktopPane.add(pHinteresLaufband, "cell 0 23,grow");
-        pHinteresLaufband.setLayout(new GridLayout(5, 0, 0, 0));
+        pHinteresLaufband.setLayout(new GridLayout(0, 1, 0, 0));
         
         lblHintereslaufband = new JLabel("Hinteres-Laufband");
         pHinteresLaufband.add(lblHintereslaufband);
@@ -390,15 +404,33 @@ public class SimulationGUI {
         groupL3.add(rdbtnHinteresVorwaerts);
         groupL3.add(rdbtnHinteresRueckwaerts);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		frmSimulationhelper.getContentPane().add(scrollPane, "cell 1 0 2 1,grow");
 		
-		txtrMonitoring = new JTextArea();
-		scrollPane.setViewportView(txtrMonitoring);
-		DefaultCaret caret = (DefaultCaret)txtrMonitoring.getCaret();
-		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		
-		frmSimulationhelper.setLocation(490, 30);
+        pEndbehaelter = new JPanel();
+        desktopPane.add(pEndbehaelter, "cell 0 28,grow");
+        pEndbehaelter.setLayout(new GridLayout(0, 1, 0, 0));
+        
+        lblEndbehaelter = new JLabel("Endbehälter");
+        pEndbehaelter.add(lblEndbehaelter);
+        
+        tglbtnPetBehlter = new JToggleButton("PET");
+        tglbtnPetBehlter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent actionEvent) {
+				AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+		        HWaccess.write(Automat.Adressen.FuellstandPET.ordinal(), abstractButton.getModel().isSelected());
+			}
+		});
+        pEndbehaelter.add(tglbtnPetBehlter);
+        
+        tglbtnMehrwegBehlter = new JToggleButton("Mehrweg");
+        tglbtnMehrwegBehlter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent actionEvent) {
+				AbstractButton abstractButton = (AbstractButton) actionEvent.getSource();
+		        HWaccess.write(Automat.Adressen.FuellstandMehrweg.ordinal(), abstractButton.getModel().isSelected());
+			}
+		});
+        pEndbehaelter.add(tglbtnMehrwegBehlter);
+        
 	}
 	
 	public void MonitoringUpdate(String message)
@@ -420,6 +452,8 @@ public class SimulationGUI {
 		tglbtnLichtschrankepet.setSelected((Boolean)list.get(Automat.Adressen.UebergabelichtschrankePET.ordinal()));;
 		tglbtnLichtschrankemehrweg.setSelected((Boolean)list.get(Automat.Adressen.UebergabelichtschrankeMehrweg.ordinal()));;
 		tglbtnTrte.setSelected((Boolean)list.get(Automat.Adressen.Troete.ordinal()));;
+		tglbtnMehrwegBehlter.setSelected((Boolean)list.get(Automat.Adressen.FuellstandMehrweg.ordinal()));;
+		tglbtnPetBehlter.setSelected((Boolean)list.get(Automat.Adressen.FuellstandPET.ordinal()));;
 		
 		switch ((Integer)list.get(Automat.Adressen.LaufbandEingang.ordinal())) {
 		default:chckbxVorderesGesperrt.setSelected(true); 

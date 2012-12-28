@@ -8,7 +8,7 @@ package Automat;
 public class Scanner extends Subjekt{
 
 	private int adresse;
-	private FlaschenType lastCode ;
+	public FlaschenType lastCode ;
 	private HWSimulation HWaccess;
 	private ParallelWarteClass workerThread;
 	private int timeoutMS; 
@@ -43,7 +43,6 @@ public class Scanner extends Subjekt{
 		
 		if (lastCode != FlaschenType.CodeUnlesbar)
 		{
-			this.notifyObservers();
 			return true;
 		}
 		else 

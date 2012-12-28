@@ -31,10 +31,12 @@ public class HWSimulation {
 		ea_area.add(new Integer(0)); // 11 LaufbandAusgang
 		ea_area.add(new Boolean(false)); // 12 Auswahlklappe
 		ea_area.add(FlaschenType.CodeNichtValide); 	 // 13 Scanner
-		ea_area.add(new Boolean(false)); // 14 BonDrucker
+		ea_area.add(new String("")); // 14 BonDrucker
 		ea_area.add(new Boolean(false)); // 15 Druckknopf
 		ea_area.add(new String("init")); // 16 Display
 		ea_area.add(new String("init")); // 17 Drucker
+		ea_area.add(new Boolean(false));
+		ea_area.add(new Boolean(false));
 	}
 
 	/**

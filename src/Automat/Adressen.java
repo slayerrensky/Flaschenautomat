@@ -19,5 +19,7 @@ public enum Adressen {
 	BonDrucker,
 	Druckknopf,
 	Display,
-	Drucker;
+	Drucker,
+	FuellstandPET,
+	FuellstandMehrweg;
 }
