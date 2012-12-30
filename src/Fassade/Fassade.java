@@ -141,5 +141,8 @@ public class Fassade {
 	public void warnsignalAUS() {
 		SIMGui.MonitoringUpdate("Tröte wurde AUSgeschaltet");
 	}
-
+	
+	public void highlightEA(Adressen thisChanged){
+		SIMGui.highlightEA(thisChanged);		
+	}
 }

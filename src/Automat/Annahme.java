@@ -35,7 +35,7 @@ public class Annahme {
 	public boolean Flasche_auswerfen() {
 
 		// warte Zeit ändern in 10 sek.
-		workerThread = new ParallelWarteClass(20000);
+		workerThread = new ParallelWarteClass(10000);
 
 		// warte Thread starten
 		workerThread.start();
@@ -45,12 +45,12 @@ public class Annahme {
 
 		// sicherstellen dass die flasche am ausgang liegt und bei evtl.
 		// reinfassen nicht gestoppt wird
-		while (!s_EingangsLichtschranke.read()
-				//&& !s_JustierungLichtschranke.read()
-				//&& !s_AusgangsLichtschranke.read() 
-				&& workerThread.isAlive())
-		{
-			workerThread.wait(1000);
+		while (!s_EingangsLichtschranke.read() && workerThread.isAlive()){
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+			}
 		}
 
 		// wenn wartThread aktive: beenden
@@ -60,23 +60,23 @@ public class Annahme {
 		}
 
 		// warte Zeit ändern in 400ms
-		workerThread = new ParallelWarteClass(1000);
+		workerThread = new ParallelWarteClass(400);
 
 		// warte Thread starten
 		workerThread.start();
 
 		// nachlauf für das Laufband, damit der Flaschenkopf ein Stück tausguckt
-		while (workerThread.isAlive())
-			;
+		while (workerThread.isAlive()){
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+			}
+		}
 
 		// Band abschalten
 		m_VorderesLaufband.stop();
 		
-		while (s_EingangsLichtschranke.read())
-		{
-			workerThread.wait(1000);
-		}
-
 		return true;
 	}
 
@@ -99,9 +99,12 @@ public class Annahme {
 		
 
 		// sicherstellen dass die flasche an justierung angekommen ist
-		while (!s_JustierungLichtschranke.read() && workerThread.isAlive())
-		{
-			workerThread.wait(1000);
+		while (!s_JustierungLichtschranke.read() && workerThread.isAlive()){
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+			}
 		}
 		
 		
@@ -116,6 +119,7 @@ public class Annahme {
 		} else {
 			return false;
 		}
+		System.out.println("[Flasche_positionieren] mit true beendet!");
 		return true;
 	}
 
@@ -125,6 +129,7 @@ public class Annahme {
 	 * @return true wenn alles geklappt hat, false bei misserfolg
 	 */
 	public boolean flascheWeiterLeiten() {
+		System.out.println("[flascheWeiterLeiten] enter");
 
 		// warte Zeit ändern in 10 sek.
 		workerThread = new ParallelWarteClass(10000);
@@ -134,14 +139,17 @@ public class Annahme {
 
 		// Band einschalten
 		m_VorderesLaufband.vorwaerts();
-
+		System.out.println("[flascheWeiterLeiten] warte auf justier releaser");
 		
 		// sicherstellen dass die flasche nicht an justierlichtschranke und
 		// nicht an Ausgangslichtschranke mehr ist
 		while (s_JustierungLichtschranke.read()
-				&& workerThread.isAlive())
-		{
-			workerThread.wait(1000);
+				&& workerThread.isAlive()){
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+			}
 		}
 		
 		if (workerThread.isAlive()) {
@@ -149,13 +157,17 @@ public class Annahme {
 		} else {
 			return false;
 		}
+		System.out.println("[flascheWeiterLeiten] warte auf ausgangs lichschranke");
 		
 		workerThread = new ParallelWarteClass(10000);
 		workerThread.start();
 		
-		while (!s_AusgangsLichtschranke.read() && workerThread.isAlive())
-		{
-			workerThread.wait(1000);
+		while (!s_AusgangsLichtschranke.read() && workerThread.isAlive()){
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+			}
 		}
 		
 		if (workerThread.isAlive()) {
@@ -165,10 +177,13 @@ public class Annahme {
 		}
 		workerThread = new ParallelWarteClass(10000);
 		workerThread.start();
-		
-		while (s_AusgangsLichtschranke.read() && workerThread.isAlive())
-		{
-			workerThread.wait(1000);
+		System.out.println("[flascheWeiterLeiten] warte ausgang release");
+		while (s_AusgangsLichtschranke.read() && workerThread.isAlive()){
+			try {
+				Thread.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+			}
 		}
 		
 		// Band abschalten
@@ -179,9 +194,10 @@ public class Annahme {
 		if (workerThread.isAlive()) {
 			workerThread.interrupt();
 		} else {
+			System.out.println("[flascheWeiterLeiten] false");
 			return false;
 		}
-
+		System.out.println("[flascheWeiterLeiten] true");
 		return true;
 	}
 
@@ -225,14 +241,20 @@ public class Annahme {
 		// vorwaerts == linksherum
 		// rueckwerts == rechtsherum
 		m_DrehLaufband.rueckwerts();
-
+		System.out.println("[flascheDrehenRechts] band gestartet");
 		// sicherstellen dass die flasche nicht an justierlichtschranke und
 		// nicht an Ausgangslichtschranke mehr ist
-		while (workerThread.isAlive())
-			;
+		while (workerThread.isAlive()){
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+			}
+		}
 
 		// Band abschalten
 		m_DrehLaufband.stop();
+		System.out.println("[flascheDrehenRechts] flasche gedreht");
 	}
 
 	public boolean getEingangsLichtschranke(){

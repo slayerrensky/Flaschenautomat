@@ -11,6 +11,8 @@ import net.miginfocom.swing.MigLayout;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import Automat.Adressen;
 import Automat.FlaschenType;
 import Automat.HWSimulation;
 import Fassade.Fassade;
@@ -69,6 +71,12 @@ public class SimulationGUI {
 	private JLabel lblEndbehaelter;
 	private JToggleButton tglbtnPetBehlter;
 	private JToggleButton tglbtnMehrwegBehlter;
+	private JPanel eingangP;
+	private JPanel justierP;
+	private JPanel ausgangP;
+	private JPanel klappeEingangP;
+	private JPanel petP;
+	private JPanel mehrP;
 
 //	/**
 //	 * Launch the application.
@@ -152,7 +160,7 @@ public class SimulationGUI {
 		});
 		desktopPane.add(btnFlascheeinlegen, "cell 0 2,alignx left");
 		tglbtnEingangslichtschranke.setHorizontalAlignment(SwingConstants.LEFT);
-		desktopPane.add(tglbtnEingangslichtschranke, "cell 0 4");
+		desktopPane.add(tglbtnEingangslichtschranke, "flowx,cell 0 4");
 		
 		tglbtnJustierlichtschranke = new JToggleButton("Justierlichtschranke");
 		tglbtnJustierlichtschranke.addActionListener(new ActionListener() {
@@ -162,7 +170,7 @@ public class SimulationGUI {
 			}
 		});
 		tglbtnJustierlichtschranke.setHorizontalAlignment(SwingConstants.LEFT);
-		desktopPane.add(tglbtnJustierlichtschranke, "cell 0 5");
+		desktopPane.add(tglbtnJustierlichtschranke, "flowx,cell 0 5");
 		
 		tglbtnAusgangslichtschranke = new JToggleButton("Ausgangslichtschranke");
 		tglbtnAusgangslichtschranke.addActionListener(new ActionListener() {
@@ -172,7 +180,7 @@ public class SimulationGUI {
 			}
 		});
 		tglbtnAusgangslichtschranke.setHorizontalAlignment(SwingConstants.LEFT);
-		desktopPane.add(tglbtnAusgangslichtschranke, "cell 0 6");
+		desktopPane.add(tglbtnAusgangslichtschranke, "flowx,cell 0 6");
 		
 
 		tglbtnEingangAuswahlklappe = new JToggleButton("Eingangslichtschranke Auswahlklappe");
@@ -183,7 +191,7 @@ public class SimulationGUI {
         	}
         });
 		tglbtnEingangAuswahlklappe.setHorizontalAlignment(SwingConstants.LEFT);
-        desktopPane.add(tglbtnEingangAuswahlklappe, "cell 0 11");
+        desktopPane.add(tglbtnEingangAuswahlklappe, "flowx,cell 0 11");
         
 		ButtonGroup groupL1 = new ButtonGroup();
 		
@@ -200,7 +208,7 @@ public class SimulationGUI {
         	}
         });
         tglbtnLichtschrankepet.setHorizontalAlignment(SwingConstants.LEFT);
-        desktopPane.add(tglbtnLichtschrankepet, "cell 0 12");
+        desktopPane.add(tglbtnLichtschrankepet, "flowx,cell 0 12");
         
         tglbtnLichtschrankemehrweg = new JToggleButton("LichtschrankeMehrweg");
         tglbtnLichtschrankemehrweg.addActionListener(new ActionListener() {
@@ -210,7 +218,7 @@ public class SimulationGUI {
         	}
         });
         tglbtnLichtschrankemehrweg.setHorizontalAlignment(SwingConstants.LEFT);
-        desktopPane.add(tglbtnLichtschrankemehrweg, "cell 0 13");
+        desktopPane.add(tglbtnLichtschrankemehrweg, "flowx,cell 0 13");
         
         tglbtnLeuchte = new JToggleButton("Leuchte");
         tglbtnLeuchte.addActionListener(new ActionListener() {
@@ -431,6 +439,24 @@ public class SimulationGUI {
 		});
         pEndbehaelter.add(tglbtnMehrwegBehlter);
         
+        eingangP = new JPanel();
+        desktopPane.add(eingangP, "cell 0 4");
+        
+        justierP = new JPanel();
+        desktopPane.add(justierP, "cell 0 5");
+        
+        ausgangP = new JPanel();
+        desktopPane.add(ausgangP, "cell 0 6");
+        
+        klappeEingangP = new JPanel();
+        desktopPane.add(klappeEingangP, "cell 0 11");
+        
+        petP = new JPanel();
+        desktopPane.add(petP, "cell 0 12");
+        
+        mehrP = new JPanel();
+        desktopPane.add(mehrP, "cell 0 13");
+        
 	}
 	
 	public void MonitoringUpdate(String message)
@@ -489,5 +515,36 @@ public class SimulationGUI {
 		}	
 	}
 	
+	public void highlightEA(Adressen thisChanged){
+		switch (thisChanged) {
+		case Eingangslichtschranke:
+			highlighter tmp = new highlighter(100,eingangP);
+			tmp.start();
+			break;
+		case Justierlichtschranke:
+			highlighter tmp2 = new highlighter(100,justierP);
+			tmp2.start();
+			break;
+		case Ausgangslichtschranke:
+			highlighter tmp3 = new highlighter(100,ausgangP);
+			tmp3.start();
+			break;
+		case UebergabelichtschrankePET:
+			highlighter tmp4 = new highlighter(100,petP);
+			tmp4.start();
+			break;
+		case UebergabelichtschrankeMehrweg:
+			highlighter tmp5 = new highlighter(100,mehrP);
+			tmp5.start();
+			break;
+		case AuswahlklappeEingangslichtschranke:
+			highlighter tmp6 = new highlighter(100,klappeEingangP);
+			tmp6.start();
+			break;
+
+		default:
+			break;
+		}
+	}
 
 }

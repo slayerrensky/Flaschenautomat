@@ -49,19 +49,22 @@ public class HWSimulation {
 	
 	public Boolean readBool(int adresse){
 		Boolean status = (Boolean) ea_area.get(adresse);
-		dieFassade.simKonsolenText(0, "[read:"+Adressen.values()[adresse].toString()+"] "+status);
+		//dieFassade.simKonsolenText(0, "[read:"+Adressen.values()[adresse].toString()+"] "+status);
+		tellFassade(Adressen.values()[adresse]);
 		return status;		
 	}
 	
 	public Integer readInt(int adresse){
 		Integer number = (Integer) ea_area.get(adresse);
-		dieFassade.simKonsolenText(0, "[read:"+Adressen.values()[adresse].toString()+"] "+number);
+		//dieFassade.simKonsolenText(0, "[read:"+Adressen.values()[adresse].toString()+"] "+number);
+		tellFassade(Adressen.values()[adresse]);
 		return number;		
 	}
 	
 	public String readStr(int adresse){
 		String text = (String) ea_area.get(adresse);
-		dieFassade.simKonsolenText(0, "[read:"+Adressen.values()[adresse].toString()+"] \""+text+"\"");
+		//dieFassade.simKonsolenText(0, "[read:"+Adressen.values()[adresse].toString()+"] \""+text+"\"");
+		tellFassade(Adressen.values()[adresse]);
 		return text;
 	}
 	
@@ -69,31 +72,36 @@ public class HWSimulation {
 	{
 		FlaschenType fType = (FlaschenType) ea_area.get(adresse);
 		dieFassade.simKonsolenText(0, "[read:"+Adressen.values()[adresse].toString()+"] "+fType.toString());
+		tellFassade(Adressen.values()[adresse]);
 		return fType;		
 	}
 	
 	public void write(int adresse, Boolean status){
 		ea_area.set(adresse, status);
 		dieFassade.aktuallisereHW(ea_area);
-		dieFassade.simKonsolenText(0, "[write:"+ Adressen.values()[adresse].toString() +"] "+status);
+		//dieFassade.simKonsolenText(0, "[write:"+ Adressen.values()[adresse].toString() +"] "+status);
+		tellFassade(Adressen.values()[adresse]);
 	}
 	
 	public void write(int adresse, Integer number){
 		ea_area.set(adresse, number);
 		dieFassade.aktuallisereHW(ea_area);
-		dieFassade.simKonsolenText(0, "[write:"+Adressen.values()[adresse].toString()+"] "+number);
+		//dieFassade.simKonsolenText(0, "[write:"+Adressen.values()[adresse].toString()+"] "+number);
+		tellFassade(Adressen.values()[adresse]);
 	}
 	
 	public void write(int adresse, String text){
 		ea_area.set(adresse, text);
 		dieFassade.aktuallisereHW(ea_area);
-		dieFassade.simKonsolenText(0, "[write:"+Adressen.values()[adresse].toString()+"] \""+text+"\"");
+		//dieFassade.simKonsolenText(0, "[write:"+Adressen.values()[adresse].toString()+"] \""+text+"\"");
+		tellFassade(Adressen.values()[adresse]);
 	}
 
 	public void write(int adresse, FlaschenType fType){
 		ea_area.set(adresse, fType);
 		dieFassade.aktuallisereHW(ea_area);
 		dieFassade.simKonsolenText(0, "[write:"+ Adressen.values()[adresse].toString() +"] "+fType.toString());
+		tellFassade(Adressen.values()[adresse]);
 	}
 	
 	public void setF(Fassade dieFassade){
@@ -101,6 +109,9 @@ public class HWSimulation {
 		this.dieFassade.aktuallisereHW(ea_area);
 	}
 	
+	public void tellFassade(Adressen thisChanged){
+		this.dieFassade.highlightEA(thisChanged);
+	}
 
 	
 

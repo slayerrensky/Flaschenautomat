@@ -81,11 +81,11 @@ public class Ablieferung extends Thread{
 				while (!(scan = m_scanner.Scan()) && versuche <= 6)
 				{
 					DieFassade.simKonsolenText(0, "Ablieferung: Flasche nicht erkannt.");
-					workerThread.wait(1000);
 					DieFassade.simKonsolenText(0, "Ablieferung: Flasche nach rechts drehen.");
-					m_Annahme.flascheDrehenRechts(2000);
+					m_Annahme.flascheDrehenRechts(300);
 					versuche++;
 				}
+				m_scanner.resetMissCounter();
 				if (scan)
 				{
 					if (!checkFuellstand(m_scanner.lastCode)) //wenn füllstand nicht voll ist
@@ -114,7 +114,11 @@ public class Ablieferung extends Thread{
 									DieFassade.simKonsolenText(0, "Ablieferung: Flasche konnte nicht an den Endbekälter "+
 																	m_KundenZaehler.getLastFlaschenType().toString() +
 																	" weitergeleitet werden.");
-									flascheZurueckGeben();
+									if(flascheZurueckGeben()){
+										//ok
+									}else{
+										//fehler fall bon ausdrucken
+									}
 								}
 							}
 							else
@@ -171,14 +175,23 @@ public class Ablieferung extends Thread{
 	}
 	
 
-	public void flascheZurueckGeben()
+	public boolean flascheZurueckGeben()
 	{
 		DieFassade.simKonsolenText(0, "Ablieferung: Flasche wird zurück gegeben.");
 		if (m_Annahme.Flasche_auswerfen())
 		{
 			DisplayAktualisieren("Bitte Flasche entnehmen.");
 			m_Anzeige.FehlerMelden(0);
+		}else{
+			//fehlerfall
+			DisplayAktualisieren("Es ist ein Fehler aufgetreten!");
+			m_Anzeige.FehlerMelden(1);
+			return false;
 		}
+		
+		// auf entnahme warten
+		while (m_Annahme.getEingangsLichtschranke());
+		return true;
 	}
 
 	/**
@@ -195,18 +208,22 @@ public class Ablieferung extends Thread{
 		
 	
 	public void wartenAufFlasche(){
+
 		while (! m_Annahme.getEingangsLichtschranke())
 		{
+			ParallelWarteClass warte = new ParallelWarteClass(300);
+
 			if (BonButtonPresst)
 			{
 				// Guthaben errechnen, Bon Drucken, Flaschenzähler leeren
 				m_BonDrucker.BonDrucken(m_KundenZaehler.getFlaschenListe());
 				m_KundenZaehler.reset();
 				BonButtonPresst = false;
-				workerThread.wait(5000);
+				//workerThread.wait(5000);
 			}
-			workerThread.run();
-			workerThread.isAlive();
+
+			warte.start();
+			while(warte.isAlive());
 		}
 	}
 	

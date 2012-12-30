@@ -67,9 +67,12 @@ public class Verteilung {
 			
 			workerThread =  new ParallelWarteClass(10000);
 			workerThread.start();
-			while(!s.read() && workerThread.isAlive())
-			{
-				workerThread.wait(1000);
+			while(!s.read() && workerThread.isAlive()){
+				try {
+					Thread.sleep(300);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+				}
 			}
 			
 			if (!workerThread.isAlive()){		
@@ -82,9 +85,12 @@ public class Verteilung {
 
 			workerThread =  new ParallelWarteClass(10000);
 			workerThread.start();
-			while(s.read() && workerThread.isAlive())
-			{
-				workerThread.wait(1000);
+			while(s.read() && workerThread.isAlive()){
+				try {
+					Thread.sleep(300);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+				}
 			}
 				
 			if (!workerThread.isAlive()){
