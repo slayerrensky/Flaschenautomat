@@ -518,15 +518,15 @@ public class SimulationGUI {
 	public void highlightEA(Adressen thisChanged){
 		switch (thisChanged) {
 		case Eingangslichtschranke:
-			highlighter tmp = new highlighter(100,eingangP);
+			highlighter tmp = new highlighter(150,eingangP);
 			tmp.start();
 			break;
 		case Justierlichtschranke:
-			highlighter tmp2 = new highlighter(100,justierP);
+			highlighter tmp2 = new highlighter(150,justierP);
 			tmp2.start();
 			break;
 		case Ausgangslichtschranke:
-			highlighter tmp3 = new highlighter(100,ausgangP);
+			highlighter tmp3 = new highlighter(150,ausgangP);
 			tmp3.start();
 			break;
 		case UebergabelichtschrankePET:
@@ -534,11 +534,11 @@ public class SimulationGUI {
 			tmp4.start();
 			break;
 		case UebergabelichtschrankeMehrweg:
-			highlighter tmp5 = new highlighter(100,mehrP);
+			highlighter tmp5 = new highlighter(150,mehrP);
 			tmp5.start();
 			break;
 		case AuswahlklappeEingangslichtschranke:
-			highlighter tmp6 = new highlighter(100,klappeEingangP);
+			highlighter tmp6 = new highlighter(150,klappeEingangP);
 			tmp6.start();
 			break;
 

@@ -21,7 +21,7 @@ public class Scanner extends Subjekt{
 		this.HWaccess = HWSimulation.getInstance();
 		workerThread = new ParallelWarteClass(1000);
 		this.timeoutMS = timeoutMS;
-		fehlversuche = 3;
+		fehlversuche = 1;
 	}
 
 	public FlaschenType getSubjectState(){
@@ -79,6 +79,6 @@ public class Scanner extends Subjekt{
 	}
 	
 	public void resetMissCounter(){
-		fehlversuche = 3;
+		fehlversuche = 1;
 	}
 }

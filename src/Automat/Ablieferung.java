@@ -69,26 +69,36 @@ public class Ablieferung extends Thread{
 		
 		while (true)
 		{
+			System.out.println("[ablaufFlaschenablieferung] enter main loop");
 
 			DisplayAktualisieren("Warten auf Flasche.");
 			wartenAufFlasche();
+			DisplayAktualisieren("Lese Flaschencode.");
 			if (m_Annahme.Flasche_positionieren())
 			{
 				int flaschenanzahl = m_KundenZaehler.getGesamtAnzahlFlaschen();
 				
-				int versuche; versuche = 0;
-				boolean scan;
-				while (!(scan = m_scanner.Scan()) && versuche <= 6)
+				int versuche = 0;
+				boolean scan = false;
+				
+				while (!scan && versuche <= 6)
 				{
+					scan = m_scanner.Scan();
 					DieFassade.simKonsolenText(0, "Ablieferung: Flasche nicht erkannt.");
 					DieFassade.simKonsolenText(0, "Ablieferung: Flasche nach rechts drehen.");
 					m_Annahme.flascheDrehenRechts(300);
 					versuche++;
 				}
+				
+				//---------->>
+				// nur für simulation, scanner kann einmal nix lesen, damit das drehband zum einsatz kommt
 				m_scanner.resetMissCounter();
+				//<<<---------
+				
 				if (scan)
 				{
-					if (!checkFuellstand(m_scanner.lastCode)) //wenn füllstand nicht voll ist
+					//wenn füllstand nicht voll ist
+					if (!checkFuellstand(m_scanner.lastCode))
 					{
 						
 						//anzahl kontrollieren
@@ -114,11 +124,7 @@ public class Ablieferung extends Thread{
 									DieFassade.simKonsolenText(0, "Ablieferung: Flasche konnte nicht an den Endbekälter "+
 																	m_KundenZaehler.getLastFlaschenType().toString() +
 																	" weitergeleitet werden.");
-									if(flascheZurueckGeben()){
-										//ok
-									}else{
-										//fehler fall bon ausdrucken
-									}
+									flascheZurueckGeben();
 								}
 							}
 							else
@@ -175,23 +181,57 @@ public class Ablieferung extends Thread{
 	}
 	
 
-	public boolean flascheZurueckGeben()
+	public void flascheZurueckGeben()
 	{
+		Sensor s_EingangsLichtschranke = new Sensor(Adressen.Eingangslichtschranke.ordinal());
+		
+		System.out.println("[flascheZurueckGeben] enter");
+		
 		DieFassade.simKonsolenText(0, "Ablieferung: Flasche wird zurück gegeben.");
 		if (m_Annahme.Flasche_auswerfen())
 		{
+			System.out.println("[flascheZurueckGeben] Flasche_auswerfen erfolgreich");
 			DisplayAktualisieren("Bitte Flasche entnehmen.");
 			m_Anzeige.FehlerMelden(0);
+			
+			// warte Zeit ändern in 10sec.
+			workerThread = new ParallelWarteClass(10000);
+
+			// warte Thread starten
+			workerThread.start();
+			
+			System.out.println("[flascheZurueckGeben] warten auf entnahme der Flasche");
+			
+			// auf entnahme der flasche warten oder timeout 10sec.
+			while (s_EingangsLichtschranke.read() && workerThread.isAlive()) {
+				try {
+					Thread.sleep(300);
+				} catch (InterruptedException e) {
+					// do nothing
+				}
+			}
+			
+			// flasche wurde nicht rechtzeitig zurück entnommen
+			if (!workerThread.isAlive()){
+				System.out.println("[flascheZurueckGeben] Flasche wurde nicht im Timeout entnommen");
+				m_Anzeige.FehlerMelden(1);
+				// now wait infinite for Eingangslichtschrnake release
+				System.out.println("[flascheZurueckGeben] unendliches warten auf entnahme der Flasche");
+				while(s_EingangsLichtschranke.read()){
+					try {
+						Thread.sleep(300);
+					} catch (InterruptedException e) {
+						// do nothing
+					}
+				}
+			}
 		}else{
 			//fehlerfall
+			System.out.println("[flascheZurueckGeben] Flasche_auswerfen returned false!");
 			DisplayAktualisieren("Es ist ein Fehler aufgetreten!");
 			m_Anzeige.FehlerMelden(1);
-			return false;
+			// was nun warten??? <<<<<<<<<----------------------------
 		}
-		
-		// auf entnahme warten
-		while (m_Annahme.getEingangsLichtschranke());
-		return true;
 	}
 
 	/**
