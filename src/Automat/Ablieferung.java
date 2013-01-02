@@ -66,11 +66,13 @@ public class Ablieferung extends Thread{
 	 */
 	public void ablaufFlaschenablieferung(){
 		
-		
 		while (true)
 		{
 			System.out.println("[ablaufFlaschenablieferung] enter main loop");
-
+			
+			// -1 alles i.o.
+			m_Anzeige.FehlerMelden(-1);
+			
 			DisplayAktualisieren("Warten auf Flasche.");
 			wartenAufFlasche();
 			DisplayAktualisieren("Lese Flaschencode.");
@@ -192,7 +194,6 @@ public class Ablieferung extends Thread{
 		{
 			System.out.println("[flascheZurueckGeben] Flasche_auswerfen erfolgreich");
 			DisplayAktualisieren("Bitte Flasche entnehmen.");
-			m_Anzeige.FehlerMelden(0);
 			
 			// warte Zeit ändern in 10sec.
 			workerThread = new ParallelWarteClass(10000);

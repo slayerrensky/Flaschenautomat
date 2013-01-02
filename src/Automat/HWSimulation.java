@@ -80,7 +80,7 @@ public class HWSimulation {
 		ea_area.set(adresse, status);
 		dieFassade.aktuallisereHW(ea_area);
 		//dieFassade.simKonsolenText(0, "[write:"+ Adressen.values()[adresse].toString() +"] "+status);
-		tellFassade(Adressen.values()[adresse]);
+		//tellFassade(Adressen.values()[adresse]);
 	}
 	
 	public void write(int adresse, Integer number){
