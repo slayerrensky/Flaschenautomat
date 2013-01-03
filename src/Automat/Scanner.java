@@ -13,15 +13,11 @@ public class Scanner extends Subjekt{
 	public FlaschenType lastCode ;
 	private HWSimulation HWaccess;
 	private ParallelWarteClass workerThread;
-	private int timeoutMS; 
-	private int fehlversuche;
 	
 	public Scanner(int adresse, int timeoutMS){
 		this.adresse = adresse;
 		this.HWaccess = HWSimulation.getInstance();
 		workerThread = new ParallelWarteClass(1000);
-		this.timeoutMS = timeoutMS;
-		fehlversuche = 1;
 	}
 
 	public FlaschenType getSubjectState(){
@@ -44,26 +40,6 @@ public class Scanner extends Subjekt{
 			
 		}
 		
-		//int[] passRef = new int[1];
-		//HWaccess.read(this.adresse, passRef);
-		//return passRef[1];
-		/*int fehlversuche = new Random().nextInt(5)+1;
-		while(fehlversuche>0){
-			int wartezeit = new Random().nextInt(3000)+1000;
-			workerThread.setTimeout(wartezeit);
-			workerThread.start();
-			while(workerThread.isAlive());
-			if(workerThread.isAlive()){
-				workerThread.interrupt();
-			}// abbrechen falls er noch läuft
-			fehlversuche--;
-		}*/// das hier habe ich eingebaut um die eingelegte flasche besser zu simulieren, damit er die flasche auch mal dreht
-		
-		if(fehlversuche>0){
-			fehlversuche--;
-			return false;
-		}
-		
 		if (lastCode != FlaschenType.CodeUnlesbar)
 		{
 			return true;
@@ -78,7 +54,4 @@ public class Scanner extends Subjekt{
 	
 	}
 	
-	public void resetMissCounter(){
-		fehlversuche = 1;
-	}
 }

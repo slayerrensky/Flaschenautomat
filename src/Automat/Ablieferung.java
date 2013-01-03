@@ -90,11 +90,6 @@ public class Ablieferung extends Thread{
 					versuche++;
 				}
 				
-				//---------->>
-				// nur für simulation, scanner kann einmal nix lesen, damit das drehband zum einsatz kommt
-				m_scanner.resetMissCounter();
-				//<<<---------
-				
 				if (scan)
 				{
 					//wenn füllstand nicht voll ist
