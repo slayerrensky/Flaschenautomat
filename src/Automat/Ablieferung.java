@@ -77,9 +77,7 @@ public class Ablieferung extends Thread{
 			wartenAufFlasche();
 			DisplayAktualisieren("Lese Flaschencode.");
 			if (m_Annahme.Flasche_positionieren())
-			{
-				int flaschenanzahl = m_KundenZaehler.getGesamtAnzahlFlaschen();
-				
+			{				
 				int versuche = 0;
 				boolean scan = false;
 				
@@ -260,7 +258,12 @@ public class Ablieferung extends Thread{
 				m_BonDrucker.BonDrucken(m_KundenZaehler.getFlaschenListe());
 				m_KundenZaehler.reset();
 				BonButtonPresst = false;
-				//workerThread.wait(5000);
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+					// do nothing
+				}
+				DisplayAktualisieren("Warten auf Flasche.");
 			}
 
 			warte.start();
