@@ -1,7 +1,5 @@
 package Automat;
 
-import Fassade.Fassade;
-
 /**
  * @author Dennis
  * @version 1.0

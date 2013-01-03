@@ -1,7 +1,6 @@
 package Automat;
 
 import java.math.BigDecimal;
-import java.util.Currency;
 
 /**
  * @author Dennis

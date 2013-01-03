@@ -50,7 +50,7 @@ public class Fassade {
 		});
 	}
 	
-	public void aktuallisereHW(ArrayList<Comparable> list){
+	public void aktuallisereHW(@SuppressWarnings("rawtypes") ArrayList<Comparable> list){
 		SIMGui.updateUI(list);
 		HWGui.updateUI(list);
 		Color c;

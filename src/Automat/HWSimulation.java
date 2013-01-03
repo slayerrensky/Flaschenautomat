@@ -8,6 +8,7 @@ import Fassade.Fassade;
  */
 public class HWSimulation {
 	private static HWSimulation instance = new HWSimulation();
+	@SuppressWarnings("rawtypes")
 	private ArrayList<Comparable> ea_area;
 	private Fassade dieFassade;
 
@@ -15,6 +16,7 @@ public class HWSimulation {
 	 * Default-Konstruktor, der nicht au�erhalb dieser Klasse
 	 * aufgerufen werden kann
 	 */
+	@SuppressWarnings("rawtypes")
 	private HWSimulation() {
 		ea_area = new ArrayList<Comparable>();
 		ea_area.add(new Boolean(false)); // 0 Troete

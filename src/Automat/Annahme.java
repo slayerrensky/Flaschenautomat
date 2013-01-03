@@ -1,7 +1,5 @@
 package Automat;
 
-import org.omg.CosNaming.NamingContextExtPackage.AddressHelper;
-
 public class Annahme {
 
 	// Variablen

@@ -38,11 +38,11 @@ public class Verteilung {
 			if( ! Durchlauf_A(Flasche)){
 				return false;
 			}
-			
 			switch (Flasche) {
 			
 				case PET:
-							
+					
+					
 					return Durchlauf_B(s_PetBehaelterLichtschranke);		
 					
 				case Mehrweg:

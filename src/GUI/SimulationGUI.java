@@ -35,18 +35,18 @@ public class SimulationGUI {
 
 	private JFrame frmSimulationhelper;
 	private Fassade DieFassade;
-	private JComboBox comboBox;
+	private JComboBox<FlaschenType> comboBoxFlaschenType;
 	private JTextArea txtrMonitoring;
 	private JToggleButton tglbtnLeuchte;
 	private JToggleButton tglbtnEingangslichtschranke;
 	private JToggleButton tglbtnJustierlichtschranke;
-	private JToggleButton tglbtnNewToggleButton;
+	//private JToggleButton tglbtnNewToggleButton;
 	private JToggleButton tglbtnEingangAuswahlklappe;
 	private JToggleButton tglbtnAusgangslichtschranke;
 	private JToggleButton tglbtnLichtschrankepet;
 	private JToggleButton tglbtnLichtschrankemehrweg;
 	private JToggleButton tglbtnTrte;
-	private int logLevel;
+	//private int logLevel;
 	private HWSimulation HWaccess;
 	private JPanel pVorderesLaufband;
 	private JRadioButton rdbtnVorderesStop;
@@ -66,7 +66,7 @@ public class SimulationGUI {
 	private JRadioButton rdbtnHinteresStop;
 	private JRadioButton rdbtnHinteresVorwaerts;
 	private JRadioButton rdbtnHinteresRueckwaerts;
-	private JButton btnEingangslichtschrankeAuswahlklappe;
+	//private JButton btnEingangslichtschrankeAuswahlklappe;
 	private JPanel pEndbehaelter;
 	private JLabel lblEndbehaelter;
 	private JToggleButton tglbtnPetBehlter;
@@ -77,6 +77,10 @@ public class SimulationGUI {
 	private JPanel klappeEingangP;
 	private JPanel petP;
 	private JPanel mehrP;
+	private JPanel pAuswahlplappe;
+	private JLabel lblAuswahlklappe;
+	private JRadioButton rdbtnAuswahlklappePET;
+	private JRadioButton rdbtnAuswahlklappeMehrweg;
 
 //	/**
 //	 * Launch the application.
@@ -101,7 +105,7 @@ public class SimulationGUI {
 	public SimulationGUI(Fassade fassade) {
 		HWaccess = HWSimulation.getInstance();
 		DieFassade = fassade;
-		logLevel = 0;
+		//logLevel = 0;
 		initialize();
 		this.frmSimulationhelper.setVisible(true);
 	}
@@ -113,28 +117,29 @@ public class SimulationGUI {
 		frmSimulationhelper = new JFrame();
 		frmSimulationhelper.setResizable(false);
 		frmSimulationhelper.setTitle("Simulation");
-		frmSimulationhelper.setBounds(100, 100, 669, 890);
+		frmSimulationhelper.setBounds(100, 100, 669, 939);
 		frmSimulationhelper.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSimulationhelper.getContentPane().setLayout(new MigLayout("", "[289.00px][144px,grow][193.00px]", "[675.00px,grow]"));
 		
 		JDesktopPane desktopPane = new JDesktopPane();
 		desktopPane.setBackground(Color.LIGHT_GRAY);
 		frmSimulationhelper.getContentPane().add(desktopPane, "cell 0 0,grow");
-		desktopPane.setLayout(new MigLayout("", "[140px,grow]", "[12px][24px][25px][25px][15px][][][19px][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow][grow][grow][]"));
+		desktopPane.setLayout(new MigLayout("", "[140px,grow]", "[12px][24px][25px][25px][15px][][][19px][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][grow][grow][grow][]"));
 		
 		JLabel lblFlaschenautomat = new JLabel("Flaschenautomat");
 		desktopPane.add(lblFlaschenautomat, "cell 0 0,alignx center,aligny center");
 		
-		String[] comboStrings = new String[FlaschenType.values().length];
+		FlaschenType[] comboStrings = new FlaschenType[FlaschenType.values().length];
 		
-		comboStrings[0] = FlaschenType.CodeNichtValide.toString();
-		comboStrings[1] = FlaschenType.CodeUnlesbar.toString();
-		comboStrings[2] = FlaschenType.Mehrweg.toString();
-		comboStrings[3] = FlaschenType.PET.toString();
+		comboStrings[0] = FlaschenType.CodeNichtValide;
+		comboStrings[1] = FlaschenType.CodeUnlesbar;
+		comboStrings[2] = FlaschenType.Mehrweg;
+		comboStrings[3] = FlaschenType.PET;
 		
-		comboBox =  new JComboBox(comboStrings);
+		comboBoxFlaschenType =  new JComboBox<FlaschenType>(comboStrings);
 		
-		desktopPane.add(comboBox, "cell 0 1,growx,aligny center");
+		
+		desktopPane.add(comboBoxFlaschenType, "cell 0 1,growx,aligny center");
 		
 		tglbtnEingangslichtschranke = new JToggleButton("Eingangslichtschranke");
 		tglbtnEingangslichtschranke.addActionListener(new ActionListener() {
@@ -153,7 +158,7 @@ public class SimulationGUI {
 		btnFlascheeinlegen.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String Flasche = comboBox.getSelectedItem().toString();
+				String Flasche = comboBoxFlaschenType.getSelectedItem().toString();
 				DieFassade.simFlascheEinlegen(FlaschenType.valueOf(Flasche));
 				//Glue.InsertBottle();
 			}
@@ -198,6 +203,8 @@ public class SimulationGUI {
 		ButtonGroup groupL2 = new ButtonGroup();
 		
 		ButtonGroup groupL3 = new ButtonGroup();
+		
+		ButtonGroup groupL4 = new ButtonGroup();
         
         
         tglbtnLichtschrankepet = new JToggleButton("LichtschrankePET");
@@ -411,11 +418,55 @@ public class SimulationGUI {
         groupL3.add(rdbtnHinteresStop);
         groupL3.add(rdbtnHinteresVorwaerts);
         groupL3.add(rdbtnHinteresRueckwaerts);
-		
-		
-		
+        
+        eingangP = new JPanel();
+        desktopPane.add(eingangP, "cell 0 4");
+        
+        justierP = new JPanel();
+        desktopPane.add(justierP, "cell 0 5");
+        
+        ausgangP = new JPanel();
+        desktopPane.add(ausgangP, "cell 0 6");
+        
+        klappeEingangP = new JPanel();
+        desktopPane.add(klappeEingangP, "cell 0 11");
+        
+        petP = new JPanel();
+        desktopPane.add(petP, "cell 0 12");
+        
+        mehrP = new JPanel();
+        desktopPane.add(mehrP, "cell 0 13");
+        //pEndbehaelter.setLayout(new GridLayout(0, 1, 0, 0));
+        
+       
+        this.pAuswahlplappe = new JPanel();
+        desktopPane.add(pAuswahlplappe, "cell 0 26,grow");
+        pAuswahlplappe.setLayout(new GridLayout(0, 3, 0, 0));
+        lblAuswahlklappe = new JLabel("Auswahlklappe");
+        this.pAuswahlplappe.add(lblAuswahlklappe);
+        
+        rdbtnAuswahlklappePET = new JRadioButton("PET");
+        
+        rdbtnAuswahlklappePET.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		HWaccess.write(Automat.Adressen.Auswahlklappe.ordinal(), false);
+        	}
+        });
+        pAuswahlplappe.add(rdbtnAuswahlklappePET);
+        
+        rdbtnAuswahlklappeMehrweg = new JRadioButton("Mehrweg");
+        rdbtnAuswahlklappeMehrweg.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		HWaccess.write(Automat.Adressen.Auswahlklappe.ordinal(), true);
+        	}
+        });
+        pAuswahlplappe.add(rdbtnAuswahlklappeMehrweg);
+        
+        groupL4.add(rdbtnAuswahlklappeMehrweg);
+        groupL4.add(rdbtnAuswahlklappePET);
+        
         pEndbehaelter = new JPanel();
-        desktopPane.add(pEndbehaelter, "cell 0 28,grow");
+        desktopPane.add(pEndbehaelter, "cell 0 29,grow");
         pEndbehaelter.setLayout(new GridLayout(0, 1, 0, 0));
         
         lblEndbehaelter = new JLabel("Endbehälter");
@@ -439,24 +490,6 @@ public class SimulationGUI {
 		});
         pEndbehaelter.add(tglbtnMehrwegBehlter);
         
-        eingangP = new JPanel();
-        desktopPane.add(eingangP, "cell 0 4");
-        
-        justierP = new JPanel();
-        desktopPane.add(justierP, "cell 0 5");
-        
-        ausgangP = new JPanel();
-        desktopPane.add(ausgangP, "cell 0 6");
-        
-        klappeEingangP = new JPanel();
-        desktopPane.add(klappeEingangP, "cell 0 11");
-        
-        petP = new JPanel();
-        desktopPane.add(petP, "cell 0 12");
-        
-        mehrP = new JPanel();
-        desktopPane.add(mehrP, "cell 0 13");
-        
 	}
 	
 	public void MonitoringUpdate(String message)
@@ -464,7 +497,7 @@ public class SimulationGUI {
 		txtrMonitoring.append(message+'\n');		
 	}
 	
-	public void updateUI(ArrayList<Comparable> list){
+	public void updateUI(@SuppressWarnings("rawtypes") ArrayList<Comparable> list){
 		//HWLayer HWaccess = HWLayer.getInstance();
 		//Boolean tmp_bool = new Boolean(false);
 		// sollte lieber so sein
@@ -480,6 +513,15 @@ public class SimulationGUI {
 		tglbtnTrte.setSelected((Boolean)list.get(Automat.Adressen.Troete.ordinal()));;
 		tglbtnMehrwegBehlter.setSelected((Boolean)list.get(Automat.Adressen.FuellstandMehrweg.ordinal()));;
 		tglbtnPetBehlter.setSelected((Boolean)list.get(Automat.Adressen.FuellstandPET.ordinal()));;
+		
+		if ((Boolean)list.get(Automat.Adressen.Auswahlklappe.ordinal()))
+		{
+			rdbtnAuswahlklappeMehrweg.setSelected(true);
+		}
+		else
+		{
+			rdbtnAuswahlklappePET.setSelected(true);
+		}
 		
 		switch ((Integer)list.get(Automat.Adressen.LaufbandEingang.ordinal())) {
 		default:chckbxVorderesGesperrt.setSelected(true); 

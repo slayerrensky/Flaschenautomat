@@ -2,8 +2,6 @@ package Automat;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.LinkedList;
 import Fassade.Fassade;
 
@@ -15,17 +13,10 @@ import Fassade.Fassade;
  */
 public class Ablieferung extends Thread{
 
-	private boolean ButtonPressed = false;
-	/**
-	 * in Sekunden
-	 */
-	private int Timeout = 4;
 	private Annahme m_Annahme;
 	private Verteilung m_Verteilung;
 	private Anzeige m_Anzeige;
 	private BonDrucker m_BonDrucker;
-	private Sensor m_Druckknopf;
-	private LinkedList<Flasche> abgelieferteFlaschen;
 	private FlaschenZaehler m_KundenZaehler;
 	private FlaschenZaehler m_TagesZaehler;
 	private BigDecimal Guthaben = new BigDecimal(0.0);
@@ -40,8 +31,6 @@ public class Ablieferung extends Thread{
 		m_Verteilung = new Verteilung();
 		m_Anzeige = new Anzeige(fassade);
 		m_BonDrucker= new BonDrucker(Adressen.BonDrucker.ordinal());
-		m_Druckknopf = new Sensor(Adressen.Druckknopf.ordinal());
-		//m_FlaschenZaehlerSubject = new FlaschenAbrechnungSubject();
 		m_scanner = new Scanner(Adressen.Scanner.ordinal(),10000);
 		m_KundenZaehler = new FlaschenZaehler(m_scanner,ListofBottlesTag);
 		m_TagesZaehler = new FlaschenZaehler(m_scanner,ListofBottlesKunde);
@@ -81,9 +70,8 @@ public class Ablieferung extends Thread{
 				int versuche = 0;
 				boolean scan = false;
 				
-				while (!scan && versuche <= 6)
+				while (!(scan = m_scanner.Scan()) && versuche <= 6)
 				{
-					scan = m_scanner.Scan();
 					DieFassade.simKonsolenText(0, "Ablieferung: Flasche nicht erkannt.");
 					DieFassade.simKonsolenText(0, "Ablieferung: Flasche nach rechts drehen.");
 					m_Annahme.flascheDrehenRechts(300);
@@ -158,13 +146,6 @@ public class Ablieferung extends Thread{
 		
 	}
 
-	/**
-	 * 
-	 * @param FlaschenType
-	 */
-	public void addGuthaben(FlaschenType FlaschenType){
-
-	}
 
 	public void DisplayAktualisieren(String info)
 	{
