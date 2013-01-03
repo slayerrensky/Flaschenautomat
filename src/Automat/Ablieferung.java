@@ -258,6 +258,7 @@ public class Ablieferung extends Thread{
 				} catch (InterruptedException e) {
 					// do nothing
 				}
+				Guthaben = new BigDecimal(0.0);
 				DisplayAktualisieren("Warten auf Flasche.");
 			}
 

@@ -65,7 +65,7 @@ public class HardwareGUI {
 		frmHardware.setVisible(true);
 		frmHardware.setResizable(false);
 		frmHardware.setTitle("Hardware");
-		frmHardware.setBounds(100, 100, 450, 300);
+		frmHardware.setBounds(100, 100, 450, 424);
 		frmHardware.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmHardware.getContentPane().setLayout(new MigLayout("", "[grow][grow]", "[][grow][][][][grow][grow][][][grow]"));
 		
