@@ -9,7 +9,7 @@ public class ParallelWarteClass extends Thread {
 
 	public void run() {
 		try {
-			Thread.sleep(timeoutMS);
+			ParallelWarteClass.sleep(timeoutMS);
 		} catch (InterruptedException e) {
 			interrupt();
 		}
@@ -19,15 +19,6 @@ public class ParallelWarteClass extends Thread {
 		if(! this.isAlive())
 		{
 			this.timeoutMS = timeoutMS;
-		}
-	}
-	
-	public void wait(int timeout)
-	{
-		try {
-			Thread.sleep(timeout);
-		} catch (InterruptedException e) {
-			interrupt();
 		}
 	}
 }

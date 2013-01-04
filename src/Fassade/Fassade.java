@@ -2,6 +2,7 @@ package Fassade;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import Automat.*;
@@ -49,8 +50,9 @@ public class Fassade {
 		});
 	}
 	
-	public void aktuallisereHW(ArrayList<Comparable> list){
+	public void aktuallisereHW(@SuppressWarnings("rawtypes") ArrayList<Comparable> list){
 		SIMGui.updateUI(list);
+		HWGui.updateUI(list);
 		Color c;
 		
 		switch ((Integer)list.get(Adressen.Leuchte_Frabe.ordinal())) {
@@ -80,10 +82,10 @@ public class Fassade {
 	 * Wenn der Bon Button in der GUI gedrï¿½ckt wurde
 	 */
 	public void bonAnfordern() {
-		FachklasseAblieferung.test();
 		// Ausgabe auf Gui.Monitoring
 		// Automat.Ablieferung etwas tuhen
-		SIMGui.MonitoringUpdate("Bon Button wurde gedrï¿½ckt");
+		SIMGui.MonitoringUpdate("Bon Button wurde gedrückt.");
+		FachklasseAblieferung.BonButtonPresst = true;
 	}
 
 	/**
@@ -98,8 +100,10 @@ public class Fassade {
 	
 	private LinkedList<Flasche> loadFlaschenFile(String Path)
 	{
-		
-		return null;
+		LinkedList<Flasche> flaschen = new LinkedList<Flasche>();
+		flaschen.add(new Flasche(FlaschenType.PET,new BigDecimal(0.25),"00000"));
+		flaschen.add(new Flasche(FlaschenType.Mehrweg,new BigDecimal(0.08),"00001"));
+		return flaschen;
 	}
 	
 	public void warnleuchteAN() {
@@ -125,8 +129,9 @@ public class Fassade {
 	 * @param Type
 	 */
 	public void simFlascheEinlegen(FlaschenType Type) {
+		HWaccess.write(Adressen.Scanner.ordinal(), Type);
 		SimAblauf = new SimulationFlasche(this,Type);
-		SimAblauf.start();
+		//SimAblauf.start();
 	}
 
 	public void warnsignalAN() {
@@ -136,5 +141,8 @@ public class Fassade {
 	public void warnsignalAUS() {
 		SIMGui.MonitoringUpdate("TrÃ¶te wurde AUSgeschaltet");
 	}
-
+	
+	public void highlightEA(Adressen thisChanged){
+		SIMGui.highlightEA(thisChanged);		
+	}
 }

@@ -1,5 +1,7 @@
 package Automat;
 
+import java.util.Random;
+
 /**
  * @author Dennis
  * @version 1.0
@@ -8,42 +10,38 @@ package Automat;
 public class Scanner extends Subjekt{
 
 	private int adresse;
-	private String lastCode = "00000";
+	public FlaschenType lastCode ;
 	private HWSimulation HWaccess;
 	private ParallelWarteClass workerThread;
-	private int timeoutMS; 
 	
 	public Scanner(int adresse, int timeoutMS){
 		this.adresse = adresse;
 		this.HWaccess = HWSimulation.getInstance();
 		workerThread = new ParallelWarteClass(1000);
-		this.timeoutMS = timeoutMS;
 	}
 
-	public String getSubjectState(){
+	public FlaschenType getSubjectState(){
 		return lastCode;
 	}
 
 	public boolean Scan(){
+		ParallelWarteClass randomWaitThread = new ParallelWarteClass(new Random().nextInt(5000)+1000);
 		
-		int time = 0;
-		while(( null == (lastCode = this.HWaccess.readStr(adresse))) && time <= timeoutMS);
+		workerThread.interrupt();
+		workerThread = new ParallelWarteClass(10000);
+		workerThread.start();
+		randomWaitThread.start();
+		
+		//warten auf beendinugn der random wartezeit
+		while(randomWaitThread.isAlive());
+		
+		while(( null == (lastCode = this.HWaccess.readFlaschenType(adresse))) && workerThread.isAlive());
 		{
-			workerThread.run();
-			workerThread.isAlive();
-			time += 1000;
 			
 		}
 		
-		//int[] passRef = new int[1];
-		//HWaccess.read(this.adresse, passRef);
-		//return passRef[1];
-		
-		
-		
-		if (lastCode != "")
+		if (lastCode != FlaschenType.CodeUnlesbar)
 		{
-			this.notifyObservers();
 			return true;
 		}
 		else 
@@ -55,4 +53,5 @@ public class Scanner extends Subjekt{
 	public void stopScann(){
 	
 	}
+	
 }

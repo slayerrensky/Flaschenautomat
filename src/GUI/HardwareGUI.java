@@ -9,8 +9,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTextPane;
 
 import Automat.Adressen;
-import Automat.Automat;
-import Automat.HWSimulation;
 import Fassade.Fassade;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -19,8 +17,8 @@ import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.JPanel;
 import java.awt.Color;
-import javax.swing.JSplitPane;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 
 
 public class HardwareGUI {
@@ -64,7 +62,7 @@ public class HardwareGUI {
 		frmHardware.setVisible(true);
 		frmHardware.setResizable(false);
 		frmHardware.setTitle("Hardware");
-		frmHardware.setBounds(100, 100, 450, 300);
+		frmHardware.setBounds(100, 100, 450, 424);
 		frmHardware.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmHardware.getContentPane().setLayout(new MigLayout("", "[grow][grow]", "[][grow][][][][grow][grow][][][grow]"));
 		
@@ -74,14 +72,15 @@ public class HardwareGUI {
 		JButton btnBonDrucken = new JButton("Bon Drucken");
 		btnBonDrucken.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				DieFassade.bonAnfordern();
-				HWSimulation test = HWSimulation.getInstance();
+				//HWSimulation test = HWSimulation.getInstance();
 			}
 		});
 		btnBonDrucken.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//.PressedBonButton();
+				DieFassade.displayAktualisieren("Bon wird gedruckt!");
+				DieFassade.bonAnfordern();
 			}
 		});
 		
@@ -139,5 +138,14 @@ public class HardwareGUI {
 		}else{
 			lb_Leuchte.setBackground(new Color(240,240,240));
 		}
+	}
+	
+	public void updateUI(@SuppressWarnings("rawtypes") ArrayList<Comparable> list){
+		//HWLayer HWaccess = HWLayer.getInstance();
+		//Boolean tmp_bool = new Boolean(false);
+		// sollte lieber so sein
+		//HWaccess.read(Automat.Adressen.Leuchte.ordinal(), tmp_bool);
+		
+		drucken(((String)list.get(Adressen.BonDrucker.ordinal())));;
 	}
 }

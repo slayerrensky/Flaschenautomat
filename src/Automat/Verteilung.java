@@ -11,6 +11,8 @@ public class Verteilung {
 		private Sensor s_AuswahlklappeEingangsLichtschranke;
 		private Sensor s_MehrwegBehaelterLichtschranke;
 		private Sensor s_PetBehaelterLichtschranke;
+		public Sensor s_FuellstandPET;
+		public Sensor s_FuellstandMehrweg;
 		
 		private ParallelWarteClass workerThread;
 	
@@ -23,6 +25,8 @@ public class Verteilung {
 			s_AuswahlklappeEingangsLichtschranke = new Sensor(Adressen.AuswahlklappeEingangslichtschranke.ordinal());
 			s_MehrwegBehaelterLichtschranke = new Sensor(Adressen.UebergabelichtschrankeMehrweg.ordinal());
 			s_PetBehaelterLichtschranke = new Sensor(Adressen.UebergabelichtschrankePET.ordinal());
+			s_FuellstandMehrweg = new Sensor(Adressen.FuellstandMehrweg.ordinal());
+			s_FuellstandPET = new Sensor(Adressen.FuellstandPET.ordinal());
 			
 			workerThread = new ParallelWarteClass(10000);
 		}
@@ -34,11 +38,11 @@ public class Verteilung {
 			if( ! Durchlauf_A(Flasche)){
 				return false;
 			}
-			
 			switch (Flasche) {
 			
 				case PET:
-							
+					
+					
 					return Durchlauf_B(s_PetBehaelterLichtschranke);		
 					
 				case Mehrweg:
@@ -63,9 +67,12 @@ public class Verteilung {
 			
 			workerThread =  new ParallelWarteClass(10000);
 			workerThread.start();
-			while(!s.read() && workerThread.isAlive())
-			{
-				workerThread.wait(1000);
+			while(!s.read() && workerThread.isAlive()){
+				try {
+					Thread.sleep(300);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+				}
 			}
 			
 			if (!workerThread.isAlive()){		
@@ -78,9 +85,12 @@ public class Verteilung {
 
 			workerThread =  new ParallelWarteClass(10000);
 			workerThread.start();
-			while(s.read() && workerThread.isAlive())
-			{
-				workerThread.wait(1000);
+			while(s.read() && workerThread.isAlive()){
+				try {
+					Thread.sleep(300);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+				}
 			}
 				
 			if (!workerThread.isAlive()){

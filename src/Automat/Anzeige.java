@@ -33,10 +33,14 @@ public class Anzeige {
 	 * @param errno
 	 */
 	public void FehlerMelden(int errno) {
-		int pulseEin, pulseAus, wdh;
+		int pulseEin = 10, pulseAus = 10, wdh = 5;
 		
 
 		switch (errno) {
+		case -1: m_Leuchte.setColor(2);
+				 m_Leuchte.einschalten();
+				 m_Troete.ausschalten();
+				 return;
 		default:
 		case 0:
 			wdh = 5;
