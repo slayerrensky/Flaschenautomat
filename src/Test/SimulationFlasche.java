@@ -45,7 +45,7 @@ public class SimulationFlasche extends Thread {
 		
 		while(true){	
 			
-			try { Thread.sleep(100); } //warte um nicht alles zu überlasten
+			try { Thread.sleep(100); } //regelmäßig warten
 			catch(InterruptedException e){ System.out.println(e); }
 			
 			switch (pos) {
@@ -61,7 +61,8 @@ public class SimulationFlasche extends Thread {
 				
 					if(posChanged){ // Eigenschaften der Position setzen
 						HW.write(Adressen.Eingangslichtschranke.ordinal(), true);
-						Fassade.simKonsolenText(0, "Sim: Eingangslichtschranke durch Flasche aktiviert.");
+						Fassade.simKonsolenText(0, "Sim: Flasche am Eingang.");
+						Fassade.simKonsolenText(0, "Sim: Eingangslichtschranke aktiviert.");
 						posChanged = false;
 					}
 				}
@@ -87,17 +88,21 @@ public class SimulationFlasche extends Thread {
 			 *  An der Postionierungslichtschranke
 			 */
 			case Positioniert: 
-				if(HW.readInt(Adressen.LaufbandEingang.ordinal()).intValue()==0 &&
+				if(posChanged){
+					HW.write(Adressen.Justierlichtschranke.ordinal(), true);
+					Fassade.simKonsolenText(0, "Sim: Flasche bei der Positionierung.");
+					Fassade.simKonsolenText(0, "Sim: Justierlichtschranke aktiviert.");
+					posChanged = false;
+					
+					try { Thread.sleep(1000); } //warte damit das System reagieren kann
+					catch(InterruptedException e){ System.out.println(e); }
+				}
+				else if(HW.readInt(Adressen.LaufbandEingang.ordinal()).intValue()==0 &&
 						HW.readInt(Adressen.LaufbandDrehen.ordinal()).intValue()==0){
 					//Position nicht verändert
 					
-					if(posChanged){
-						HW.write(Adressen.Justierlichtschranke.ordinal(), true);
-						Fassade.simKonsolenText(0, "Sim: Justierlichtschranke durch Flasche aktiviert.");
-						posChanged = false;
-					}
 				}
-				else if(HW.readInt(Adressen.LaufbandEingang.ordinal()).intValue()>0){
+				else if(HW.readInt(Adressen.LaufbandEingang.ordinal()).intValue()>0){ //hier fehlerhaft
 					try { Thread.sleep(100); } //warte 0.1s bis die Flasche weggefahren ist
 					catch(InterruptedException e){ System.out.println(e); }
 					
@@ -117,21 +122,23 @@ public class SimulationFlasche extends Thread {
 					try { Thread.sleep(100); } //warte 0.1s um ein Ergebnis auszugeben (random wäre besser)
 					catch(InterruptedException e){ System.out.println(e); }
 					
+					Fassade.simKonsolenText(0, "Sim: Flasche wird zum Scannen gedreht.");
+					
 					switch(FType){
 						case Mehrweg : 
-							HW.write(Adressen.Scanner.ordinal(), 1); //code für Mehrweg
+							HW.write(Adressen.Scanner.ordinal(), "1"); //code für Mehrweg
 							Fassade.simKonsolenText(0, "Sim: Mehrweg Flaschencode");
 							break;
 						case PET :
-							HW.write(Adressen.Scanner.ordinal(), 1000); //code für PET
+							HW.write(Adressen.Scanner.ordinal(), "1000"); //code für PET
 							Fassade.simKonsolenText(0, "Sim: PET Flaschencode");
 							break;
 						case CodeNichtValide :
-							HW.write(Adressen.Scanner.ordinal(), 2392728); //unbekannter Flaschencode
+							HW.write(Adressen.Scanner.ordinal(), "2392728"); //unbekannter Flaschencode
 							Fassade.simKonsolenText(0, "Sim: Unbekannter Flaschencode");
 							break;
 						case CodeUnlesbar :
-							HW.write(Adressen.Scanner.ordinal(), -1); //Flaschencode unlesbar
+							HW.write(Adressen.Scanner.ordinal(), "-1"); //Flaschencode unlesbar
 							Fassade.simKonsolenText(0, "Sim: Unlesbarer Flaschencode.");
 							break;
 						
@@ -148,6 +155,9 @@ public class SimulationFlasche extends Thread {
 			 * An der Auswahlklappe
 			 */
 			case Auswahlklappe:
+				
+				Fassade.simKonsolenText(0, "Sim: Flasche bei der Auswahlklappe.");
+				
 				if(HW.readBool(Adressen.Auswahlklappe.ordinal()).booleanValue()){
 					//für Mehrweg
 					HW.write(Adressen.UebergabelichtschrankeMehrweg.ordinal(), true);
