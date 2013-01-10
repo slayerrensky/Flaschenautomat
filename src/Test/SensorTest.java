@@ -15,8 +15,7 @@ public class SensorTest {
 	static HWSimulation HWaccess = HWSimulation.getInstance();
 	
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		
+	public static void setUpBeforeClass() throws Exception {	
 		HWaccess.setF(new Fassade());
 	}
 
