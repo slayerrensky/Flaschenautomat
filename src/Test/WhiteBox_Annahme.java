@@ -24,26 +24,38 @@ public class WhiteBox_Annahme {
 	}
 
 	@Test
-	public void test() {
-		// fail("Not yet implemented");
-		FlaschenAuswerfenTest();
-
-		// assertTrue("Flasche auswerfen gibt ein true zurück und ist somit Funktionstüchtig",model.flascheWeiterLeiten()
-		// == true);
-	}
-	
-	public void FlaschenAuswerfenTest(){
+	public void testAuswerfen() throws InterruptedException {
+		
 		paraAblaufeFlascheRueckgabe test_FlascheAuswerfenHW = new paraAblaufeFlascheRueckgabe();
 		paraEingangslaufbandUeberprüfen test_FlascheAuswerfen = new paraEingangslaufbandUeberprüfen();
 
 		test_FlascheAuswerfenHW.start();
 		test_FlascheAuswerfen.start();
-		
+
 		assertTrue("[FAILED] Flasche auswerfen returned false",
 				model.Flasche_auswerfen());
+		test_FlascheAuswerfen.join();
+
 		assertTrue("[FAILED] Flasche auswerfen Laufband war nicht an.",
 				test_FlascheAuswerfen.getResult());
 	}
+	
+	@Test
+	public void test_Positionieren() throws InterruptedException {
+		
+		paraAblaufeFlaschePosition test_FlascheAuswerfenHW = new paraAblaufeFlaschePosition();
+		paraPositionierenUeberprüfen test_FlaschePos = new paraPositionierenUeberprüfen();
+
+		test_FlascheAuswerfenHW.start();
+		test_FlaschePos.start();
+
+		assertTrue("[FAILED] Flasche auswerfen returned false",
+				model.Flasche_positionieren());
+		test_FlaschePos.join();
+
+		assertTrue("[FAILED] Flasche auswerfen Laufband war nicht an.",
+				test_FlaschePos.getResult());
+	}	
 
 	public class paraAblaufeFlascheRueckgabe extends Thread {
 
@@ -82,7 +94,6 @@ public class WhiteBox_Annahme {
 			ParallelWarteClass paraWait = new ParallelWarteClass(10000);
 
 			paraWait.start();
-			System.out.println("[test] laufband = ");
 			// warte auf laufband rueckwerts oder timeout 10 Sek.
 			while (!(HWaccess.readInt(Adressen.LaufbandEingang.ordinal()) == -1)
 					&& paraWait.isAlive()) {
@@ -98,11 +109,10 @@ public class WhiteBox_Annahme {
 				interrupt();
 			} else {
 				// stopping paraWait
-				paraWait.interrupt();
+				// paraWait.interrupt();
 			}
 
 			// ------------------>>>>>>>
-			System.out.println("phase 2");
 
 			paraWait = new ParallelWarteClass(10000);
 
@@ -112,7 +122,7 @@ public class WhiteBox_Annahme {
 			while (!(HWaccess.readInt(Adressen.LaufbandEingang.ordinal()) == 0)
 					&& paraWait.isAlive()) {
 				try {
-					Thread.sleep(50);
+					Thread.sleep(150);
 				} catch (InterruptedException e) {
 					this.interrupt();
 				}
@@ -120,18 +130,106 @@ public class WhiteBox_Annahme {
 
 			// exit with result = false
 			if (!paraWait.isAlive()) {
-				System.out.println("zeitabgelaufen");
 				interrupt();
 			} else {
 				// stopping paraWait
 				paraWait.interrupt();
-				System.out.println("zeitabgelaufen");
 			}
-			
+
 			result = true;
 		}
-		
-		public boolean getResult(){
+
+		public boolean getResult() {
+			return result;
+		}
+
+	}
+	
+	//--------------------->>>>>>>> Positionieren
+
+	public class paraAblaufeFlaschePosition extends Thread {
+
+		public paraAblaufeFlaschePosition() {
+		}
+
+		public void run() {
+
+			HWaccess.write(Adressen.Justierlichtschranke.ordinal(), false);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// do nothing
+			}
+			HWaccess.write(Adressen.Justierlichtschranke.ordinal(), true);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// do nothing
+			}
+			HWaccess.write(Adressen.Justierlichtschranke.ordinal(), false);
+		}
+
+	}
+
+	public class paraPositionierenUeberprüfen extends Thread {
+
+		private boolean result;
+
+		public paraPositionierenUeberprüfen() {
+			result = false;
+		}
+
+		public void run() {
+
+			ParallelWarteClass paraWait = new ParallelWarteClass(10000);
+
+			paraWait.start();
+			// warte auf laufband rueckwerts oder timeout 10 Sek.
+			while (!(HWaccess.readInt(Adressen.LaufbandEingang.ordinal()) == 1)
+					&& paraWait.isAlive()) {
+				try {
+					Thread.sleep(150);
+				} catch (InterruptedException e) {
+					interrupt();
+				}
+			}
+
+			// exit with result = false
+			if (!paraWait.isAlive()) {
+				interrupt();
+			} else {
+				// stopping paraWait
+				// paraWait.interrupt();
+			}
+
+			// ------------------>>>>>>>
+
+			paraWait = new ParallelWarteClass(10000);
+
+			paraWait.start();
+
+			// warte auf laufband rueckwerts oder timeout 10 Sek.
+			while (!(HWaccess.readInt(Adressen.LaufbandEingang.ordinal()) == 0)
+					&& paraWait.isAlive()) {
+				try {
+					Thread.sleep(150);
+				} catch (InterruptedException e) {
+					this.interrupt();
+				}
+			}
+
+			// exit with result = false
+			if (!paraWait.isAlive()) {
+				interrupt();
+			} else {
+				// stopping paraWait
+				paraWait.interrupt();
+			}
+
+			result = true;
+		}
+
+		public boolean getResult() {
 			return result;
 		}
 
