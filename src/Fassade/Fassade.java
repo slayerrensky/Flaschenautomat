@@ -84,7 +84,7 @@ public class Fassade {
 	public void bonAnfordern() {
 		// Ausgabe auf Gui.Monitoring
 		// Automat.Ablieferung etwas tuhen
-		SIMGui.MonitoringUpdate("Bon Button wurde gedrückt.");
+		SIMGui.MonitoringUpdate("Bon Button wurde gedrï¿½ckt.");
 		FachklasseAblieferung.BonButtonPresst = true;
 	}
 
@@ -131,7 +131,12 @@ public class Fassade {
 	public void simFlascheEinlegen(FlaschenType Type) {
 		HWaccess.write(Adressen.Scanner.ordinal(), Type);
 		SimAblauf = new SimulationFlasche(this,Type);
-		//SimAblauf.start();
+	}
+	
+	public void simAblauf(FlaschenType Type) {
+		HWaccess.write(Adressen.Scanner.ordinal(), Type);
+		SimAblauf = new SimulationFlasche(this,Type);
+		SimAblauf.start();
 	}
 
 	public void warnsignalAN() {

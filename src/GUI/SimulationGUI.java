@@ -77,6 +77,7 @@ public class SimulationGUI {
 	private JPanel klappeEingangP;
 	private JPanel petP;
 	private JPanel mehrP;
+	private JButton btnSimulation;
 
 //	/**
 //	 * Launch the application.
@@ -158,7 +159,7 @@ public class SimulationGUI {
 				//Glue.InsertBottle();
 			}
 		});
-		desktopPane.add(btnFlascheeinlegen, "cell 0 2,alignx left");
+		desktopPane.add(btnFlascheeinlegen, "flowx,cell 0 2,alignx left");
 		tglbtnEingangslichtschranke.setHorizontalAlignment(SwingConstants.LEFT);
 		desktopPane.add(tglbtnEingangslichtschranke, "flowx,cell 0 4");
 		
@@ -418,7 +419,7 @@ public class SimulationGUI {
         desktopPane.add(pEndbehaelter, "cell 0 28,grow");
         pEndbehaelter.setLayout(new GridLayout(0, 1, 0, 0));
         
-        lblEndbehaelter = new JLabel("Endbehälter");
+        lblEndbehaelter = new JLabel("Endbehï¿½lter");
         pEndbehaelter.add(lblEndbehaelter);
         
         tglbtnPetBehlter = new JToggleButton("PET");
@@ -456,6 +457,15 @@ public class SimulationGUI {
         
         mehrP = new JPanel();
         desktopPane.add(mehrP, "cell 0 13");
+        
+        btnSimulation = new JButton("Simulation");
+        btnSimulation.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+        		String Flasche = comboBox.getSelectedItem().toString();
+				DieFassade.simAblauf(FlaschenType.valueOf(Flasche));
+        	}
+        });
+        desktopPane.add(btnSimulation, "cell 0 2");
         
 	}
 	

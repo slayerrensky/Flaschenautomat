@@ -43,12 +43,20 @@ public class SimulationFlasche extends Thread {
 		
 		Fassade.simKonsolenText(0, "Simulation einer Flasche des Typs: " + FType.toString());
 		
+		MainLoop:
 		while(true){	
 			
 			try { Thread.sleep(100); } //regelmäßig warten
 			catch(InterruptedException e){ System.out.println(e); }
 			
 			switch (pos) {
+			
+			/*
+			 * Auswerfen
+			 */
+			case Ausgeworfen:
+				//Beende die Flasche
+				break MainLoop;
 			
 			/*
 			 * Am Eingang
