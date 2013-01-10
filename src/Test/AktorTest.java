@@ -12,7 +12,7 @@ import Fassade.Fassade;
 public class AktorTest {
 
 	protected Aktor a = new Aktor(1);
-	protected Aktor aktorUnderTest = new Aktor(2);
+	
 	static HWSimulation HWaccess = HWSimulation.getInstance();
 	
 	@BeforeClass
@@ -22,9 +22,9 @@ public class AktorTest {
 
 	@Test
 	public void testAktor() {
-		
+		Aktor aktorUnderTest = new Aktor(3);
 		aktorUnderTest.ausschalten();
-		assertTrue(HWaccess.readBool(2));
+		assertFalse(HWaccess.readBool(3));
 	}
 	
 	@Test
