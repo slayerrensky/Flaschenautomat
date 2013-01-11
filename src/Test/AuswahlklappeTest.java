@@ -19,7 +19,7 @@ public class AuswahlklappeTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		HWaccess.setF(new Fassade());
+		//HWaccess.setF(new Fassade());
 	}
 
 	@Test

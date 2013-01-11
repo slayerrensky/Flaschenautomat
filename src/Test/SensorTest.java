@@ -16,7 +16,7 @@ public class SensorTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {	
-		HWaccess.setF(new Fassade());
+		//HWaccess.setF(new Fassade());
 	}
 
 
