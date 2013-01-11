@@ -16,7 +16,6 @@ public class SimulationFlasche extends Thread {
 	private FlaschenType FType;
 	
 	enum Station {
-		Ausgeworfen,
 		Eingang,
 		Positioniert,
 		Ausgang,
@@ -53,14 +52,6 @@ public class SimulationFlasche extends Thread {
 			switch (pos) {
 			
 			/*
-			 * Auswerfen
-			 */
-			case Ausgeworfen:
-				//Beende die Flasche
-				Fassade.simKonsolenText(0, "Sim: Die Flasche wurde ausgeworfen.");
-				break MainLoop;
-			
-			/*
 			 * Am Eingang
 			 */
 			case Eingang:
@@ -88,9 +79,15 @@ public class SimulationFlasche extends Thread {
 					try { Thread.sleep(100); } //warte 0.1s bis die Flasche weggefahren ist
 					catch(InterruptedException e){ System.out.println(e); }
 					
-					HW.write(Adressen.Eingangslichtschranke.ordinal(), false);
-					pos=Station.Ausgeworfen; //nächster Zustand: Flasche Ausgeworfen
-					posChanged = true;
+					HW.write(Adressen.Eingangslichtschranke.ordinal(), true);
+					
+					while(HW.readBool(Adressen.Eingangslichtschranke.ordinal())){
+					try { Thread.sleep(100); } //warte 0.1s bis die Flasche weggefahren ist
+					catch(InterruptedException e){ System.out.println(e); }
+					}
+					//Fassade.simKonsolenText(0, "Sim: Simulation Beendet.");
+					break MainLoop;
+					
 				}
 				break;
 			
