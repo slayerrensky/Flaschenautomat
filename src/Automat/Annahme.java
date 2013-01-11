@@ -118,6 +118,7 @@ public class Annahme {
 		if (workerThread.isAlive()) {
 			workerThread.interrupt();
 		} else {
+			System.out.println("[Flasche_positionieren] exit false");
 			return false;
 		}
 		System.out.println("[Flasche_positionieren] exit true");
