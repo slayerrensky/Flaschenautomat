@@ -9,22 +9,18 @@ import org.junit.Test;
 import Automat.Flasche;
 import Automat.FlaschenType;
 
-public class FlascheTest {
+public class lascheTestCodeUnlesbar {
 	
-	Flasche f;
-	
-	public FlascheTest()
-	{
-		f = new Flasche(FlaschenType.Mehrweg, new BigDecimal(0.20), "000");
-	}
+	static Flasche f;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		f = new Flasche(FlaschenType.CodeUnlesbar, new BigDecimal(0.20), "000");
 	}
 
 	@Test
 	public void testFlasche() {
-		assertEquals(FlaschenType.Mehrweg, f.getType());
+		assertEquals(FlaschenType.CodeUnlesbar, f.getType());
 		assertEquals(new BigDecimal(0.20), f.getPfandwert());
 		assertEquals(new String("000"), f.getCode());
 	}
@@ -56,8 +52,9 @@ public class FlascheTest {
 
 	@Test
 	public void testGetAnzahl() {
+		int anz = f.getAnzahl();
 		f.AnzahlInc();
-		assertEquals("Vergleich mit 1:", 1, f.getAnzahl());
+		assertEquals("Vergleich mit 1:", anz+1, f.getAnzahl());
 	}
 
 	@Test
@@ -69,7 +66,7 @@ public class FlascheTest {
 
 	@Test
 	public void testGetType() {
-		assertEquals(FlaschenType.Mehrweg, f.getType());
+		assertEquals(FlaschenType.CodeUnlesbar, f.getType());
 	}
 
 
