@@ -27,7 +27,7 @@ public class WhiteBox_Annahme {
 	public void testAuswerfen() throws InterruptedException {
 		
 		paraAblaufeFlascheRueckgabe test_FlascheAuswerfenHW = new paraAblaufeFlascheRueckgabe();
-		paraEingangslaufbandUeberprüfen test_FlascheAuswerfen = new paraEingangslaufbandUeberprüfen();
+		paraEingangslaufbandUeberpruefen test_FlascheAuswerfen = new paraEingangslaufbandUeberpruefen();
 
 		test_FlascheAuswerfenHW.start();
 		test_FlascheAuswerfen.start();
@@ -44,7 +44,7 @@ public class WhiteBox_Annahme {
 	public void test_Positionieren() throws InterruptedException {
 		
 		paraAblaufeFlaschePosition test_FlascheAuswerfenHW = new paraAblaufeFlaschePosition();
-		paraPositionierenUeberprüfen test_FlaschePos = new paraPositionierenUeberprüfen();
+		paraPositionierenUeberpruefen test_FlaschePos = new paraPositionierenUeberpruefen();
 
 		test_FlascheAuswerfenHW.start();
 		test_FlaschePos.start();
@@ -81,11 +81,11 @@ public class WhiteBox_Annahme {
 
 	}
 
-	public class paraEingangslaufbandUeberprüfen extends Thread {
+	public class paraEingangslaufbandUeberpruefen extends Thread {
 
 		private boolean result;
 
-		public paraEingangslaufbandUeberprüfen() {
+		public paraEingangslaufbandUeberpruefen() {
 			result = false;
 		}
 
@@ -171,11 +171,11 @@ public class WhiteBox_Annahme {
 
 	}
 
-	public class paraPositionierenUeberprüfen extends Thread {
+	public class paraPositionierenUeberpruefen extends Thread {
 
 		private boolean result;
 
-		public paraPositionierenUeberprüfen() {
+		public paraPositionierenUeberpruefen() {
 			result = false;
 		}
 
