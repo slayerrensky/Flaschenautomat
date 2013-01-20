@@ -11,7 +11,7 @@ import Automat.HWSimulation;
 import Automat.ParallelWarteClass;
 import Automat.Verteilung;
 
-public class WhiteBox_Verteilung {
+public class Komplextest_Verteilung {
 
 	private static Verteilung simVerteilung;
 	protected static HWSimulation HWaccess;

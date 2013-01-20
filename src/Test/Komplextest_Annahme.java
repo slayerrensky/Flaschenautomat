@@ -11,7 +11,7 @@ import Automat.HWSimulation;
 import Automat.ParallelWarteClass;
 import Fassade.Fassade;
 
-public class WhiteBox_Annahme {
+public class Komplextest_Annahme {
 
 	private static Annahme model;
 	protected static HWSimulation HWaccess;
