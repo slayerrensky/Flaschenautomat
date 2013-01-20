@@ -112,7 +112,6 @@ public class SimulationGUI {
 	 */
 	private void initialize() {
 		frmSimulationhelper = new JFrame();
-		frmSimulationhelper.setResizable(false);
 		frmSimulationhelper.setTitle("Simulation");
 		frmSimulationhelper.setBounds(100, 100, 669, 890);
 		frmSimulationhelper.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

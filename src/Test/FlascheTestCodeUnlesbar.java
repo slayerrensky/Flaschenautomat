@@ -9,7 +9,7 @@ import org.junit.Test;
 import Automat.Flasche;
 import Automat.FlaschenType;
 
-public class lascheTestCodeUnlesbar {
+public class FlascheTestCodeUnlesbar {
 	
 	static Flasche f;
 	

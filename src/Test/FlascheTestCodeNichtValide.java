@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import Automat.Flasche;
@@ -17,7 +18,7 @@ public class FlascheTestCodeNichtValide {
 	public static void setUpBeforeClass() throws Exception {
 		f = new Flasche(FlaschenType.CodeNichtValide, new BigDecimal(0.20), "000");
 	}
-
+	
 	@Test
 	public void testFlasche() {
 		assertEquals(FlaschenType.CodeNichtValide, f.getType());
